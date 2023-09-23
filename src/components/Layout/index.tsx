@@ -1,4 +1,4 @@
-import { FeaturedMovie } from "../FeaturedMovie";
+import { FeaturedGame } from "../FeaturedGame";
 import { Footer } from "../Footer";
 import { MainSlider } from "../MainSlider";
 import { NewArrival } from "../NewArrival";
@@ -9,8 +9,8 @@ export function Layout() {
     <>
       <MainSlider />
       <Container>
-        <FeaturedMovie />
-        <NewArrival />
+        <FeaturedGame />
+        {/* <NewArrival /> */}
         <Footer />
       </Container>
     </>

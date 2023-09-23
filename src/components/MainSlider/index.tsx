@@ -1,25 +1,34 @@
-import { Container, Logo, Navbar, Searchbar, SignIn } from "./styles";
-
+import Image from "next/image";
 import { LuCircleEqual } from "react-icons/lu";
 
-import tvLogo from "../../assets/logo/tv.png";
-import Image from "next/image";
+import {
+  Container,
+  Logo,
+  MainImage,
+  Navbar,
+  Searchbar,
+  SignIn,
+} from "./styles";
+import gameHubLogo from "../../assets/logo/logo-white-removebg-preview.png";
 
 export function MainSlider() {
   return (
     <Container>
       <Navbar>
         <Logo>
-          <Image src={tvLogo.src} alt="Logotipo" width={40} height={40} />
-          <h2>MovieAPI</h2>
+          <Image
+            src={gameHubLogo.src}
+            alt="Logotipo"
+            width={100}
+            height={100}
+          />
         </Logo>
 
         <Searchbar>
-          <input type="text" placeholder="What do you want to watch?" />
+          <input type="text" placeholder="What do you want to play?" />
         </Searchbar>
 
         <SignIn>
-          <span>Sign in</span>
           <LuCircleEqual />
         </SignIn>
       </Navbar>

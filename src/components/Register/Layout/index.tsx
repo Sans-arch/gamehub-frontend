@@ -4,6 +4,7 @@ import {
   Dialog,
   LoginButton,
   LoginSidebar,
+  RegisterButton,
   RegisterContainer,
 } from "./styles";
 
@@ -27,6 +28,7 @@ export function Layout() {
             <input type="text" name="" id="" placeholder="Nome" />
             <input type="email" name="" id="" placeholder="Email" />
             <input type="password" name="" id="" placeholder="Senha" />
+            <RegisterButton type="submit">Cadastrar</RegisterButton>
           </form>
         </RegisterContainer>
       </Dialog>

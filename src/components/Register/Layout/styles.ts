@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 import backgroundImg from "../../../assets/poster/cyberpunk.jpg";
 
@@ -75,6 +75,20 @@ export const LoginButton = styled.button`
   margin-top: 43px;
   cursor: pointer;
   text-transform: uppercase;
+  transition: background-color 0.3s, transform 0.3s, border-color 0.3s;
+
+  &:hover {
+    background: #fff; /* Nova cor de fundo durante o hover */
+    color: #333; /* Nova cor de texto durante o hover */
+    border-color: #fff; /* Nova cor da borda durante o hover */
+    transform: scale(1.05);
+  }
+
+  &:active {
+    background: #ccc; /* Nova cor de fundo quando clicado */
+    border-color: #ccc; /* Nova cor da borda quando clicado */
+    transform: scale(0.95); /* Reduz ligeiramente o tamanho quando clicado */
+  }
 `;
 
 export const RegisterContainer = styled.div`
@@ -82,8 +96,9 @@ export const RegisterContainer = styled.div`
   flex-direction: column;
   align-items: center;
 
-  background-color: #fff;
+  background-color: #f5f5f5;
   width: 100%;
+
   h1 {
     margin: 0;
     margin-top: 110px;
@@ -100,17 +115,19 @@ export const RegisterContainer = styled.div`
   form {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 28px;
 
-    width: 70%;
-    height: 60px;
+    height: 100%;
+    width: 100%;
 
     input {
-      width: 100%;
-      background-color: #f5f5f5;
+      width: 70%;
+      background-color: #f0f0f0;
       outline: none;
       border: none;
       padding: 20px;
+      border-radius: 12px;
 
       color: #9c9c9c;
       font-family: var(--font-poppins);
@@ -119,5 +136,39 @@ export const RegisterContainer = styled.div`
       font-weight: 500;
       line-height: normal;
     }
+  }
+`;
+
+export const RegisterButton = styled.button`
+  color: #fff;
+  font-family: var(--font-poppins);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  width: 144px;
+  height: 48px;
+  border: 2px solid #be3144;
+  margin-top: 43px;
+  cursor: pointer;
+  text-transform: uppercase;
+  border-radius: 30px;
+  background: #be3144;
+  padding: 10px;
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s,
+    border-color 0.3s;
+
+  &:hover {
+    transform: scale(1.05);
+    background: #ff5e6e;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border-color: #ff5e6e;
+  }
+
+  &:active {
+    transform: scale(0.95);
+    background: #a82e3c;
+    border-color: #a82e3c;
+    box-shadow: none;
   }
 `;

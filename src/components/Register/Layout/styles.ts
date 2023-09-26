@@ -7,12 +7,42 @@ export const Container = styled.div`
   width: 100vw;
   display: flex;
 
+  .register-toast {
+    border-radius: 20px;
+  }
+
+  .register-toast-alert {
+    background-color: #4caf50;
+    color: #f5f5f5;
+    font-family: var(--font-poppins);
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+
+    svg {
+      color: #f5f5f5;
+    }
+  }
+
+  .register-toast-alert-error {
+    background-color: #be3144;
+    color: #f5f5f5;
+    font-family: var(--font-poppins);
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+
+    svg {
+      color: #f5f5f5;
+    }
+  }
+
   &::before {
     content: "";
     background-image: url(${backgroundImg.src});
     background-repeat: no-repeat;
     background-size: cover;
-    filter: brightness(40%);
+    filter: brightness(35%);
     position: absolute;
     top: 0;
     left: 0;
@@ -78,16 +108,16 @@ export const LoginButton = styled.button`
   transition: background-color 0.3s, transform 0.3s, border-color 0.3s;
 
   &:hover {
-    background: #fff; /* Nova cor de fundo durante o hover */
-    color: #333; /* Nova cor de texto durante o hover */
-    border-color: #fff; /* Nova cor da borda durante o hover */
+    background: #fff;
+    color: #333;
+    border-color: #fff;
     transform: scale(1.05);
   }
 
   &:active {
-    background: #ccc; /* Nova cor de fundo quando clicado */
-    border-color: #ccc; /* Nova cor da borda quando clicado */
-    transform: scale(0.95); /* Reduz ligeiramente o tamanho quando clicado */
+    background: #ccc;
+    border-color: #ccc;
+    transform: scale(0.95);
   }
 `;
 
@@ -96,7 +126,7 @@ export const RegisterContainer = styled.div`
   flex-direction: column;
   align-items: center;
 
-  background-color: #f5f5f5;
+  background-color: #1c1e21;
   width: 100%;
 
   h1 {
@@ -104,6 +134,7 @@ export const RegisterContainer = styled.div`
     margin-top: 110px;
     margin-bottom: 81px;
     color: #dc3157;
+    color: #f5f5f5;
     text-align: center;
     font-family: var(--font-poppins);
     font-size: 24px;
@@ -129,12 +160,15 @@ export const RegisterContainer = styled.div`
       padding: 20px;
       border-radius: 12px;
 
-      color: #9c9c9c;
       font-family: var(--font-poppins);
       font-size: 14px;
       font-style: normal;
       font-weight: 500;
       line-height: normal;
+
+      &::placeholder {
+        color: #9c9c9c;
+      }
     }
   }
 `;

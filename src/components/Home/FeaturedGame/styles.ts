@@ -2,6 +2,8 @@ import styled from "styled-components";
 
 export const Container = styled.section`
   margin-bottom: 70px;
+  background-color: #1c1e21;
+  padding: 83px 100px 0 100px;
 `;
 
 export const GamesContainer = styled.div`
@@ -18,10 +20,12 @@ export const Title = styled.div`
   margin-bottom: 44px;
 
   h2 {
+    color: #f5f5f5;
+    font-family: var(--font-dmsans);
     font-size: 36px;
+    font-style: normal;
     font-weight: 700;
-    color: #000;
-    text-align: left;
+    line-height: normal;
   }
 
   p {

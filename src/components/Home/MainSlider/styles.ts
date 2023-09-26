@@ -5,8 +5,7 @@ import mainPoster from "../../../assets/poster/cyberpunk.jpg";
 export const Container = styled.div`
   position: relative;
   width: 100%;
-  height: 600px;
-  margin-bottom: 70px;
+  height: 800px;
   padding: 15px 95px 0 95px;
 
   &::before {

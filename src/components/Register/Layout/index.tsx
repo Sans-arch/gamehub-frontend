@@ -1,3 +1,4 @@
+import { useState, FormEvent } from "react";
 import Image from "next/image";
 import {
   Container,
@@ -11,6 +12,12 @@ import {
 import logo from "../../../assets/logo/logo-white-removebg-preview.png";
 
 export function Layout() {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    console.log(event.target);
+  }
+
   return (
     <Container>
       <Dialog>
@@ -24,7 +31,7 @@ export function Layout() {
         <RegisterContainer>
           <h1>Crie sua conta</h1>
 
-          <form>
+          <form onSubmit={handleSubmit}>
             <input type="text" name="" id="" placeholder="Nome" />
             <input type="email" name="" id="" placeholder="Email" />
             <input type="password" name="" id="" placeholder="Senha" />

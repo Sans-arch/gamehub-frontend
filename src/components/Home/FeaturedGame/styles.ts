@@ -1,9 +1,8 @@
 import styled from "styled-components";
 
 export const Container = styled.section`
-  margin-bottom: 70px;
   background-color: #1c1e21;
-  padding: 83px 100px 0 100px;
+  padding: 83px 100px 83px 100px;
 `;
 
 export const GamesContainer = styled.div`

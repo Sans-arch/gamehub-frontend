@@ -8,6 +8,10 @@ export const Container = styled.div`
   height: 800px;
   padding: 15px 95px 0 95px;
 
+  @media (max-width: 1366px) {
+    height: 620px;
+  }
+
   &::before {
     content: "";
     background-image: url(${mainPoster.src});
@@ -22,8 +26,6 @@ export const Container = styled.div`
     z-index: -1;
   }
 `;
-
-export const MainImage = styled.div``;
 
 export const Navbar = styled.nav`
   display: flex;

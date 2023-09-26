@@ -1,14 +1,7 @@
 import Image from "next/image";
 import { LuCircleEqual } from "react-icons/lu";
 
-import {
-  Container,
-  Logo,
-  MainImage,
-  Navbar,
-  Searchbar,
-  SignIn,
-} from "./styles";
+import { Container, Logo, Navbar, Searchbar, SignIn } from "./styles";
 import gameHubLogo from "../../../assets/logo/logo-white-removebg-preview.png";
 
 export function MainSlider() {

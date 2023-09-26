@@ -74,10 +74,24 @@ export const Searchbar = styled.div`
     line-height: 24px;
     font-weight: 400;
     font-family: "DM Sans", sans-serif;
+    transition: background-color 0.6s ease;
+    transform-origin: center;
+    transform: scale(1);
+  }
+
+  input:focus {
+    background-color: #fff;
+    color: #000;
+    transform: scale(1.05);
+  }
+
+  input:not(:focus) {
+    background-color: transparent;
+    transform: scale(1);
   }
 
   input::placeholder {
-    color: #fff;
+    color: #9c9c9c;
   }
 `;
 

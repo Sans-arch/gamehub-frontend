@@ -3,7 +3,7 @@ import { Container, GamesContainer, Title } from "./styles";
 
 import { CircularProgress } from "@mui/material";
 import { useEffect, useState } from "react";
-import apiCaller from "../../services/api";
+import apiCaller from "../../../services/api";
 import { GameCard } from "../GameCard";
 
 interface IGame {
@@ -45,8 +45,6 @@ export function FeaturedGame() {
         {!games.length && <CircularProgress />}
 
         {games.map((game) => {
-          // console.log(game);
-
           return (
             <GameCard
               key={game.slug}

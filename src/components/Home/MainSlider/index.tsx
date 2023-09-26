@@ -9,7 +9,7 @@ import {
   Searchbar,
   SignIn,
 } from "./styles";
-import gameHubLogo from "../../assets/logo/logo-white-removebg-preview.png";
+import gameHubLogo from "../../../assets/logo/logo-white-removebg-preview.png";
 
 export function MainSlider() {
   return (

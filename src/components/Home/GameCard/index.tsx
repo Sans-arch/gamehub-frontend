@@ -7,8 +7,8 @@ import {
   RottenTomatoesRating,
 } from "./styles";
 
-import imdbImg from "../../assets/images/imdb.png";
-import rottenTomatoesImg from "../../assets/images/rotten_tomatoes.png";
+import imdbImg from "../../../assets/images/imdb.png";
+import rottenTomatoesImg from "../../../assets/images/rotten_tomatoes.png";
 import Image from "next/image";
 
 interface IGameCard {

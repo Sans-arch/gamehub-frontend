@@ -62,6 +62,11 @@ export const Dialog = styled.div`
 
   box-sizing: border-box;
   overflow: hidden;
+
+  @media (max-width: 1400px) {
+    width: 70%;
+    height: 90%;
+  }
 `;
 
 export const LoginSidebar = styled.div`
@@ -132,7 +137,7 @@ export const RegisterContainer = styled.div`
   h1 {
     margin: 0;
     margin-top: 110px;
-    margin-bottom: 81px;
+    margin-bottom: 3.25rem;
     color: #dc3157;
     color: #f5f5f5;
     text-align: center;
@@ -204,5 +209,9 @@ export const RegisterButton = styled.button`
     background: #a82e3c;
     border-color: #a82e3c;
     box-shadow: none;
+  }
+
+  @media (max-width: 1400px) {
+    margin-top: 10px;
   }
 `;

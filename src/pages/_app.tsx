@@ -10,7 +10,7 @@ export const poppins = Poppins({
 
 export const DMSans = DM_Sans({
   subsets: ["latin"],
-  weight: ["400", "700", "800", "900"],
+  weight: ["400", "500", "600", "700", "800", "900"],
 });
 
 export default function App({ Component, pageProps }: AppProps) {

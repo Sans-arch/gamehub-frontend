@@ -115,3 +115,20 @@ export const SignIn = styled.div`
     font-size: 36px;
   }
 `;
+
+export const MainGame = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  margin-top: 40px;
+
+  h1 {
+    color: #fff;
+    font-size: 48px;
+  }
+
+  p {
+    color: #fff;
+    font-weight: 400;
+  }
+`;

@@ -7,27 +7,49 @@ import apiCaller from "../../../services/api";
 import { GameCard } from "../GameCard";
 
 interface IGame {
-  backgroundImage: string;
-  esrbRating: {
-    id: number;
-    name: string;
-    slug: string;
-  };
+  id: number;
   name: string;
-  platforms: any[];
-  released: string;
   slug: string;
-  stores: any[];
+  summary: string;
+  rating: number;
+  cover: {
+    id: number;
+    game: number;
+    height: number;
+    url: string;
+    width: number;
+  };
 }
 
-export function FeaturedGame() {
+enum GameCoverImageSizes {
+  THUMB = "t_thumb",
+  FULL_HD = "t_1080p",
+  HD = "t_720p",
+  MICRO = "t_micro",
+  COVER_BIG = "t_cover_big",
+}
+
+export function FeaturedGames() {
   const [games, setGames] = useState<IGame[]>([]);
 
   useEffect(() => {
     apiCaller
-      .get("/games/featured")
+      .get("/games/most-popular")
       .then((response) => response.data)
-      .then((data) => setGames(data))
+      .then((gamesList) => {
+        const mappedGames = gamesList.map((game: IGame) => {
+          game.cover.url = game.cover.url.replace("//", "https://");
+          game.cover.url = game.cover.url.replace(
+            "t_thumb",
+            GameCoverImageSizes.FULL_HD
+          );
+
+          return game;
+        });
+
+        return mappedGames;
+      })
+      .then((gamesList) => setGames(gamesList))
       .catch((error) => console.log(error));
   }, []);
 
@@ -50,12 +72,9 @@ export function FeaturedGame() {
               key={game.slug}
               title={game.name}
               originInfo={game.name}
-              imgUrl={game.backgroundImage}
+              cover={game.cover}
               genres={game.name}
-              ratings={{
-                imdb: game.esrbRating.id,
-                rotten: game.esrbRating.id,
-              }}
+              rating={game.rating}
             />
           );
         })}

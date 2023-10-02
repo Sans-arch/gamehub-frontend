@@ -10,6 +10,12 @@ const nextConfig = {
         port: "",
         pathname: "/media/games/**",
       },
+      {
+        protocol: "https",
+        hostname: "images.igdb.com",
+        port: "",
+        pathname: "/igdb/image/**",
+      },
     ],
   },
   compiler: {

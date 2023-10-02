@@ -1,4 +1,7 @@
+import { Rating } from "@mui/material";
+import { useState } from "react";
 import Image from "next/image";
+
 import {
   Container,
   Content,
@@ -8,15 +11,33 @@ import {
   LogoContainer,
   MainGameImageContainer,
   Overlay,
-  Rating,
   Title,
 } from "./styles";
-import { AiFillStar } from "react-icons/ai";
+
+import ImageGallery from "react-image-gallery";
+import "react-image-gallery/styles/css/image-gallery.css";
 
 import logo from "../../../assets/logo/logo-white-removebg-preview.png";
 import fifa from "../../../assets/images/fifaatualizado.png";
 
+const images = [
+  {
+    original: "https://picsum.photos/id/1018/1000/600/",
+    thumbnail: "https://picsum.photos/id/1018/250/150/",
+  },
+  {
+    original: "https://picsum.photos/id/1015/1000/600/",
+    thumbnail: "https://picsum.photos/id/1015/250/150/",
+  },
+  {
+    original: "https://picsum.photos/id/1019/1000/600/",
+    thumbnail: "https://picsum.photos/id/1019/250/150/",
+  },
+];
+
 export function Layout() {
+  const [ratingValue, setRatingValue] = useState(0);
+
   return (
     <Container>
       <Overlay>
@@ -26,34 +47,41 @@ export function Layout() {
         <GameInitialInfo>
           <Content>
             <Title>EA Sports FC 24</Title>
-            <p>EA Sports</p>
+            <p className="developer">EA Sports</p>
 
-            <Rating>
-              <AiFillStar style={{ color: "#FFD700" }} />
-              <AiFillStar style={{ color: "#FFD700" }} />
-              <AiFillStar style={{ color: "#FFD700" }} />
-              <AiFillStar style={{ color: "#D9D9D9" }} />
-              <AiFillStar style={{ color: "#D9D9D9" }} />
-            </Rating>
-
-            <span>Released On: SEP 29</span>
+            <Rating
+              id="game-rating"
+              precision={0.5}
+              value={ratingValue}
+              onChange={(event, newValue) => {
+                if (newValue) {
+                  setRatingValue(newValue);
+                }
+              }}
+            />
+            <p className="release">Released On: SEP 29</p>
           </Content>
         </GameInitialInfo>
       </Overlay>
 
       <GameMedia>
-        <MainGameImageContainer>
+        <ImageGallery
+          items={images}
+          showFullscreenButton={false}
+          showPlayButton={false}
+        />
+        {/* <MainGameImageContainer>
           <Image src={fifa.src} alt="Logo" width={1120} height={570} />
-        </MainGameImageContainer>
+        </MainGameImageContainer> */}
 
-        <Description>
+        {/* <Description>
           <p>
             EA Sports FC 24 contains more than 30 leagues, featuring over 700
             teams. It has more than 19,000 players, and 100 stadiums. Familiar
             competitions confirmed include the Champions League, Premier League
             (England), Bundesliga (Germany), and La Liga (Spain).
           </p>
-        </Description>
+        </Description> */}
       </GameMedia>
     </Container>
   );

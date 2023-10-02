@@ -1,4 +1,4 @@
-import { FeaturedGame } from "../FeaturedGame";
+import { FeaturedGames } from "../FeaturedGames";
 import { Footer } from "../Footer";
 import { MainSlider } from "../MainSlider";
 
@@ -6,7 +6,7 @@ export function Layout() {
   return (
     <>
       <MainSlider />
-      <FeaturedGame />
+      <FeaturedGames />
       <Footer />
     </>
   );

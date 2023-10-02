@@ -1,42 +1,31 @@
-import {
-  Container,
-  Content,
-  Genre,
-  ImdbRating,
-  Rating,
-  RottenTomatoesRating,
-} from "./styles";
-
-import imdbImg from "../../../assets/images/imdb.png";
-import rottenTomatoesImg from "../../../assets/images/rotten_tomatoes.png";
+import { Container, Content } from "./styles";
 import Image from "next/image";
 
 interface IGameCard {
   title: string;
-  imgUrl: string;
+  cover: {
+    id: number;
+    game: number;
+    height: number;
+    url: string;
+    width: number;
+  };
   originInfo: string;
   genres: string;
-  ratings: {
-    imdb: number;
-    rotten: number;
-  };
+  rating: number;
 }
 
-export function GameCard({
-  title,
-  imgUrl,
-  originInfo,
-  genres,
-  ratings,
-}: IGameCard) {
+export function GameCard({ title, cover, originInfo, genres }: IGameCard) {
   return (
     <Container>
       <Image
-        src={imgUrl}
+        src={cover.url}
         alt={title}
         width={250}
         height={370}
-        objectFit="contain"
+        style={{
+          objectFit: "contain",
+        }}
       />
       <Content>
         <span>{originInfo}</span>

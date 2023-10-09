@@ -1,23 +1,19 @@
-import { useState, FormEvent, ChangeEvent } from "react";
-import Image from "next/image";
-import { hashSync, genSaltSync } from "bcryptjs";
+import { AxiosError, AxiosResponse } from 'axios';
+import { Alert, Snackbar } from '@mui/material';
+import { useState, FormEvent, ChangeEvent } from 'react';
+import Image from 'next/image';
+import { hashSync, genSaltSync } from 'bcryptjs';
 
-import {
-  Container,
-  Dialog,
-  LoginButton,
-  LoginSidebar,
-  RegisterButton,
-  RegisterContainer,
-} from "./styles";
+import { Container, Dialog, LoginButton, LoginSidebar, RegisterButton, RegisterContainer } from './styles';
 
-import logo from "../../../assets/logo/logo-white-removebg-preview.png";
-import apiCaller from "../../../services/api";
+import logo from '../../../assets/logo/logo-white-removebg-preview.png';
+import apiCaller from '../../../services/api';
 
 export function Layout() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [openSuccessSnackbar, setOpenSuccessSnackbar] = useState(false);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -29,20 +25,23 @@ export function Layout() {
       password: hashSync(password, salt),
     };
 
-    console.log(userInfo);
-
     apiCaller
-      .post("/auth/register", userInfo)
-      .then((response) => {})
-      .catch((error) => {});
-
-    resetFormFields();
+      .post('/auth/register', userInfo)
+      .then((response: AxiosResponse) => {
+        if (response.status === 201) {
+          handleSuccessSnackbar();
+          resetFormFields();
+        }
+      })
+      .catch((error: AxiosError) => {
+        throw new Error(error.message);
+      });
   }
 
   function resetFormFields() {
-    setName("");
-    setEmail("");
-    setPassword("");
+    setName('');
+    setEmail('');
+    setPassword('');
   }
 
   function handleName(event: ChangeEvent<HTMLInputElement>) {
@@ -55,6 +54,14 @@ export function Layout() {
 
   function handlePassword(event: ChangeEvent<HTMLInputElement>) {
     setPassword(event.target.value);
+  }
+
+  function handleSuccessSnackbar(event?: React.SyntheticEvent | Event, reason?: string) {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenSuccessSnackbar(prevState => !prevState);
   }
 
   return (
@@ -71,28 +78,27 @@ export function Layout() {
           <h1>Crie sua conta</h1>
 
           <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              placeholder="Nome"
-              onChange={handleName}
-              value={name}
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              onChange={handleEmail}
-              value={email}
-            />
-            <input
-              type="password"
-              placeholder="Senha"
-              onChange={handlePassword}
-              value={password}
-            />
+            <input type="text" placeholder="Nome" onChange={handleName} value={name} />
+            <input type="email" placeholder="Email" onChange={handleEmail} value={email} />
+            <input type="password" placeholder="Senha" onChange={handlePassword} value={password} />
             <RegisterButton type="submit">Cadastrar</RegisterButton>
           </form>
         </RegisterContainer>
       </Dialog>
+
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        open={openSuccessSnackbar}
+        autoHideDuration={6000}
+        onClose={handleSuccessSnackbar}
+      >
+        <Alert onClose={handleSuccessSnackbar} severity="success" sx={{ width: '100%' }}>
+          Usuário criado com sucesso!
+        </Alert>
+      </Snackbar>
     </Container>
   );
 }

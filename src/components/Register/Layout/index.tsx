@@ -2,6 +2,7 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { Alert, Snackbar } from '@mui/material';
 import { useState, FormEvent, ChangeEvent } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { hashSync, genSaltSync } from 'bcryptjs';
 
 import { Container, Dialog, LoginButton, LoginSidebar, RegisterButton, RegisterContainer } from './styles';
@@ -84,7 +85,9 @@ export function Layout() {
           <Image src={logo.src} alt="Logo" width={176} height={181} />
           <h1>Bem-vindo de volta!</h1>
           <p>Acesse sua conta agora mesmo!</p>
-          <LoginButton>Entrar</LoginButton>
+          <Link href="/login">
+            <LoginButton>Entrar</LoginButton>
+          </Link>
         </LoginSidebar>
 
         <RegisterContainer>

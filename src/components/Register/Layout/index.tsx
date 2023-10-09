@@ -8,12 +8,15 @@ import { Container, Dialog, LoginButton, LoginSidebar, RegisterButton, RegisterC
 
 import logo from '../../../assets/logo/logo-white-removebg-preview.png';
 import apiCaller from '../../../services/api';
+import { SubmitNewUserError } from '../types';
 
 export function Layout() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [openSuccessSnackbar, setOpenSuccessSnackbar] = useState(false);
+  const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
+  const [submitErrorMessage, setSubmitErrorMessage] = useState('');
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -34,7 +37,9 @@ export function Layout() {
         }
       })
       .catch((error: AxiosError) => {
-        throw new Error(error.message);
+        const errorData = error.response?.data as SubmitNewUserError;
+        setSubmitErrorMessage(errorData.message);
+        handleErrorSnackbar();
       });
   }
 
@@ -62,6 +67,14 @@ export function Layout() {
     }
 
     setOpenSuccessSnackbar(prevState => !prevState);
+  }
+
+  function handleErrorSnackbar(event?: React.SyntheticEvent | Event, reason?: string) {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenErrorSnackbar(prevState => !prevState);
   }
 
   return (
@@ -97,6 +110,20 @@ export function Layout() {
       >
         <Alert onClose={handleSuccessSnackbar} severity="success" sx={{ width: '100%' }}>
           Usuário criado com sucesso!
+        </Alert>
+      </Snackbar>
+
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        open={openErrorSnackbar}
+        autoHideDuration={6000}
+        onClose={handleErrorSnackbar}
+      >
+        <Alert onClose={handleErrorSnackbar} severity="error" sx={{ width: '100%' }}>
+          {submitErrorMessage}
         </Alert>
       </Snackbar>
     </Container>

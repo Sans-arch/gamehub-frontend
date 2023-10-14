@@ -1,16 +1,17 @@
-import type { AppProps } from "next/app";
-import { Poppins, DM_Sans } from "next/font/google";
+import type { AppProps } from 'next/app';
+import { Poppins, DM_Sans } from 'next/font/google';
+import { AuthProvider } from '../contexts/AuthContext';
 
-import "../styles/global.css";
+import '../styles/global.css';
 
 export const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "700", "800", "900"],
+  subsets: ['latin'],
+  weight: ['400', '700', '800', '900'],
 });
 
 export const DMSans = DM_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800', '900'],
 });
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -22,7 +23,9 @@ export default function App({ Component, pageProps }: AppProps) {
           --font-dmsans: ${DMSans.style.fontFamily};
         }
       `}</style>
-      <Component {...pageProps} />
+      <AuthProvider>
+        <Component {...pageProps} />
+      </AuthProvider>
     </>
   );
 }

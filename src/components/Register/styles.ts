@@ -1,6 +1,6 @@
-import styled, { keyframes } from "styled-components";
+import styled from 'styled-components';
 
-import backgroundImg from "../../../assets/poster/cyberpunk.jpg";
+import backgroundImg from '../../assets/poster/cyberpunk.jpg';
 
 export const Container = styled.div`
   height: 100vh;
@@ -38,7 +38,7 @@ export const Container = styled.div`
   }
 
   &::before {
-    content: "";
+    content: '';
     background-image: url(${backgroundImg.src});
     background-repeat: no-repeat;
     background-size: cover;
@@ -194,8 +194,7 @@ export const RegisterButton = styled.button`
   border-radius: 30px;
   background: #be3144;
   padding: 10px;
-  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s,
-    border-color 0.3s;
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s, border-color 0.3s;
 
   &:hover {
     transform: scale(1.05);

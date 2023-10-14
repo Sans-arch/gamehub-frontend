@@ -1,5 +1,5 @@
-import { Layout } from "../components/Register/Layout";
+import { RegisterLayout } from '../components/Register';
 
 export default function Register() {
-  return <Layout />;
+  return <RegisterLayout />;
 }

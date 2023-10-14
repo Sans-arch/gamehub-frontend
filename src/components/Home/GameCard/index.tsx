@@ -1,5 +1,6 @@
-import { Container, Content } from "./styles";
-import Image from "next/image";
+import { useRouter } from 'next/router';
+import { Container, Content } from './styles';
+import Image from 'next/image';
 
 interface IGameCard {
   title: string;
@@ -13,18 +14,25 @@ interface IGameCard {
   originInfo: string;
   genres: string;
   rating: number;
+  slug: string;
 }
 
-export function GameCard({ title, cover, originInfo, genres }: IGameCard) {
+export function GameCard({ title, cover, originInfo, genres, slug }: IGameCard) {
+  const router = useRouter();
+
+  function handleClick() {
+    router.push(`/games/${slug}`);
+  }
+
   return (
-    <Container>
+    <Container onClick={handleClick}>
       <Image
         src={cover.url}
         alt={title}
         width={250}
         height={370}
         style={{
-          objectFit: "contain",
+          objectFit: 'contain',
         }}
       />
       <Content>

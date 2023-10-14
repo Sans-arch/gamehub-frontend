@@ -1,7 +1,6 @@
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 
-import backgroundImg from '../../../assets/poster/cyberpunk.jpg';
-import { red } from '@mui/material/colors';
+import backgroundImg from '../../assets/poster/cyberpunk.jpg';
 
 export const Container = styled.div`
   height: 100vh;
@@ -75,6 +74,7 @@ export const LoginSidebar = styled.div`
   flex-direction: column;
   background-color: #be3144;
   padding: 64px;
+  width: 25%;
 
   h1 {
     color: #fff;

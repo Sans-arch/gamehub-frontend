@@ -1,15 +1,15 @@
-import { ThemeProvider } from "styled-components";
+import { ThemeProvider } from 'styled-components';
 
-import { GlobalStyle } from "../styles/global";
-import { defaultTheme } from "../styles/themes/default";
-import { Layout } from "../components/Home/Layout";
+import { GlobalStyle } from '../styles/global';
+import { defaultTheme } from '../styles/themes/default';
+import { HomeLayout } from '../components/Home';
 
 export default function Home() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <GlobalStyle />
 
-      <Layout />
+      <HomeLayout />
     </ThemeProvider>
   );
 }

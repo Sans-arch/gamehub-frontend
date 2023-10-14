@@ -1,5 +1,5 @@
-import { Layout } from "../components/Login/Layout";
+import { LoginLayout } from '../components/Login';
 
 export default function Login() {
-  return <Layout />;
+  return <LoginLayout />;
 }

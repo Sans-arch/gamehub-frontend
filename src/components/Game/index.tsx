@@ -47,14 +47,13 @@ export function GameLayout() {
           response.data.cover.url = response.data.cover.url.replace('//', 'https://');
           response.data.cover.url = response.data.cover.url.replace('t_thumb', GameCoverImageSizes.FULL_HD);
           setGameInfo(response.data);
+          setRatingValue((response.data.rating / 100) * 5);
         })
         .catch(error => {
           console.log(error);
         });
     }
   }, [slug]);
-
-  console.log({ gameInfo });
 
   return (
     <Container>

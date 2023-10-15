@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import mainPoster from "../../../assets/poster/cyberpunk.jpg";
+import mainPoster from '../../../assets/poster/cyberpunk.jpg';
 
 export const Container = styled.div`
   position: relative;
@@ -13,7 +13,7 @@ export const Container = styled.div`
   }
 
   &::before {
-    content: "";
+    content: '';
     background-image: url(${mainPoster.src});
     background-repeat: no-repeat;
     background-size: cover;
@@ -73,7 +73,7 @@ export const Searchbar = styled.div`
     color: #fff;
     line-height: 24px;
     font-weight: 400;
-    font-family: "DM Sans", sans-serif;
+    font-family: 'DM Sans', sans-serif;
     transition: background-color 0.6s ease;
     transform-origin: center;
     transform: scale(1);

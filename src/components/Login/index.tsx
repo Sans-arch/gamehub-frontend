@@ -25,7 +25,9 @@ export function LoginLayout() {
     <Container>
       <Dialog>
         <LoginSidebar>
-          <Image src={logo.src} alt="Logo" width={176} height={181} />
+          <Link href="/">
+            <Image src={logo.src} alt="Logo" width={176} height={181} />
+          </Link>
           <h1>Bem-vindo ao GameHub!</h1>
           <p>Crie sua conta aqui!</p>
           <Link href="/register">

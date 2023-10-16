@@ -111,8 +111,12 @@ export const SignIn = styled.div`
 
   svg {
     cursor: pointer;
-    color: white;
+    color: #f5f5f5;
     font-size: 36px;
+
+    &:hover {
+      opacity: 0.6;
+    }
   }
 `;
 

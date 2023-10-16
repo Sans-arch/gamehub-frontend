@@ -1,7 +1,8 @@
 import { BsChevronRight } from 'react-icons/bs';
-import { Container, GamesContainer, Title } from './styles';
+import { Container, CreateListContainer, CreateListModal, CreateListModalGameCard, CreateListModalGames, GamesContainer, Title } from './styles';
+import { Box, CircularProgress, Modal } from '@mui/material';
+import { Button } from '@mui/material'
 
-import { CircularProgress } from '@mui/material';
 import { useEffect, useState } from 'react';
 import apiCaller from '../../../services/api';
 import { GameCard } from '../GameCard';
@@ -31,6 +32,11 @@ export enum GameCoverImageSizes {
 
 export function FeaturedGames() {
   const [games, setGames] = useState<IGame[]>([]);
+  const [isCreateListModalOpen, setIsCreateListModalOpen] = useState(false);
+
+  function handleCreateListModal(state: boolean) {
+    setIsCreateListModalOpen(state);
+  }
 
   useEffect(() => {
     apiCaller
@@ -51,32 +57,63 @@ export function FeaturedGames() {
   }, []);
 
   return (
-    <Container>
-      <Title>
-        <h2>Featured Games</h2>
-        <p>
-          See more
-          <BsChevronRight />
-        </p>
-      </Title>
+    <>
 
-      <GamesContainer>
-        {!games.length && <CircularProgress />}
+      <Container>
+        <CreateListContainer>
+          <Button variant="contained" onClick={() => handleCreateListModal(true)}>
+            Criar nova lista
+          </Button>
+        </CreateListContainer>
 
-        {games.map(game => {
-          return (
-            <GameCard
-              key={game.slug}
-              slug={game.slug}
-              title={game.name}
-              originInfo={game.name}
-              cover={game.cover}
-              genres={game.name}
-              rating={game.rating}
-            />
-          );
-        })}
-      </GamesContainer>
-    </Container>
+        <Title>
+          <h2>Featured Games</h2>
+          <p>
+            See more
+            <BsChevronRight />
+          </p>
+        </Title>
+
+        <GamesContainer>
+          {!games.length && <CircularProgress />}
+
+          {games.map(game => {
+            return (
+              <GameCard
+                key={game.slug}
+                slug={game.slug}
+                title={game.name}
+                originInfo={game.name}
+                cover={game.cover}
+                genres={game.name}
+                rating={game.rating}
+              />
+            );
+          })}
+        </GamesContainer>
+      </Container>
+
+      <Modal
+        open={isCreateListModalOpen}
+        onClose={() => handleCreateListModal(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <CreateListModal>
+          <h1>Crie sua lista</h1>
+          <CreateListModalGames>
+            {['GTA V', 'Assasins Creed Mirage', 'Starfield', 'Fallout', 'MK 10', 'Forza Motorsport', 'Diablo IV',
+              'Halo Infinite', 'The Elder Scrolls VI', 'The Last of Us Part II', 'Cyberpunk 2077', 'God of War', 'The Witcher 3']
+              .map(game => {
+                return (
+                  <CreateListModalGameCard key={game}>
+                    {game}
+                  </CreateListModalGameCard>
+                )
+              })}
+          </CreateListModalGames>
+        </CreateListModal>
+      </Modal>
+    </>
   );
 }

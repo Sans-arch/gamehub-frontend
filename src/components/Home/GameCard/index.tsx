@@ -25,7 +25,7 @@ export function GameCard({ title, cover, originInfo, genres, slug }: IGameCard) 
   }
 
   return (
-    <Container onClick={handleClick}>
+    <Container>
       <Image
         src={cover.url}
         alt={title}

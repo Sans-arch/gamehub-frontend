@@ -33,6 +33,11 @@ export enum GameCoverImageSizes {
 export function FeaturedGames() {
   const [games, setGames] = useState<IGame[]>([]);
   const [isCreateListModalOpen, setIsCreateListModalOpen] = useState(false);
+  const [numberOfGamesAppearingInModal, setNumberOfGamesAppearingInModal] = useState(5);
+
+  function loadMoreGamesInModal() {
+    setNumberOfGamesAppearingInModal(numberOfGamesAppearingInModal + numberOfGamesAppearingInModal);
+  }
 
   function handleCreateListModal(state: boolean) {
     setIsCreateListModalOpen(state);
@@ -102,16 +107,23 @@ export function FeaturedGames() {
         <CreateListModal>
           <h1>Crie sua lista</h1>
           <CreateListModalGames>
-            {['GTA V', 'Assasins Creed Mirage', 'Starfield', 'Fallout', 'MK 10', 'Forza Motorsport', 'Diablo IV',
-              'Halo Infinite', 'The Elder Scrolls VI', 'The Last of Us Part II', 'Cyberpunk 2077', 'God of War', 'The Witcher 3']
-              .map(game => {
-                return (
-                  <CreateListModalGameCard key={game}>
-                    {game}
-                  </CreateListModalGameCard>
-                )
-              })}
+            {games.slice(0, numberOfGamesAppearingInModal).map(game => {
+              return (
+                <GameCard
+                  key={game.slug}
+                  slug={game.slug}
+                  title={game.name}
+                  originInfo={game.name}
+                  cover={game.cover}
+                  genres={game.name}
+                  rating={game.rating}
+                />
+              );
+            })}
           </CreateListModalGames>
+          <Button variant="contained" onClick={loadMoreGamesInModal}>
+            Carregar mais
+          </Button>
         </CreateListModal>
       </Modal>
     </>

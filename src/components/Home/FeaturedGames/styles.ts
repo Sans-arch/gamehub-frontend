@@ -21,20 +21,24 @@ export const CreateListModal = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 70%;
-  height: 60%;
+  width: 75%;
+  height: 90%;
   background-color: #111111;
   border-radius: 30px;
+  border: 2px solid #fff;
   padding: 12px;
 `;
 
 export const CreateListModalGames = styled.div`
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 20px;
-  height: 100%;
+  height: 80%;
   width: 100%;
-  /* border: 2px solid red; */
+  padding: 20px;
+  margin-bottom: 20px;
+  overflow: auto;
 `;
 
 export const CreateListModalGameCard = styled.div`

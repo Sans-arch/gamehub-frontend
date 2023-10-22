@@ -16,8 +16,8 @@ export const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
   background: #111111;
-  width: 544px;
-  height: 761px;
+  width: 75%;
+  height: 80%;
   border-radius: 30px;
   overflow: hidden;
   box-sizing: border-box;

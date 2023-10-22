@@ -1,43 +1,17 @@
 import { BsChevronRight } from 'react-icons/bs';
-import { Container, CreateListContainer, CreateListModal, CreateListModalGameCard, CreateListModalGames, GamesContainer, Title } from './styles';
-import { Box, CircularProgress, Modal } from '@mui/material';
-import { Button } from '@mui/material'
+import { Container, CreateListContainer, GamesContainer, Title } from './styles';
+import { CircularProgress } from '@mui/material';
+import { Button } from '@mui/material';
 
 import { useEffect, useState } from 'react';
 import apiCaller from '../../../services/api';
 import { GameCard } from '../GameCard';
-
-interface IGame {
-  id: number;
-  name: string;
-  slug: string;
-  summary: string;
-  rating: number;
-  cover: {
-    id: number;
-    game: number;
-    height: number;
-    url: string;
-    width: number;
-  };
-}
-
-export enum GameCoverImageSizes {
-  THUMB = 't_thumb',
-  FULL_HD = 't_1080p',
-  HD = 't_720p',
-  MICRO = 't_micro',
-  COVER_BIG = 't_cover_big',
-}
+import { CreateListModal } from '../CreateListModal';
+import { GameCoverImageSizes, IGame } from '../../types';
 
 export function FeaturedGames() {
   const [games, setGames] = useState<IGame[]>([]);
   const [isCreateListModalOpen, setIsCreateListModalOpen] = useState(false);
-  const [numberOfGamesAppearingInModal, setNumberOfGamesAppearingInModal] = useState(5);
-
-  function loadMoreGamesInModal() {
-    setNumberOfGamesAppearingInModal(numberOfGamesAppearingInModal + numberOfGamesAppearingInModal);
-  }
 
   function handleCreateListModal(state: boolean) {
     setIsCreateListModalOpen(state);
@@ -63,7 +37,6 @@ export function FeaturedGames() {
 
   return (
     <>
-
       <Container>
         <CreateListContainer>
           <Button variant="contained" onClick={() => handleCreateListModal(true)}>
@@ -98,34 +71,9 @@ export function FeaturedGames() {
         </GamesContainer>
       </Container>
 
-      <Modal
-        open={isCreateListModalOpen}
-        onClose={() => handleCreateListModal(false)}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <CreateListModal>
-          <h1>Crie sua lista</h1>
-          <CreateListModalGames>
-            {games.slice(0, numberOfGamesAppearingInModal).map(game => {
-              return (
-                <GameCard
-                  key={game.slug}
-                  slug={game.slug}
-                  title={game.name}
-                  originInfo={game.name}
-                  cover={game.cover}
-                  genres={game.name}
-                  rating={game.rating}
-                />
-              );
-            })}
-          </CreateListModalGames>
-          <Button variant="contained" onClick={loadMoreGamesInModal}>
-            Carregar mais
-          </Button>
-        </CreateListModal>
-      </Modal>
+      {isCreateListModalOpen && (
+        <CreateListModal handleCreateListModal={handleCreateListModal} isCreateListModalOpen={isCreateListModalOpen} />
+      )}
     </>
   );
 }

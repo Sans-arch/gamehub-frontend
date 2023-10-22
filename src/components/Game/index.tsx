@@ -3,10 +3,10 @@ import { useState, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 
-import { GameCoverImageSizes } from '../Home/FeaturedGames';
 import { CardContainer, Container, GameImage, GameInformation } from './styles';
 
 import apiCaller from '@/src/services/api';
+import { GameCoverImageSizes } from '../types';
 
 interface GameInfo {
   id: number;

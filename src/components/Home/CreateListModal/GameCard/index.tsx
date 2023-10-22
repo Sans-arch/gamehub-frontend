@@ -1,6 +1,6 @@
-import { useRouter } from 'next/router';
 import { Container, Content } from './styles';
 import Image from 'next/image';
+import { AiFillCheckCircle } from 'react-icons/ai';
 
 interface GameCardProps {
   title: string;
@@ -15,17 +15,13 @@ interface GameCardProps {
   genres: string;
   rating: number;
   slug: string;
+  handleSelectGame: (slug: string) => void;
+  isSelected: boolean;
 }
 
-export function GameCard({ title, cover, originInfo, genres, slug }: GameCardProps) {
-  const router = useRouter();
-
-  function handleClick() {
-    router.push(`/games/${slug}`);
-  }
-
+export function GameCard({ title, cover, slug, isSelected, handleSelectGame }: GameCardProps) {
   return (
-    <Container onClick={handleClick}>
+    <Container isSelected={isSelected} onClick={() => handleSelectGame(slug)}>
       <Image
         src={cover.url}
         alt={title}
@@ -36,7 +32,6 @@ export function GameCard({ title, cover, originInfo, genres, slug }: GameCardPro
         }}
       />
       <Content>
-        <span>{originInfo}</span>
         <p>{title}</p>
       </Content>
     </Container>

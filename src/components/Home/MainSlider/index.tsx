@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { LuCircleEqual } from 'react-icons/lu';
@@ -7,8 +7,11 @@ import MailIcon from '@mui/icons-material/Mail';
 
 import { Container, Logo, MainGame, Navbar, Searchbar, SignIn } from './styles';
 import gameHubLogo from '../../../assets/logo/logo-white-removebg-preview.png';
+import { AuthContext } from '@/src/contexts/AuthContext';
 
 export function MainSlider() {
+  const { user, isAuthenticated } = useContext(AuthContext);
+
   const [isDrawerOpened, setIsDrawerOpened] = useState(false);
 
   function toggleDrawer(open: boolean) {
@@ -63,6 +66,18 @@ export function MainSlider() {
             onClick={toggleDrawer(false)}
             onKeyDown={toggleDrawer(false)}
           >
+            {isAuthenticated && (
+              <p
+                style={{
+                  textAlign: 'center',
+                  fontSize: '1.3rem',
+                  marginTop: 20,
+                }}
+              >
+                Seja-bem vindo {user.name}
+              </p>
+            )}
+
             <List>
               <Link href="/register" style={{ textDecoration: 'none', color: '#f5f5f5' }}>
                 <ListItem disablePadding disableGutters sx={{ outline: 'none' }}>

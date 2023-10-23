@@ -80,7 +80,7 @@ export function AuthProvider({ children }: any) {
 
     apiCaller.defaults.headers['Authorization'] = `Bearer ${token}`;
 
-    router.push('/game');
+    router.push('/');
   }
 
   return <AuthContext.Provider value={{ user, isAuthenticated, signIn }}>{children}</AuthContext.Provider>;

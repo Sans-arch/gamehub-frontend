@@ -1,4 +1,4 @@
-import { useEffect, useState, Fragment } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Backdrop, Modal } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
@@ -10,6 +10,7 @@ import { GameCoverImageSizes, IGame } from '../../types';
 
 import { GameCard } from './GameCard';
 import apiCaller from '@/src/services/api';
+import { AuthContext } from '@/src/contexts/AuthContext';
 
 interface CreateListModalProps {
   isCreateListModalOpen: boolean;
@@ -21,13 +22,28 @@ interface FormData {
 }
 
 export function CreateListModal({ isCreateListModalOpen, handleCreateListModal }: CreateListModalProps) {
+  const { user } = useContext(AuthContext);
+
   const { register, handleSubmit } = useForm();
 
   const [games, setGames] = useState<IGame[]>([]);
   const [selectedGames, setSelectedGames] = useState<IGame[]>([]);
 
   async function handleCreateCustomList(data: FormData) {
-    console.log({ data });
+    const { name } = data;
+
+    const payload = {
+      userEmail: user.email,
+      description: name,
+      selectedGamesIds: selectedGames.map(game => game.id),
+    };
+
+    console.log(payload);
+
+    apiCaller
+      .post('/lists', payload)
+      .then(response => console.log(response))
+      .catch(error => console.log(error));
   }
 
   console.log({ selectedGames });
@@ -82,7 +98,7 @@ export function CreateListModal({ isCreateListModalOpen, handleCreateListModal }
             type="text"
             placeholder="Nome da lista"
           />
-          <Button variant="contained" type="submit">
+          <Button variant="contained" type="submit" disabled={selectedGames.length === 0}>
             Criar
           </Button>
         </Form>

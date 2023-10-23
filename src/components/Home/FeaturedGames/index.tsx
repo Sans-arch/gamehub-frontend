@@ -1,15 +1,18 @@
+import { useEffect, useState, useContext } from 'react';
 import { BsChevronRight } from 'react-icons/bs';
 import { Container, CreateListContainer, GamesContainer, Title } from './styles';
 import { CircularProgress } from '@mui/material';
 import { Button } from '@mui/material';
 
-import { useEffect, useState } from 'react';
 import apiCaller from '../../../services/api';
 import { GameCard } from '../GameCard';
 import { CreateListModal } from '../CreateListModal';
 import { GameCoverImageSizes, IGame } from '../../types';
+import { AuthContext } from '@/src/contexts/AuthContext';
 
 export function FeaturedGames() {
+  const { isAuthenticated } = useContext(AuthContext);
+
   const [games, setGames] = useState<IGame[]>([]);
   const [isCreateListModalOpen, setIsCreateListModalOpen] = useState(false);
 
@@ -38,11 +41,13 @@ export function FeaturedGames() {
   return (
     <>
       <Container>
-        <CreateListContainer>
-          <Button variant="contained" onClick={() => handleCreateListModal(true)}>
-            Criar nova lista
-          </Button>
-        </CreateListContainer>
+        {isAuthenticated && (
+          <CreateListContainer>
+            <Button variant="contained" onClick={() => handleCreateListModal(true)}>
+              Criar nova lista
+            </Button>
+          </CreateListContainer>
+        )}
 
         <Title>
           <h2>Featured Games</h2>
@@ -71,7 +76,7 @@ export function FeaturedGames() {
         </GamesContainer>
       </Container>
 
-      {isCreateListModalOpen && (
+      {isAuthenticated && isCreateListModalOpen && (
         <CreateListModal handleCreateListModal={handleCreateListModal} isCreateListModalOpen={isCreateListModalOpen} />
       )}
     </>

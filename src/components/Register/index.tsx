@@ -5,12 +5,26 @@ import { useForm } from 'react-hook-form';
 import { Container, Dialog, LoginButton, LoginSidebar, RegisterButton, RegisterContainer } from './styles';
 
 import logo from '../../assets/logo/logo-white-removebg-preview.png';
+import apiCaller from '@/src/services/api';
+import { useRouter } from 'next/router';
 
 export function RegisterLayout() {
   const { register, handleSubmit } = useForm();
+  const router = useRouter();
 
   function handleSignIn(data: any) {
-    console.log(data);
+    apiCaller
+        .post('/auth/register', {
+          name: data.name,
+          email: data.email,
+          password: data.password,
+        })
+        .then((response) => {
+          router.push('/');
+        })
+        .catch((error) => {
+          console.log(error);
+        });
   }
 
   return (

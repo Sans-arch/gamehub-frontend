@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from 'react';
-import { setCookie, parseCookies } from 'nookies';
+import { setCookie, parseCookies, destroyCookie } from 'nookies';
 import { useRouter } from 'next/router';
 
 import apiCaller from '../services/api';
@@ -13,6 +13,7 @@ type AuthContextType = {
   user: User;
   isAuthenticated: boolean;
   signIn: (email: string, password: string) => Promise<void>;
+  logout: () => Promise<void>;
 };
 
 type SignInResponse = {
@@ -83,5 +84,22 @@ export function AuthProvider({ children }: any) {
     router.push('/');
   }
 
-  return <AuthContext.Provider value={{ user, isAuthenticated, signIn }}>{children}</AuthContext.Provider>;
+  async function logout() {
+    try {
+      // Destruindo o token do lado do servidor
+      const { 'gamehub-token': token } = parseCookies();
+      await apiCaller.post('/auth/logout', { token });
+
+      // Destruindo o cookie com o token do lado do client
+      destroyCookie(null, 'gamehub-token');
+      setUser(null);
+      delete apiCaller.defaults.headers['Authorization'];
+
+      router.push('/login');
+    } catch (error) {
+      console.log('Erro ao fazer logout: ', error);
+    }
+  }
+
+  return <AuthContext.Provider value={{ user, isAuthenticated, signIn, logout }}>{children}</AuthContext.Provider>;
 }

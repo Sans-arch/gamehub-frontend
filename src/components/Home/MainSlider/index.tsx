@@ -8,9 +8,11 @@ import MailIcon from '@mui/icons-material/Mail';
 import { Container, Logo, MainGame, Navbar, Searchbar, SignIn } from './styles';
 import gameHubLogo from '../../../assets/logo/logo-white-removebg-preview.png';
 import { AuthContext } from '@/src/contexts/AuthContext';
+import apiCaller from '@/src/services/api';
+import { parseCookies } from 'nookies';
 
 export function MainSlider() {
-  const { user, isAuthenticated } = useContext(AuthContext);
+  const { user, isAuthenticated, logout } = useContext(AuthContext);
 
   const [isDrawerOpened, setIsDrawerOpened] = useState(false);
 
@@ -79,19 +81,27 @@ export function MainSlider() {
             )}
 
             <List>
-              <Link href="/register" style={{ textDecoration: 'none', color: '#f5f5f5' }}>
+              {isAuthenticated && (
                 <ListItem disablePadding disableGutters sx={{ outline: 'none' }}>
-                  <ListItemButton>
-                    <ListItemIcon>{<MailIcon color="secondary" />}</ListItemIcon>
-                    <ListItemText primary={'Cadastrar-se'} />
+                  <ListItemButton onClick={logout}>
+                    <ListItemIcon>{<MailIcon color="warning" />}</ListItemIcon>
+                    <ListItemText primary={'Logout'} />
                   </ListItemButton>
                 </ListItem>
-              </Link>
+              )}
               <Link href="/login" style={{ textDecoration: 'none', color: '#f5f5f5' }}>
                 <ListItem disablePadding>
                   <ListItemButton>
                     <ListItemIcon>{<MailIcon color="secondary" />}</ListItemIcon>
                     <ListItemText primary={'Fazer Login'} />
+                  </ListItemButton>
+                </ListItem>
+              </Link>
+              <Link href="/register" style={{ textDecoration: 'none', color: '#f5f5f5' }}>
+                <ListItem disablePadding disableGutters sx={{ outline: 'none' }}>
+                  <ListItemButton>
+                    <ListItemIcon>{<MailIcon color="secondary" />}</ListItemIcon>
+                    <ListItemText primary={'Cadastrar-se'} />
                   </ListItemButton>
                 </ListItem>
               </Link>

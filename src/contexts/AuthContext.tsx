@@ -3,51 +3,20 @@ import { setCookie, parseCookies, destroyCookie } from 'nookies';
 import { useRouter } from 'next/router';
 
 import apiCaller from '../services/api';
-
-type User = {
-  name: string;
-  email: string;
-};
-
-type AuthContextType = {
-  user: User;
-  isAuthenticated: boolean;
-  signIn: (email: string, password: string) => Promise<void>;
-  logout: () => Promise<void>;
-};
-
-type SignInResponse = {
-  token: string;
-  user: {
-    email: string;
-    name: string;
-  };
-};
-
-type RetrieveUserResponse = {
-  user: {
-    email: string;
-    name: string;
-  };
-};
+import { AuthContextType, RetrieveUserResponse, SignInResponse, User } from '../hooks/types';
 
 export const AuthContext = createContext({} as AuthContextType);
 
 export function AuthProvider({ children }: any) {
   const [user, setUser] = useState<User | null>(null);
-
   const router = useRouter();
-
-  const isAuthenticated = !!user;
 
   useEffect(() => {
     const { 'gamehub-token': token } = parseCookies();
 
     if (token) {
       apiCaller
-        .post('/auth/retrieve', {
-          token,
-        })
+        .post('/auth/retrieve', { token })
         .then(response => {
           const { user } = response.data as RetrieveUserResponse;
 
@@ -61,6 +30,16 @@ export function AuthProvider({ children }: any) {
         });
     }
   }, []);
+
+  async function checkIsAuthenticated() {
+    const { 'gamehub-token': token } = parseCookies();
+
+    if (token) {
+      return true;
+    }
+
+    return false;
+  }
 
   async function signIn(email: string, password: string) {
     const response = await apiCaller.post('/auth/login', {
@@ -86,13 +65,11 @@ export function AuthProvider({ children }: any) {
 
   async function logout() {
     try {
-      // Destruindo o token do lado do servidor
       const { 'gamehub-token': token } = parseCookies();
       await apiCaller.post('/auth/logout', { token });
 
-      // Destruindo o cookie com o token do lado do client
       destroyCookie(null, 'gamehub-token');
-      setUser(null);
+
       delete apiCaller.defaults.headers['Authorization'];
 
       router.push('/login');
@@ -101,5 +78,5 @@ export function AuthProvider({ children }: any) {
     }
   }
 
-  return <AuthContext.Provider value={{ user, isAuthenticated, signIn, logout }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ user, checkIsAuthenticated, signIn, logout }}>{children}</AuthContext.Provider>;
 }

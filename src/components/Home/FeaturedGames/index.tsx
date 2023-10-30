@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { BsChevronRight } from 'react-icons/bs';
 import { Container, CreateListContainer, GamesContainer, Title } from './styles';
 import { CircularProgress } from '@mui/material';
@@ -8,10 +8,10 @@ import apiCaller from '../../../services/api';
 import { GameCard } from '../GameCard';
 import { CreateListModal } from '../CreateListModal';
 import { GameCoverImageSizes, IGame } from '../../types';
-import { AuthContext } from '@/src/contexts/AuthContext';
+import { useAuth } from '@/src/hooks/useAuth';
 
 export function FeaturedGames() {
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated } = useAuth();
 
   const [games, setGames] = useState<IGame[]>([]);
   const [isCreateListModalOpen, setIsCreateListModalOpen] = useState(false);

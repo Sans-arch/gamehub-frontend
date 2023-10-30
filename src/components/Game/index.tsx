@@ -1,5 +1,5 @@
 import { Rating, Skeleton } from '@mui/material';
-import { useState, useContext, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 

@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { Backdrop, Modal } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
@@ -10,7 +10,7 @@ import { GameCoverImageSizes, IGame } from '../../types';
 
 import { GameCard } from './GameCard';
 import apiCaller from '@/src/services/api';
-import { AuthContext } from '@/src/contexts/AuthContext';
+import { useAuth } from '@/src/hooks/useAuth';
 
 interface CreateListModalProps {
   isCreateListModalOpen: boolean;
@@ -22,7 +22,7 @@ interface FormData {
 }
 
 export function CreateListModal({ isCreateListModalOpen, handleCreateListModal }: CreateListModalProps) {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
 
   const { register, handleSubmit } = useForm();
 

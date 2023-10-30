@@ -1,12 +1,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
-import { useContext } from 'react';
+
+import { useAuth } from '@/src/hooks/useAuth';
 
 import { Container, Dialog, LoginButton, LoginSidebar, RegisterButton, RegisterContainer } from './styles';
-
 import logo from '../../assets/logo/logo-white-removebg-preview.png';
-import { AuthContext } from '@/src/contexts/AuthContext';
 
 interface FormData {
   email: string;
@@ -15,10 +14,13 @@ interface FormData {
 
 export function LoginLayout() {
   const { register, handleSubmit } = useForm();
-  const { signIn } = useContext(AuthContext);
+  const { login } = useAuth();
 
   async function handleSignIn(data: FormData) {
-    await signIn(data.email, data.password);
+    await login({
+      login: data.email,
+      password: data.password,
+    });
   }
 
   return (

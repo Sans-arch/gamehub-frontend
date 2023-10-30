@@ -1,19 +1,17 @@
-import { useState, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { LuCircleEqual } from 'react-icons/lu';
 import { Box, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import MailIcon from '@mui/icons-material/Mail';
 
+import { useAuth } from '@/src/hooks/useAuth';
+
 import { Container, Logo, MainGame, Navbar, Searchbar, SignIn } from './styles';
 import gameHubLogo from '../../../assets/logo/logo-white-removebg-preview.png';
-import { AuthContext } from '@/src/contexts/AuthContext';
-import apiCaller from '@/src/services/api';
-import { parseCookies } from 'nookies';
 
 export function MainSlider() {
-  const { user, isAuthenticated, logout } = useContext(AuthContext);
-
+  const { user, isAuthenticated, logout } = useAuth();
   const [isDrawerOpened, setIsDrawerOpened] = useState(false);
 
   function toggleDrawer(open: boolean) {

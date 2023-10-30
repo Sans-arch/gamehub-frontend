@@ -1,6 +1,5 @@
 import type { AppProps } from 'next/app';
 import { Poppins, DM_Sans } from 'next/font/google';
-import { AuthProvider } from '../contexts/AuthContext';
 
 import '../styles/global.css';
 
@@ -23,9 +22,8 @@ export default function App({ Component, pageProps }: AppProps) {
           --font-dmsans: ${DMSans.style.fontFamily};
         }
       `}</style>
-      <AuthProvider>
-        <Component {...pageProps} />
-      </AuthProvider>
+
+      <Component {...pageProps} />
     </>
   );
 }

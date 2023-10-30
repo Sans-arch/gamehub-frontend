@@ -1,10 +1,5 @@
-import {
-  FaFacebookSquare,
-  FaInstagram,
-  FaTwitter,
-  FaYoutube,
-} from "react-icons/fa";
-import { Author, Container, PageLinks, SocialMedia } from "./styles";
+import { FaFacebookSquare, FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
+import { Author, Container, PageLinks, SocialMedia } from './styles';
 
 export function Footer() {
   return (

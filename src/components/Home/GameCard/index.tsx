@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { Container, Content } from './styles';
 import Image from 'next/image';
 
-interface GameCardProps {
+export interface GameCardProps {
   title: string;
   cover: {
     id: number;

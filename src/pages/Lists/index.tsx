@@ -2,7 +2,7 @@ import { Container, Navbar } from './styles';
 
 import gameHubLogo from '@assets/logo/logo-white-removebg-preview.png';
 
-export function ListsLayout() {
+export default function Lists() {
   return (
     <Container>
       <Navbar>

@@ -10,7 +10,7 @@ interface FormData {
   password: string;
 }
 
-export function LoginLayout() {
+export default function Login() {
   const { register, handleSubmit } = useForm();
   const { login } = useAuth();
 

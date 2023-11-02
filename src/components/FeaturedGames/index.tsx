@@ -8,35 +8,34 @@ import apiCaller from '../../../services/api';
 import { GameCard } from '../GameCard';
 import { CreateListModal } from '../CreateListModal';
 import { GameCoverImageSizes, IGame } from '../../types';
-import { useAuth } from '@/src/hooks/useAuth';
 
 export function FeaturedGames() {
   // const { isAuthenticated } = useAuth();
 
-  const [games, setGames] = useState<IGame[]>([]);
-  const [isCreateListModalOpen, setIsCreateListModalOpen] = useState(false);
+  // const [games, setGames] = useState<IGame[]>([]);
+  // const [isCreateListModalOpen, setIsCreateListModalOpen] = useState(false);
 
-  function handleCreateListModal(state: boolean) {
-    setIsCreateListModalOpen(state);
-  }
+  // function handleCreateListModal(state: boolean) {
+  //   setIsCreateListModalOpen(state);
+  // }
 
-  useEffect(() => {
-    apiCaller
-      .get('/games/most-popular')
-      .then(response => response.data)
-      .then(gamesList => {
-        const mappedGames = gamesList.map((game: IGame) => {
-          game.cover.url = game.cover.url.replace('//', 'https://');
-          game.cover.url = game.cover.url.replace('t_thumb', GameCoverImageSizes.FULL_HD);
+  // useEffect(() => {
+  //   apiCaller
+  //     .get('/games/most-popular')
+  //     .then(response => response.data)
+  //     .then(gamesList => {
+  //       const mappedGames = gamesList.map((game: IGame) => {
+  //         game.cover.url = game.cover.url.replace('//', 'https://');
+  //         game.cover.url = game.cover.url.replace('t_thumb', GameCoverImageSizes.FULL_HD);
 
-          return game;
-        });
+  //         return game;
+  //       });
 
-        return mappedGames;
-      })
-      .then(gamesList => setGames(gamesList))
-      .catch(error => console.log(error));
-  }, []);
+  //       return mappedGames;
+  //     })
+  //     .then(gamesList => setGames(gamesList))
+  //     .catch(error => console.log(error));
+  // }, []);
 
   return (
     <>
@@ -58,7 +57,7 @@ export function FeaturedGames() {
         </Title>
 
         <GamesContainer>
-          {!games.length && <CircularProgress />}
+          {/* {!games.length && <CircularProgress />}
 
           {games.map(game => {
             return (
@@ -72,7 +71,7 @@ export function FeaturedGames() {
                 rating={game.rating}
               />
             );
-          })}
+          })} */}
         </GamesContainer>
       </Container>
 

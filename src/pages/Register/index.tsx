@@ -6,7 +6,7 @@ import logo from '../../assets/logo/logo-white-removebg-preview.png';
 import apiCaller from '@/src/services/api';
 import { setCookie } from 'nookies';
 
-export function RegisterLayout() {
+export default function Register() {
   const { register, handleSubmit } = useForm();
 
   function handleSignIn(data: any) {

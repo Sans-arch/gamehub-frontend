@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import mainPoster from '../../../assets/poster/cyberpunk.jpg';
+import mainPoster from '@assets/poster/cyberpunk.jpg';
 
 export const Container = styled.div`
   position: relative;

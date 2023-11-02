@@ -6,7 +6,7 @@ import { Button } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import { Container, Form, GameList } from './styles';
-import { GameCoverImageSizes, IGame } from '../../types';
+import { GameCoverImageSizes, IGame } from '../types';
 
 import { GameCard } from './GameCard';
 import apiCaller from '@/src/services/api';

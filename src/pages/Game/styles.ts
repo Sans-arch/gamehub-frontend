@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
@@ -27,6 +27,11 @@ export const CardContainer = styled.div`
 export const GameImage = styled.div`
   height: 100%;
   overflow: hidden;
+  text-align: center;
+
+  img {
+    object-fit: initial;
+  }
 `;
 
 export const GameInformation = styled.div`

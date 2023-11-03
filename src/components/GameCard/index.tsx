@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Container, Content } from './styles';
 
 export interface GameCardProps {
@@ -16,13 +17,15 @@ export interface GameCardProps {
 }
 
 export function GameCard({ title, cover, originInfo, genres, slug }: GameCardProps) {
+  const navigate = useNavigate();
+
   function handleClick() {
-    // router.push(`/games/${slug}`);
+    navigate(`/game/${slug}`);
   }
 
   return (
     <Container onClick={handleClick}>
-      {/* <Image
+      <img
         src={cover.url}
         alt={title}
         width={700}
@@ -30,7 +33,7 @@ export function GameCard({ title, cover, originInfo, genres, slug }: GameCardPro
         style={{
           objectFit: 'cover',
         }}
-      /> */}
+      />
       <Content>
         <span>{originInfo}</span>
         <p>{title}</p>

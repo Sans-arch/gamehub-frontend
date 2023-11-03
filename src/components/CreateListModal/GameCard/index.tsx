@@ -1,5 +1,4 @@
 import { Container, Content } from './styles';
-import { AiFillCheckCircle } from 'react-icons/ai';
 
 interface GameCardProps {
   title: string;
@@ -21,7 +20,7 @@ interface GameCardProps {
 export function GameCard({ title, cover, slug, isSelected, handleSelectGame }: GameCardProps) {
   return (
     <Container isSelected={isSelected} onClick={() => handleSelectGame(slug)}>
-      {/* <Image
+      <img
         src={cover.url}
         alt={title}
         width={700}
@@ -29,7 +28,7 @@ export function GameCard({ title, cover, slug, isSelected, handleSelectGame }: G
         style={{
           objectFit: 'cover',
         }}
-      /> */}
+      />
       <Content>
         <p>{title}</p>
       </Content>

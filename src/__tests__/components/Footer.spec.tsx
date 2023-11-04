@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { Footer } from '.';
+import { Footer } from '@components/Footer';
 
 describe('Footer test suite', () => {
   it('should be rendered correctly', () => {

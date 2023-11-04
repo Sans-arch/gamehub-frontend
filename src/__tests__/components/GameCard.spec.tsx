@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { GameCard, GameCardProps } from '.';
+import { GameCard, GameCardProps } from '@components/GameCard';
 
 describe('GameCard test suite', () => {
   it('should render GameCard correctly with all props passed', () => {

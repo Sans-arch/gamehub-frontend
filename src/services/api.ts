@@ -1,14 +1,7 @@
 import axios from 'axios';
-import { parseCookies } from 'nookies';
 
-const { 'gamehub-token': token } = parseCookies();
-
-const apiCaller = axios.create({
-  baseURL: 'http://localhost:3003/api',
+export const apiCaller = axios.create({
+  baseURL: import.meta.env.VITE_BACKEND_API,
 });
-
-if (token) {
-  apiCaller.defaults.headers['Authorization'] = `Bearer ${token}`;
-}
 
 export default apiCaller;

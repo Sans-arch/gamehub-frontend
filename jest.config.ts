@@ -1,42 +1,18 @@
-import nextJest from 'next/jest';
-import type { Config } from '@jest/types';
+import type { Config } from 'jest';
 
-const baseDir = '<rootDir>/src/app';
-const baseTestDir = '<rootDir>/src/tests';
+const config: Config = {
+    preset: 'ts-jest',
+    testEnvironment: 'jest-environment-jsdom',
+    setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
+    testPathIgnorePatterns: ['<rootDir>/node_modules', '<rootDir>/dist'],
+    transform: {
+        // process `*.tsx` files with `ts-jest`
+        "^.+\\.tsx?$": "ts-jest"
+    },
+    moduleNameMapper: {
+        '\\.(gif|ttf|eot|svg|png)$': '<rootDir>/test/__ mocks __/fileMock.js',
+    },
+    verbose: true,
+};
 
-const createJestConfig = nextJest({
-  // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
-  dir: './',
-});
-
-const config: Config.InitialOptions = {
-  preset: 'ts-jest',
-  testEnvironment: 'jest-environment-jsdom',
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
-  verbose: true,
-  // collectCoverage: true,
-  // collectCoverageFrom: [`${baseDir}/**/*.ts`],
-  // testMatch: [`${baseTestDir}/**/*.ts`],
-  // testPathIgnorePatterns: [
-  //   "/node_modules/",
-  //   `${baseDir}/@types`,
-  //   `${baseDir}/repositories/prisma.ts`,
-  //   `${baseDir}/services/external`,
-  //   `${baseDir}/routes`,
-  //   `${baseDir}/controllers`,
-  //   `${baseDir}/middlewares`,
-  //   `${baseDir}/auth`,
-  // ],
-  // coveragePathIgnorePatterns: [
-  //   "/node_modules/",
-  //   `${baseDir}/@types`,
-  //   `${baseDir}/repositories/prisma.ts`,
-  //   `${baseDir}/services/external`,
-  //   `${baseDir}/routes`,
-  //   `${baseDir}/controllers`,
-  //   `${baseDir}/middlewares`,
-  //   `${baseDir}/auth`,
-  // ]
-}
-
-export default createJestConfig(config);
+export default config;

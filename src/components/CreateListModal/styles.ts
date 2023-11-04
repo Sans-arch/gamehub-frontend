@@ -5,7 +5,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
 
-  font-family: var(--font-poppins);
+  font-family: 'Poppins', sans-serif;
   position: absolute;
   top: 50%;
   left: 50%;

@@ -8,7 +8,7 @@ export const Container = styled.div`
   width: 100vw;
   background-color: #111111;
   color: #f5f5f5;
-  font-family: var(--font-poppins);
+  font-family: 'Poppins', sans-serif;
 
   h1 {
     font-weight: 500;

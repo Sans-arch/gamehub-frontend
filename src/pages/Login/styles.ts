@@ -14,7 +14,7 @@ export const Container = styled.div`
   .register-toast-alert {
     background-color: #4caf50;
     color: #f5f5f5;
-    font-family: var(--font-poppins);
+    font-family: 'Poppins', sans-serif;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
@@ -27,7 +27,7 @@ export const Container = styled.div`
   .register-toast-alert-error {
     background-color: #be3144;
     color: #f5f5f5;
-    font-family: var(--font-poppins);
+    font-family: 'Poppins', sans-serif;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
@@ -78,7 +78,7 @@ export const LoginSidebar = styled.div`
 
   h1 {
     color: #fff;
-    font-family: var(--font-poppins);
+    font-family: 'Poppins', sans-serif;
     font-size: 24px;
     font-style: normal;
     font-weight: 700;
@@ -87,7 +87,7 @@ export const LoginSidebar = styled.div`
 
   p {
     color: #fff;
-    font-family: var(--font-poppins);
+    font-family: 'Poppins', sans-serif;
     font-size: 13px;
     font-style: normal;
     font-weight: 500;
@@ -98,7 +98,7 @@ export const LoginSidebar = styled.div`
 
 export const LoginButton = styled.button`
   color: #fff;
-  font-family: var(--font-poppins);
+  font-family: 'Poppins', sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 800;
@@ -142,7 +142,7 @@ export const RegisterContainer = styled.div`
     color: #dc3157;
     color: #f5f5f5;
     text-align: center;
-    font-family: var(--font-poppins);
+    font-family: 'Poppins', sans-serif;
     font-size: 24px;
     font-style: normal;
     font-weight: 700;
@@ -161,7 +161,7 @@ export const RegisterContainer = styled.div`
     a {
       font-size: 14px;
       color: #f0f0f0;
-      font-family: var(--font-poppins);
+      font-family: 'Poppins', sans-serif;
       text-decoration: none;
 
       & {
@@ -176,7 +176,7 @@ export const RegisterContainer = styled.div`
       padding: 20px;
       border-radius: 12px;
 
-      font-family: var(--font-poppins);
+      font-family: 'Poppins', sans-serif;
       font-size: 14px;
       font-style: normal;
       font-weight: 500;
@@ -191,7 +191,7 @@ export const RegisterContainer = styled.div`
 
 export const RegisterButton = styled.button`
   color: #fff;
-  font-family: var(--font-poppins);
+  font-family: 'Poppins', sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 800;

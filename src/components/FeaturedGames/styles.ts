@@ -26,7 +26,7 @@ export const Title = styled.div`
 
   h2 {
     color: #f5f5f5;
-    font-family: var(--font-dmsans);
+    font-family: 'DM Sans', sans-serif;
     font-size: 36px;
     font-style: normal;
     font-weight: 700;

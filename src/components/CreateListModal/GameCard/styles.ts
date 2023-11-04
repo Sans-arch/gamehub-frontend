@@ -38,7 +38,7 @@ export const Content = styled.div`
   gap: 12px;
   width: 100%;
   margin-top: 12px;
-  font-family: var(--font-poppins);
+  font-family: 'Poppins', sans-serif;
 
   p {
     text-align: center;

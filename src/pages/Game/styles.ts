@@ -40,7 +40,7 @@ export const GameInformation = styled.div`
   align-items: center;
   height: 80%;
   color: #f5f5f5;
-  font-family: var(--font-poppins);
+  font-family: 'Poppins', sans-serif;
 
   h1 {
     margin-bottom: 0;

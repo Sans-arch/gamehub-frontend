@@ -5,7 +5,7 @@ import { CardContainer, Container, GameImage, GameInformation } from './styles';
 
 import apiCaller from '@/src/services/api';
 import { GameCoverImageSizes } from '@components/types';
-import { useLoaderData } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 interface GameInfo {
   id: number;
@@ -22,13 +22,8 @@ interface GameInfo {
   summary: string;
 }
 
-export async function loader({ params }: any) {
-  console.log(params);
-  return params;
-}
-
 export default function Game() {
-  const { slug } = useLoaderData() as any;
+  const { slug } = useParams();
 
   const [gameInfo, setGameInfo] = useState<GameInfo | null>(null);
   const [ratingValue, setRatingValue] = useState(0);

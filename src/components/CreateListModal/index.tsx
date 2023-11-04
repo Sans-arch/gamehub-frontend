@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Backdrop, Modal } from '@mui/material';
-import { useForm } from 'react-hook-form';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -10,7 +10,7 @@ import { GameCoverImageSizes, IGame } from '../types';
 
 import { GameCard } from './GameCard';
 import apiCaller from '@/src/services/api';
-import { useAuth } from '@/src/hooks/useAuth';
+import { AuthContext } from '@/src/contexts/auth';
 
 interface CreateListModalProps {
   isCreateListModalOpen: boolean;
@@ -22,31 +22,37 @@ interface FormData {
 }
 
 export function CreateListModal({ isCreateListModalOpen, handleCreateListModal }: CreateListModalProps) {
-  // const { user } = useAuth();
-
+  const { user } = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
 
   const [games, setGames] = useState<IGame[]>([]);
   const [selectedGames, setSelectedGames] = useState<IGame[]>([]);
 
-  async function handleCreateCustomList(data: any) {
-    const { name } = data;
+  const handleCreateCustomList: SubmitHandler<FieldValues> = async data => {
+    const { name } = data as FormData;
 
-    // const payload = {
-    //   userEmail: user.email,
-    //   description: name,
-    //   selectedGamesIds: selectedGames.map(game => game.id),
-    // };
+    if (!user) {
+      return;
+    }
 
-    // console.log(payload);
+    const token = localStorage.getItem('@Auth:token');
 
-    // apiCaller
-    //   .post('/lists', payload)
-    //   .then(response => console.log(response))
-    //   .catch(error => console.log(error));
-  }
+    if (token) {
+      const parsed: string = JSON.parse(token);
+      apiCaller.defaults.headers.common.Authorization = `Bearer ${parsed}`;
+    }
 
-  console.log({ selectedGames });
+    const payload = {
+      userEmail: user.email,
+      description: name,
+      selectedGamesIds: selectedGames.map(game => game.id),
+    };
+
+    apiCaller
+      .post('/lists', payload)
+      .then(response => console.log(response))
+      .catch(error => console.log(error));
+  };
 
   function handleSelectGame(slug: string) {
     const gameAlreadySelected = selectedGames.some(selectedGame => selectedGame.slug === slug);
@@ -56,7 +62,10 @@ export function CreateListModal({ isCreateListModalOpen, handleCreateListModal }
     }
 
     const selectedGame = games.find(game => game.slug === slug);
-    // setSelectedGames(prevGames => [...prevGames, selectedGame]);
+
+    if (selectedGame) {
+      setSelectedGames(prevGames => [...prevGames, selectedGame]);
+    }
   }
 
   useEffect(() => {

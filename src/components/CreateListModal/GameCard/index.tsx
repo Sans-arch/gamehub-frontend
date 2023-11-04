@@ -19,7 +19,7 @@ interface GameCardProps {
 
 export function GameCard({ title, cover, slug, isSelected, handleSelectGame }: GameCardProps) {
   return (
-    <Container isSelected={isSelected} onClick={() => handleSelectGame(slug)}>
+    <Container onClick={() => handleSelectGame(slug)} $is-selected={isSelected}>
       <img
         src={cover.url}
         alt={title}

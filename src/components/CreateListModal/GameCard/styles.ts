@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 interface ContainerProps {
-  isSelected?: boolean;
+  '$is-selected': boolean;
 }
 
 export const Container = styled.div<ContainerProps>`
@@ -16,12 +16,11 @@ export const Container = styled.div<ContainerProps>`
   overflow: hidden;
   cursor: pointer;
 
-  opacity: ${props => props.isSelected && 0.1};
-
+  opacity: ${props => props['$is-selected'] && 0.1};
   transition: box-shadow 0.3s, transform 0.3s;
 
   &:hover {
-    box-shadow: ${props => !props.isSelected && '0 0 10px #be3144'};
+    box-shadow: ${props => props['$is-selected'] && '0 0 10px #be3144'};
     transform: scale(1.1);
     border-radius: 4px;
   }

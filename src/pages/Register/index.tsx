@@ -1,56 +1,58 @@
-import { setCookie } from 'nookies';
-import { Link } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+import { useContext } from 'react';
+import { Link, Navigate } from 'react-router-dom';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 
-import { Container, Dialog, LoginButton, LoginSidebar, RegisterButton, RegisterContainer } from './styles';
-
+import { AuthContext } from '@/src/contexts/auth';
+import { Box, Container, LoginButton, LoginSidebar, RegisterButton, RegisterContainer } from './styles';
 import logo from '../../assets/logo/logo-white-removebg-preview.png';
-import apiCaller from '@/src/services/api';
+
+type Inputs = {
+  name: string;
+  email: string;
+  password: string;
+};
 
 export default function Register() {
+  const { signUp, signed } = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
 
-  function handleSignIn(data) {
-    apiCaller
-      .post('/auth/register', {
-        name: data.name,
-        email: data.email,
-        password: data.password,
-      })
-      .then(response => {
-        const { token } = response.data;
-        setCookie(null, 'gamehub-token', token);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+  const handleSignUp: SubmitHandler<FieldValues> = async data => {
+    const { email, password } = data as Inputs;
+
+    if (email && password) {
+      await signUp(data.name, data.email, data.password);
+    }
+  };
+
+  if (signed) {
+    return <Navigate to="/" />;
+  } else {
+    return (
+      <Container>
+        <Box>
+          <LoginSidebar>
+            <Link to="/">
+              <img src={logo} alt="Logo" width={176} height={181} />
+            </Link>
+            <h1>Bem-vindo de volta!</h1>
+            <p>Acesse sua conta agora mesmo!</p>
+            <Link to="/login">
+              <LoginButton>Entrar</LoginButton>
+            </Link>
+          </LoginSidebar>
+
+          <RegisterContainer>
+            <h1>Crie sua conta</h1>
+
+            <form onSubmit={handleSubmit(handleSignUp)}>
+              <input {...register('name')} type="text" placeholder="Nome" />
+              <input {...register('email')} type="email" placeholder="Email" />
+              <input {...register('password')} type="password" placeholder="Senha" />
+              <RegisterButton type="submit">Cadastrar</RegisterButton>
+            </form>
+          </RegisterContainer>
+        </Box>
+      </Container>
+    );
   }
-
-  return (
-    <Container>
-      <Dialog>
-        <LoginSidebar>
-          <Link to="/">
-            <img src={logo} alt="Logo" width={176} height={181} />
-          </Link>
-          <h1>Bem-vindo de volta!</h1>
-          <p>Acesse sua conta agora mesmo!</p>
-          <Link to="/login">
-            <LoginButton>Entrar</LoginButton>
-          </Link>
-        </LoginSidebar>
-
-        <RegisterContainer>
-          <h1>Crie sua conta</h1>
-
-          <form onSubmit={handleSubmit(handleSignIn)}>
-            <input {...register('name')} type="text" placeholder="Nome" />
-            <input {...register('email')} type="email" placeholder="Email" />
-            <input {...register('password')} type="password" placeholder="Senha" />
-            <RegisterButton type="submit">Cadastrar</RegisterButton>
-          </form>
-        </RegisterContainer>
-      </Dialog>
-    </Container>
-  );
 }

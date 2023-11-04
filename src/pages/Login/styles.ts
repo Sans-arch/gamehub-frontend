@@ -6,36 +6,7 @@ export const Container = styled.div`
   height: 100vh;
   width: 100vw;
   display: flex;
-
-  .register-toast {
-    border-radius: 20px;
-  }
-
-  .register-toast-alert {
-    background-color: #4caf50;
-    color: #f5f5f5;
-    font-family: 'Poppins', sans-serif;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-
-    svg {
-      color: #f5f5f5;
-    }
-  }
-
-  .register-toast-alert-error {
-    background-color: #be3144;
-    color: #f5f5f5;
-    font-family: 'Poppins', sans-serif;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-
-    svg {
-      color: #f5f5f5;
-    }
-  }
+  /* border: 2px solid red; */
 
   &::before {
     content: '';
@@ -52,7 +23,7 @@ export const Container = styled.div`
   }
 `;
 
-export const Dialog = styled.div`
+export const Box = styled.div`
   display: flex;
   width: 50%;
   height: 70%;
@@ -69,12 +40,15 @@ export const Dialog = styled.div`
   }
 `;
 
-export const LoginSidebar = styled.div`
+export const RegisterSidebar = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #be3144;
-  padding: 64px;
-  width: 25%;
+  width: 50%;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 140px;
+
 
   h1 {
     color: #fff;
@@ -83,6 +57,8 @@ export const LoginSidebar = styled.div`
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+    text-align: center;
+    width: 80%;
   }
 
   p {
@@ -96,42 +72,10 @@ export const LoginSidebar = styled.div`
   }
 `;
 
-export const LoginButton = styled.button`
-  color: #fff;
-  font-family: 'Poppins', sans-serif;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 800;
-  line-height: normal;
-  width: 176px;
-  height: 48px;
-  border-radius: 30px;
-  border: 2px solid #fff;
-  background: rgba(217, 217, 217, 0);
-  margin-top: 43px;
-  cursor: pointer;
-  text-transform: uppercase;
-  transition: background-color 0.3s, transform 0.3s, border-color 0.3s;
-
-  &:hover {
-    background: #fff;
-    color: #333;
-    border-color: #fff;
-    transform: scale(1.05);
-  }
-
-  &:active {
-    background: #ccc;
-    border-color: #ccc;
-    transform: scale(0.95);
-  }
-`;
-
 export const RegisterContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
   background-color: #1c1e21;
   width: 100%;
 
@@ -188,6 +132,39 @@ export const RegisterContainer = styled.div`
     }
   }
 `;
+
+export const LoginButton = styled.button`
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  width: 176px;
+  height: 48px;
+  border-radius: 30px;
+  border: 2px solid #fff;
+  background: rgba(217, 217, 217, 0);
+  margin-top: 43px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background-color 0.3s, transform 0.3s, border-color 0.3s;
+
+  &:hover {
+    background: #fff;
+    color: #333;
+    border-color: #fff;
+    transform: scale(1.05);
+  }
+
+  &:active {
+    background: #ccc;
+    border-color: #ccc;
+    transform: scale(0.95);
+  }
+`;
+
+
 
 export const RegisterButton = styled.button`
   color: #fff;

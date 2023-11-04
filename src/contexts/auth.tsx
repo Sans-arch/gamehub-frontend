@@ -3,8 +3,8 @@ import apiCaller from '../services/api';
 import { Navigate } from 'react-router-dom';
 
 type User = {
-  email: string;
   id: number;
+  email: string;
   name: string;
 };
 
@@ -13,7 +13,13 @@ interface AuthContextProps {
   signed: boolean;
   signIn(email: string, password: string): Promise<void>;
   signOut(): JSX.Element;
+  signUp(name: string, email: string, password: string): Promise<void>;
 }
+
+type signUpResponse = {
+  user: User;
+  token: string;
+};
 
 export const AuthContext = createContext<AuthContextProps>({} as AuthContextProps);
 
@@ -48,5 +54,24 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
     return <Navigate to="/" />;
   };
 
-  return <AuthContext.Provider value={{ user, signed: !!user, signIn, signOut }}>{children}</AuthContext.Provider>;
+  const signUp = async (name: string, email: string, password: string) => {
+    const response = await apiCaller.post('/auth/register', { name, email, password });
+
+    if (response.data.error) {
+      alert(response.data.error);
+    } else {
+      const { user, token } = response.data as signUpResponse;
+
+      console.log(response.data);
+
+      setUser(user);
+      apiCaller.defaults.headers.common.Authorization = `Bearer ${token}`;
+      localStorage.setItem('@Auth:token', JSON.stringify(token));
+      localStorage.setItem('@Auth:user', JSON.stringify(user));
+    }
+  };
+
+  return (
+    <AuthContext.Provider value={{ user, signed: !!user, signIn, signOut, signUp }}>{children}</AuthContext.Provider>
+  );
 };

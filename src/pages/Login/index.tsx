@@ -1,28 +1,35 @@
 import { Link, Navigate } from 'react-router-dom';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 
-import { Container, Dialog, LoginButton, LoginSidebar, RegisterButton, RegisterContainer } from './styles';
+import { Container, Box, LoginButton, RegisterButton, RegisterContainer, RegisterSidebar } from './styles';
 import logo from '../../assets/logo/logo-white-removebg-preview.png';
 import { useContext } from 'react';
 import { AuthContext } from '@/src/contexts/auth';
+
+interface Inputs {
+  email: string;
+  password: string;
+}
 
 export default function Login() {
   const { register, handleSubmit } = useForm();
   const { signIn, signed } = useContext(AuthContext);
 
-  async function handleSignIn(data) {
-    if (data.email && data.password) {
+  const handleSignIn: SubmitHandler<FieldValues> = async data => {
+    const { email, password } = data as Inputs;
+
+    if (email && password) {
       await signIn(data.email, data.password);
     }
-  }
+  };
 
   if (signed) {
     return <Navigate to="/" />;
   } else {
     return (
       <Container>
-        <Dialog>
-          <LoginSidebar>
+        <Box>
+          <RegisterSidebar>
             <Link to="/">
               <img src={logo} alt="Logo" width={176} height={181} />
             </Link>
@@ -31,7 +38,7 @@ export default function Login() {
             <Link to="/register">
               <LoginButton>Cadastrar</LoginButton>
             </Link>
-          </LoginSidebar>
+          </RegisterSidebar>
 
           <RegisterContainer>
             <h1>Faça login</h1>
@@ -39,11 +46,10 @@ export default function Login() {
             <form onSubmit={handleSubmit(handleSignIn)}>
               <input {...register('email')} type="email" placeholder="Email" />
               <input {...register('password')} type="password" placeholder="Senha" />
-              <a href="">Esqueceu sua senha?</a>
               <RegisterButton type="submit">Entrar</RegisterButton>
             </form>
           </RegisterContainer>
-        </Dialog>
+        </Box>
       </Container>
     );
   }

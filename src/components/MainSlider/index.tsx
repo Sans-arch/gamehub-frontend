@@ -1,15 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { LuCircleEqual } from 'react-icons/lu';
 import { Box, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import MailIcon from '@mui/icons-material/Mail';
 
-import { useAuth } from '@/src/hooks/useAuth';
-
 import { Container, Logo, MainGame, Navbar, Searchbar, SignIn } from './styles';
-import gameHubLogo from '../../../assets/logo/logo-white-removebg-preview.png';
+import gameHubLogo from '@assets/logo/logo-white-removebg-preview.png';
+import { AuthContext } from '@/src/contexts/auth';
 
 export function MainSlider() {
-  // const { user, isAuthenticated, logout } = useAuth();
+  const { signed, signOut, user } = useContext(AuthContext);
   const [isDrawerOpened, setIsDrawerOpened] = useState(false);
 
   function toggleDrawer(open: boolean) {
@@ -25,13 +25,13 @@ export function MainSlider() {
     };
   }
 
-  // console.log({ isAuthenticated, user });
-
   return (
     <>
       <Container>
         <Navbar>
-          <Logo>{/* <Image src={gameHubLogo.src} alt="Logotipo" width={100} height={100} /> */}</Logo>
+          <Logo>
+            <img src={gameHubLogo} alt="Logotipo" width={100} height={100} />
+          </Logo>
 
           <Searchbar>
             <input type="text" placeholder="What do you want to play?" />
@@ -64,7 +64,7 @@ export function MainSlider() {
             onClick={toggleDrawer(false)}
             onKeyDown={toggleDrawer(false)}
           >
-            {/* {isAuthenticated && (
+            {signed && user && (
               <p
                 style={{
                   textAlign: 'center',
@@ -74,33 +74,50 @@ export function MainSlider() {
               >
                 Seja-bem vindo {user.name}
               </p>
-            )} */}
+            )}
 
             <List>
-              {/* {isAuthenticated && (
+              {signed && (
                 <ListItem disablePadding disableGutters sx={{ outline: 'none' }}>
-                  <ListItemButton onClick={logout}>
+                  <ListItemButton onClick={signOut}>
                     <ListItemIcon>{<MailIcon color="warning" />}</ListItemIcon>
                     <ListItemText primary={'Logout'} />
                   </ListItemButton>
                 </ListItem>
-              )} */}
-              {/* <Link href="/login" style={{ textDecoration: 'none', color: '#f5f5f5' }}>
-                <ListItem disablePadding>
-                  <ListItemButton>
-                    <ListItemIcon>{<MailIcon color="secondary" />}</ListItemIcon>
-                    <ListItemText primary={'Fazer Login'} />
-                  </ListItemButton>
-                </ListItem>
-              </Link>
-              <Link href="/register" style={{ textDecoration: 'none', color: '#f5f5f5' }}>
-                <ListItem disablePadding disableGutters sx={{ outline: 'none' }}>
-                  <ListItemButton>
-                    <ListItemIcon>{<MailIcon color="secondary" />}</ListItemIcon>
-                    <ListItemText primary={'Cadastrar-se'} />
-                  </ListItemButton>
-                </ListItem>
-              </Link> */}
+              )}
+
+              {!signed && (
+                <Link to="/login" style={{ textDecoration: 'none', color: '#f5f5f5' }}>
+                  <ListItem disablePadding>
+                    <ListItemButton>
+                      <ListItemIcon>{<MailIcon color="secondary" />}</ListItemIcon>
+                      <ListItemText primary={'Fazer Login'} />
+                    </ListItemButton>
+                  </ListItem>
+                </Link>
+              )}
+
+              {!signed && (
+                <Link to="/register" style={{ textDecoration: 'none', color: '#f5f5f5' }}>
+                  <ListItem disablePadding disableGutters sx={{ outline: 'none' }}>
+                    <ListItemButton>
+                      <ListItemIcon>{<MailIcon color="secondary" />}</ListItemIcon>
+                      <ListItemText primary={'Cadastrar-se'} />
+                    </ListItemButton>
+                  </ListItem>
+                </Link>
+              )}
+
+              {signed && (
+                <Link to="/lists" style={{ textDecoration: 'none', color: '#f5f5f5' }}>
+                  <ListItem disablePadding disableGutters sx={{ outline: 'none' }}>
+                    <ListItemButton>
+                      <ListItemIcon>{<MailIcon color="info" />}</ListItemIcon>
+                      <ListItemText primary={'Minhas listas'} />
+                    </ListItemButton>
+                  </ListItem>
+                </Link>
+              )}
             </List>
           </Box>
         </Drawer>

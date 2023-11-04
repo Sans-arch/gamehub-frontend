@@ -2,8 +2,14 @@ import { createContext, useState } from 'react';
 import apiCaller from '../services/api';
 import { Navigate } from 'react-router-dom';
 
+type User = {
+  email: string;
+  id: number;
+  name: string;
+};
+
 interface AuthContextProps {
-  user: string | null;
+  user: User | null;
   signed: boolean;
   signIn(email: string, password: string): Promise<void>;
   signOut(): JSX.Element;
@@ -12,7 +18,7 @@ interface AuthContextProps {
 export const AuthContext = createContext<AuthContextProps>({} as AuthContextProps);
 
 export const AuthProvider = ({ children }: { children: JSX.Element }) => {
-  const [user, setUser] = useState(() => {
+  const [user, setUser] = useState<User | null>(() => {
     const storageUser = localStorage.getItem('@Auth:user');
 
     if (storageUser) {

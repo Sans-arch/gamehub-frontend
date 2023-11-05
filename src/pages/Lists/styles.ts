@@ -9,6 +9,8 @@ export const Container = styled.div`
   background-color: #111111;
   color: #f5f5f5;
   font-family: 'Poppins', sans-serif;
+  overflow: auto;
+
 
   h1 {
     font-weight: 500;
@@ -34,10 +36,16 @@ export const Navbar = styled.nav`
 
 export const ListContainer = styled.main`
   display: flex;
-  flex-direction: row;
-  margin-top: 20px;
-  gap: 20px;
-  border: 2px solid blue;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  overflow-x: hidden;
+  gap: 200px;
+  margin-bottom: 40px;
+
+  /* border: 2px solid red; */
+  padding: 30px;
 `;
 
 export const ListCard = styled.div`

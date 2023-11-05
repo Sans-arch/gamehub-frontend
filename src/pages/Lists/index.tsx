@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, ListCard, ListContainer, Navbar } from './styles';
+import { Container, ListContainer, Navbar } from './styles';
 
 import gameHubLogo from '@assets/logo/logo-white-removebg-preview.png';
 import apiCaller from '@/src/services/api';
+import List from '@/src/components/List';
 
 interface ListFromResponse {
   id: number;
@@ -53,11 +54,7 @@ export default function Lists() {
 
       <ListContainer>
         {lists.map(list => {
-          return (
-            <ListCard>
-              <h3>{list.description}</h3>
-            </ListCard>
-          );
+          return <List key={list.id} description={list.description} gamesList={list.gamelist} />;
         })}
       </ListContainer>
     </Container>

@@ -17,7 +17,7 @@ export const Container = styled.div`
     background-image: url(${mainPoster});
     background-repeat: no-repeat;
     background-size: cover;
-    filter: brightness(50%);
+    filter: brightness(70%);
     position: absolute;
     top: 0;
     left: 0;
@@ -80,9 +80,10 @@ export const Searchbar = styled.div`
   }
 
   input:focus {
-    background-color: #fff;
+    background-color: #f5f5f5;
     color: #000;
     transform: scale(1.05);
+    border: 2px solid #323238;
   }
 
   input:not(:focus) {

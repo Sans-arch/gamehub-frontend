@@ -1,6 +1,8 @@
 import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { LuCircleEqual } from 'react-icons/lu';
+import { BiSolidLogIn } from 'react-icons/bi';
+import { AiOutlineUserAdd } from 'react-icons/ai';
 import { Box, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import MailIcon from '@mui/icons-material/Mail';
 
@@ -90,7 +92,7 @@ export function MainSlider() {
                 <Link to="/login" style={{ textDecoration: 'none', color: '#f5f5f5' }}>
                   <ListItem disablePadding>
                     <ListItemButton>
-                      <ListItemIcon>{<MailIcon color="secondary" />}</ListItemIcon>
+                      <ListItemIcon sx={{ color: '#f5f5f5', fontSize: '1.55rem' }}>{<BiSolidLogIn />}</ListItemIcon>
                       <ListItemText primary={'Fazer Login'} />
                     </ListItemButton>
                   </ListItem>
@@ -101,7 +103,7 @@ export function MainSlider() {
                 <Link to="/register" style={{ textDecoration: 'none', color: '#f5f5f5' }}>
                   <ListItem disablePadding disableGutters sx={{ outline: 'none' }}>
                     <ListItemButton>
-                      <ListItemIcon>{<MailIcon color="secondary" />}</ListItemIcon>
+                      <ListItemIcon sx={{ color: '#f5f5f5', fontSize: '1.55rem' }}>{<AiOutlineUserAdd />}</ListItemIcon>
                       <ListItemText primary={'Cadastrar-se'} />
                     </ListItemButton>
                   </ListItem>

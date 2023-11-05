@@ -20,9 +20,8 @@ export const Container = styled.div`
 `;
 
 export const Navbar = styled.nav`
-  height: 100px;
   width: 100%;
-  background: #be3144;
+  background: linear-gradient(180deg, rgba(211, 19, 19, 0.72) 0%, rgba(68, 12, 12, 0.05) 99.99%, rgba(217, 217, 217, 0.00) 100%);
 
   img {
     transition: filter 0.3s;
@@ -41,10 +40,8 @@ export const ListContainer = styled.main`
   width: 100%;
   overflow: auto;
   overflow-x: hidden;
-  gap: 200px;
+  gap: 100px;
   margin-bottom: 40px;
-
-  /* border: 2px solid red; */
   padding: 30px;
 `;
 

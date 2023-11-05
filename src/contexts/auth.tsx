@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
     } else {
       setUser(response.data.user);
       apiCaller.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
-      localStorage.setItem('@Auth:token', JSON.stringify(response.data.token));
+      localStorage.setItem('@Auth:token', response.data.token);
       localStorage.setItem('@Auth:user', JSON.stringify(response.data.user));
     }
   };

@@ -25,13 +25,6 @@ export default function Lists() {
   const [lists, setLists] = useState<ListFromResponse[]>([]);
 
   useEffect(() => {
-    const token = localStorage.getItem('@Auth:token');
-
-    if (token) {
-      const parsed: string = JSON.parse(token);
-      apiCaller.defaults.headers.common.Authorization = `Bearer ${parsed}`;
-    }
-
     const fetchLists = async () => {
       const response = await apiCaller.get('/lists');
       const lists = response.data as ListFromResponse[];
@@ -48,9 +41,9 @@ export default function Lists() {
         <Link to="/">
           <img src={gameHubLogo} alt="Logotipo" width={100} height={100} />
         </Link>
-      </Navbar>
 
-      <h1>Minhas listas</h1>
+        <h1>Minhas listas</h1>
+      </Navbar>
 
       <ListContainer>
         {lists.map(list => {

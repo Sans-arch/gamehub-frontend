@@ -16,7 +16,7 @@ export interface GameCardProps {
   slug: string;
 }
 
-export function GameCard({ title, cover, originInfo, genres, slug }: GameCardProps) {
+export function GameCard({ title, cover, originInfo, slug }: GameCardProps) {
   const navigate = useNavigate();
 
   function handleClick() {

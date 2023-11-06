@@ -71,7 +71,7 @@ export default function Game() {
             <Rating
               name="half-rating"
               value={ratingValue}
-              onChange={(event, newValue) => {
+              onChange={(_event, newValue) => {
                 setRatingValue(newValue ? newValue : 0);
               }}
               precision={0.5}

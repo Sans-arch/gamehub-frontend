@@ -1,4 +1,4 @@
-name: Continuous Integration
+name: Build React app
 
 on:
   push:

@@ -10,7 +10,7 @@ import { AuthContext } from '@/src/contexts/auth';
 
 const createUserFormSchema = z.object({
   email: z.string().nonempty('O e-mail é obrigatório').email('Formato de e-mail inválido').toLowerCase(),
-  password: z.string().min(6, 'A senha deve ter no mínimo 6 caracteres'),
+  password: z.string(),
 });
 
 type LoginUserFormData = z.infer<typeof createUserFormSchema>;

@@ -46,6 +46,8 @@ export default function Lists() {
       </Navbar>
 
       <ListContainer>
+        {!lists.length && <h2>Você não possui listas, crie algumas!</h2>}
+
         {lists.map(list => {
           return <List key={list.id} description={list.description} gamesList={list.gamelist} />;
         })}

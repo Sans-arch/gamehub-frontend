@@ -48,6 +48,10 @@ export const ListContainer = styled.main`
   gap: 100px;
   margin-bottom: 40px;
   padding: 30px;
+
+  h2 {
+    margin: auto;
+  }
 `;
 
 export const ListCard = styled.div`

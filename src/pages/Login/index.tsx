@@ -13,20 +13,20 @@ const createUserFormSchema = z.object({
   password: z.string().min(6, 'A senha deve ter no mínimo 6 caracteres'),
 });
 
-type CreateUserFormData = z.infer<typeof createUserFormSchema>;
+type LoginUserFormData = z.infer<typeof createUserFormSchema>;
 
 export default function Login() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<CreateUserFormData>({
+  } = useForm<LoginUserFormData>({
     resolver: zodResolver(createUserFormSchema),
   });
   const { signIn, signed } = useContext(AuthContext);
 
   const handleSignIn: SubmitHandler<FieldValues> = async data => {
-    const { email, password } = data as CreateUserFormData;
+    const { email, password } = data as LoginUserFormData;
 
     if (email && password) {
       await signIn(data.email, data.password);
@@ -64,7 +64,7 @@ export default function Login() {
                   {...register('password')}
                   type="password"
                   placeholder="Senha"
-                  className={errors.email && 'invalid'}
+                  className={errors.password && 'invalid'}
                 />
                 {errors.password && <span>{errors.password.message}</span>}
               </div>

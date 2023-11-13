@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
+import { MdDeleteForever } from 'react-icons/md';
 
-import { Container, GamesArea } from './styles';
+import { Container, GamesArea, ListDescription } from './styles';
 import apiCaller from '@/src/services/api';
 import { GameCard } from '../GameCard';
 import { GameCoverImageSizes } from '../types';
 import { CircularProgress } from '@mui/material';
+import { AiOutlineConsoleSql } from 'react-icons/ai';
 
 interface ListProps {
+  id: number;
   description: string;
   gamesList: {
     id: number;
@@ -35,39 +38,54 @@ interface GameFromAPI {
   summary: string;
 }
 
-export default function List({ description, gamesList }: ListProps) {
+export default function List({ id, description, gamesList }: ListProps) {
   const [games, setGames] = useState<GameFromAPI[]>([]);
 
-  useEffect(() => {
+  async function deleteList() {
+    await apiCaller.delete(`/lists/${id}`);
+
+    window.location.reload();
+  }
+
+  async function getGamesFromList(): Promise<GameFromAPI[]> {
     const igdb_ids = gamesList.map(game => game.game.id_igdb);
 
-    apiCaller
-      .get('/games/get-by-id', {
+    try {
+      const gamesFromList = await apiCaller.get('/games/get-by-id', {
         params: {
           ids: igdb_ids,
         },
-      })
-      .then(response => {
-        const parsed = response.data.map((arr: GameFromAPI[]) => {
-          const [game] = arr;
+      });
 
-          game.cover.url = game.cover.url.replace('//', 'https://');
-          game.cover.url = game.cover.url.replace('t_thumb', GameCoverImageSizes.FULL_HD);
+      const parsedGames = gamesFromList.data.map((arr: GameFromAPI[]) => {
+        const [game] = arr;
 
-          return game;
-        });
+        game.cover.url = game.cover.url.replace('//', 'https://');
+        game.cover.url = game.cover.url.replace('t_thumb', GameCoverImageSizes.FULL_HD);
 
-        setGames(parsed);
-      })
-      .catch(error => console.log(error));
+        return game;
+      });
+
+      return parsedGames;
+    } catch (error) {
+      throw new Error('Error while fetching games from list');
+    }
+  }
+
+  useEffect(() => {
+    getGamesFromList()
+      .then(games => setGames(games))
+      .catch(error => console.log(error.message));
   }, []);
-
-  console.log(description);
 
   return (
     <Container>
-      <h3>{description}</h3>
-
+      <ListDescription onClick={deleteList}>
+        <h3>{description}</h3>
+        <span>
+          <MdDeleteForever id="delete-icon" />
+        </span>
+      </ListDescription>
       <GamesArea>
         {games.length === 0 && (
           <CircularProgress

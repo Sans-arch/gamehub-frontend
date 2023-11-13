@@ -5,8 +5,9 @@ import { z } from 'zod';
 
 import { Container, Box, LoginButton, RegisterButton, RegisterContainer, RegisterSidebar, Form } from './styles';
 import logo from '../../assets/logo/logo-white-removebg-preview.png';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AuthContext } from '@/src/contexts/auth';
+import { NotificationSnackbar } from '@/src/components/NotificationSnackbar';
 
 const createUserFormSchema = z.object({
   email: z.string().nonempty('O e-mail é obrigatório').email('Formato de e-mail inválido').toLowerCase(),
@@ -24,14 +25,26 @@ export default function Login() {
     resolver: zodResolver(createUserFormSchema),
   });
   const { signIn, signed } = useContext(AuthContext);
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarmessage] = useState('');
 
   const handleSignIn: SubmitHandler<FieldValues> = async data => {
     const { email, password } = data as LoginUserFormData;
 
     if (email && password) {
-      await signIn(data.email, data.password);
+      try {
+        await signIn(data.email, data.password);
+      } catch (error) {
+        const { error: message } = error.response.data;
+        setSnackbarmessage(message);
+        setIsSnackbarOpen(true);
+      }
     }
   };
+
+  function handleClose() {
+    setIsSnackbarOpen(false);
+  }
 
   if (signed) {
     return <Navigate to="/" />;
@@ -72,6 +85,15 @@ export default function Login() {
             </Form>
           </RegisterContainer>
         </Box>
+
+        {isSnackbarOpen && (
+          <NotificationSnackbar
+            type="error"
+            message={snackbarMessage}
+            isSnackbarOpen={isSnackbarOpen}
+            handleClose={handleClose}
+          />
+        )}
       </Container>
     );
   }

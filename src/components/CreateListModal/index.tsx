@@ -1,16 +1,15 @@
 import { useContext, useEffect, useState } from 'react';
 import { Backdrop, Modal } from '@mui/material';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import TextField from '@mui/material/TextField';
-import { Button } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { Container, Form, GameList } from './styles';
+import { Container, Form, GameList, Input, Button } from './styles';
 import { GameCoverImageSizes, IGame } from '../types';
 
 import { GameCard } from './GameCard';
 import apiCaller from '@/src/services/api';
 import { AuthContext } from '@/src/contexts/auth';
+import { NotificationSnackbar } from '../NotificationSnackbar';
 
 interface CreateListModalProps {
   isCreateListModalOpen: boolean;
@@ -27,6 +26,7 @@ export function CreateListModal({ isCreateListModalOpen, handleCreateListModal }
 
   const [games, setGames] = useState<IGame[]>([]);
   const [selectedGames, setSelectedGames] = useState<IGame[]>([]);
+  const [isListCreated, setIsListCreated] = useState(false);
 
   const handleCreateCustomList: SubmitHandler<FieldValues> = async data => {
     const { name } = data as FormData;
@@ -38,8 +38,7 @@ export function CreateListModal({ isCreateListModalOpen, handleCreateListModal }
     const token = localStorage.getItem('@Auth:token');
 
     if (token) {
-      const parsed: string = JSON.parse(token);
-      apiCaller.defaults.headers.common.Authorization = `Bearer ${parsed}`;
+      apiCaller.defaults.headers.common.Authorization = `Bearer ${token}`;
     }
 
     const payload = {
@@ -50,7 +49,10 @@ export function CreateListModal({ isCreateListModalOpen, handleCreateListModal }
 
     apiCaller
       .post('/lists', payload)
-      .then(response => console.log(response))
+      .then(_response => {
+        setIsListCreated(true);
+        setSelectedGames([]);
+      })
       .catch(error => console.log(error));
   };
 
@@ -66,6 +68,10 @@ export function CreateListModal({ isCreateListModalOpen, handleCreateListModal }
     if (selectedGame) {
       setSelectedGames(prevGames => [...prevGames, selectedGame]);
     }
+  }
+
+  function handleCloseSnackbar() {
+    setIsListCreated(false);
   }
 
   useEffect(() => {
@@ -87,72 +93,74 @@ export function CreateListModal({ isCreateListModalOpen, handleCreateListModal }
   }, []);
 
   return (
-    <Modal
-      open={isCreateListModalOpen}
-      onClose={() => handleCreateListModal(false)}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-      slots={{
-        backdrop: Backdrop,
-      }}
-    >
-      <Container>
-        <h1>Crie sua lista</h1>
+    <>
+      <Modal
+        open={isCreateListModalOpen}
+        onClose={() => handleCreateListModal(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        slots={{
+          backdrop: Backdrop,
+        }}
+      >
+        <Container>
+          <h1>Crie sua lista</h1>
 
-        <Form onSubmit={handleSubmit(handleCreateCustomList)}>
-          <TextField
-            {...register('name')}
-            id="outlined-basic"
-            variant="outlined"
+          <Form onSubmit={handleSubmit(handleCreateCustomList)}>
+            <Input {...register('name')} type="text" placeholder="Nome da lista" />
+            <Button type="submit" disabled={selectedGames.length === 0}>
+              Criar
+            </Button>
+          </Form>
+
+          <Input
             type="text"
-            placeholder="Nome da lista"
+            placeholder="Buscar por jogo"
+            disabled={games.length == 0}
+            style={{
+              width: '80%',
+              marginBottom: '1.5rem',
+            }}
           />
-          <Button variant="contained" type="submit" disabled={selectedGames.length === 0}>
-            Criar
-          </Button>
-        </Form>
+          <GameList>
+            {games.length == 0 && (
+              <CircularProgress
+                color="secondary"
+                sx={{
+                  alignSelf: 'center',
+                }}
+                size={'4rem'}
+              />
+            )}
 
-        <TextField
-          id="outlined-basic"
-          variant="outlined"
-          type="text"
-          color="info"
-          placeholder="Buscar por jogo"
-          sx={{
-            width: '80%',
-          }}
-          disabled={games.length == 0}
+            {games &&
+              games.map(game => {
+                return (
+                  <GameCard
+                    key={game.slug}
+                    slug={game.slug}
+                    title={game.name}
+                    originInfo={game.name}
+                    cover={game.cover}
+                    genres={game.name}
+                    rating={game.rating}
+                    handleSelectGame={handleSelectGame}
+                    isSelected={!!selectedGames.find(selectedGame => selectedGame.slug === game.slug)}
+                  />
+                );
+              })}
+          </GameList>
+        </Container>
+      </Modal>
+
+      {isListCreated && (
+        <NotificationSnackbar
+          type="success"
+          message="Lista criada com sucesso"
+          handleClose={handleCloseSnackbar}
+          isSnackbarOpen={isListCreated}
         />
-
-        <GameList>
-          {games.length == 0 && (
-            <CircularProgress
-              color="secondary"
-              sx={{
-                alignSelf: 'center',
-              }}
-              size={'4rem'}
-            />
-          )}
-
-          {games &&
-            games.map(game => {
-              return (
-                <GameCard
-                  key={game.slug}
-                  slug={game.slug}
-                  title={game.name}
-                  originInfo={game.name}
-                  cover={game.cover}
-                  genres={game.name}
-                  rating={game.rating}
-                  handleSelectGame={handleSelectGame}
-                  isSelected={!!selectedGames.find(selectedGame => selectedGame.slug === game.slug)}
-                />
-              );
-            })}
-        </GameList>
-      </Container>
-    </Modal>
+      )}
+    </>
   );
 }

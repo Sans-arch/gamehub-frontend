@@ -15,21 +15,20 @@ export const Container = styled.div`
   background-color: #101418;
   border-radius: 15px;
   padding: 12px;
+
+  h1 {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    font-weight: 500;
+  }
 `;
 
 export const Form = styled.form`
   display: flex;
-  gap: 10px;
+  justify-content: center;
+  gap: 20px;
   margin-bottom: 2rem;
-
-  label {
-    color: #fff;
-  }
-
-  input {
-    width: 100%;
-    color: #fff;
-  }
+  width: 100%;
 `;
 
 export const GameList = styled.div`
@@ -42,4 +41,40 @@ export const GameList = styled.div`
   padding: 20px;
   margin-bottom: 20px;
   overflow: auto;
+`;
+
+export const Input = styled.input`
+  width: 50%;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: #f5f5f5;
+  outline: 2px solid ;
+  border-radius: 4px;
+  padding: 12px;
+  outline: 2px solid #1F2937;
+  
+  &:focus {
+    outline: 2px solid #1D4ED8;
+  }
+`;
+
+export const Button = styled.button`
+  background-color: #1D4ED8;
+  padding: 14px 20px;
+  color: #f5f5f5;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-transform: uppercase;
+
+  &:not(:disabled):hover {
+    background-color: #2563EB;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
 `;

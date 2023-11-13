@@ -49,7 +49,7 @@ export default function Lists() {
         {!lists.length && <h2>Você não possui listas, crie algumas!</h2>}
 
         {lists.map(list => {
-          return <List key={list.id} description={list.description} gamesList={list.gamelist} />;
+          return <List key={list.id} id={list.id} description={list.description} gamesList={list.gamelist} />;
         })}
       </ListContainer>
     </Container>

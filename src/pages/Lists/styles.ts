@@ -14,7 +14,6 @@ export const Container = styled.div`
 
   h1 {
     font-weight: 700;
-    margin-top: 20px;
     padding-bottom: 30px;
     text-align: center;
     font-family: 'DM Sans', sans-serif;

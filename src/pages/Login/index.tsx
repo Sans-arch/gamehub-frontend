@@ -1,27 +1,55 @@
 import { Link, Navigate } from 'react-router-dom';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 
-import { Container, Box, LoginButton, RegisterButton, RegisterContainer, RegisterSidebar } from './styles';
+import { Container, Box, LoginButton, RegisterButton, RegisterContainer, RegisterSidebar, Form } from './styles';
 import logo from '../../assets/logo/logo-white-removebg-preview.png';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AuthContext } from '@/src/contexts/auth';
+import { NotificationSnackbar } from '@/src/components/NotificationSnackbar';
+import { AxiosError } from 'axios';
 
-interface Inputs {
-  email: string;
-  password: string;
-}
+const createUserFormSchema = z.object({
+  email: z.string().nonempty('O e-mail é obrigatório').email('Formato de e-mail inválido').toLowerCase(),
+  password: z.string(),
+});
+
+type LoginUserFormData = z.infer<typeof createUserFormSchema>;
 
 export default function Login() {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginUserFormData>({
+    resolver: zodResolver(createUserFormSchema),
+  });
   const { signIn, signed } = useContext(AuthContext);
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarmessage] = useState('');
 
   const handleSignIn: SubmitHandler<FieldValues> = async data => {
-    const { email, password } = data as Inputs;
+    const { email, password } = data as LoginUserFormData;
 
     if (email && password) {
-      await signIn(data.email, data.password);
+      try {
+        await signIn(data.email, data.password);
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          if (error.response) {
+            const { error: message } = error.response.data;
+            setSnackbarmessage(message);
+            setIsSnackbarOpen(true);
+          }
+        }
+      }
     }
   };
+
+  function handleClose() {
+    setIsSnackbarOpen(false);
+  }
 
   if (signed) {
     return <Navigate to="/" />;
@@ -43,13 +71,34 @@ export default function Login() {
           <RegisterContainer>
             <h1>Faça login</h1>
 
-            <form onSubmit={handleSubmit(handleSignIn)}>
-              <input {...register('email')} type="email" placeholder="Email" />
-              <input {...register('password')} type="password" placeholder="Senha" />
+            <Form onSubmit={handleSubmit(handleSignIn)}>
+              <div>
+                <input {...register('email')} type="email" placeholder="Email" className={errors.email && 'invalid'} />
+                {errors.email && <span>{errors.email.message}</span>}
+              </div>
+
+              <div>
+                <input
+                  {...register('password')}
+                  type="password"
+                  placeholder="Senha"
+                  className={errors.password && 'invalid'}
+                />
+                {errors.password && <span>{errors.password.message}</span>}
+              </div>
               <RegisterButton type="submit">Entrar</RegisterButton>
-            </form>
+            </Form>
           </RegisterContainer>
         </Box>
+
+        {isSnackbarOpen && (
+          <NotificationSnackbar
+            type="error"
+            message={snackbarMessage}
+            isSnackbarOpen={isSnackbarOpen}
+            handleClose={handleClose}
+          />
+        )}
       </Container>
     );
   }

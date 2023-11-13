@@ -3,13 +3,6 @@ import styled from "styled-components";
 export const Container = styled.div`
     display: flex;
     flex-direction: column;
-
-    h3 {
-        font-size: 24px;
-        font-weight: 700;
-        margin-bottom: 20px;
-        font-family: 'Poppins', sans-serif;
-    }
 `;
 
 export const GamesArea = styled.div`
@@ -19,4 +12,23 @@ export const GamesArea = styled.div`
     gap: 100px;
     flex-wrap: wrap;
     box-sizing: border-box;
+`;
+
+export const ListDescription = styled.div`
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h3 {
+        font-size: 24px;
+        font-weight: 700;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    #delete-icon {
+        margin-left: 10px;
+        color: #F43F5E;
+        font-size: 20px;
+        cursor: pointer;
+    }
 `;

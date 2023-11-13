@@ -6,7 +6,6 @@ export const Container = styled.div`
   height: 100vh;
   width: 100vw;
   display: flex;
-  /* border: 2px solid red; */
 
   &::before {
     content: '';
@@ -48,7 +47,6 @@ export const RegisterSidebar = styled.div`
   justify-content: center;
   align-items: center;
   padding-bottom: 140px;
-
 
   h1 {
     color: #fff;
@@ -92,33 +90,31 @@ export const RegisterContainer = styled.div`
     font-weight: 700;
     line-height: normal;
   }
+`;
 
-  form {
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  height: 100%;
+  width: 100%;
+
+  div {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 28px;
-
-    height: 100%;
     width: 100%;
-
-    a {
-      font-size: 14px;
-      color: #f0f0f0;
-      font-family: 'Poppins', sans-serif;
-      text-decoration: none;
-
-      & {
-      }
-    }
+    box-sizing: border-box;
+    padding: 0 50px;
 
     input {
-      width: 70%;
       background-color: #f0f0f0;
       outline: none;
       border: none;
       padding: 20px;
       border-radius: 12px;
+      width: 100%;
 
       font-family: 'Poppins', sans-serif;
       font-size: 14px;
@@ -129,6 +125,20 @@ export const RegisterContainer = styled.div`
       &::placeholder {
         color: #9c9c9c;
       }
+    }
+
+    input:focus {
+      outline: 3px solid #8D8D99;
+    }
+
+    input.invalid {
+      outline: 3px solid red;
+    }
+
+    span {
+      font-size: 0.9rem;
+      margin-top: 0.75rem;
+      align-self: flex-start;
     }
   }
 `;
@@ -163,8 +173,6 @@ export const LoginButton = styled.button`
     transform: scale(0.95);
   }
 `;
-
-
 
 export const RegisterButton = styled.button`
   color: #fff;

@@ -14,7 +14,6 @@ export const Container = styled.div`
 
   h1 {
     font-weight: 700;
-    margin-top: 20px;
     padding-bottom: 30px;
     text-align: center;
     font-family: 'DM Sans', sans-serif;
@@ -48,6 +47,10 @@ export const ListContainer = styled.main`
   gap: 100px;
   margin-bottom: 40px;
   padding: 30px;
+
+  h2 {
+    margin: auto;
+  }
 `;
 
 export const ListCard = styled.div`

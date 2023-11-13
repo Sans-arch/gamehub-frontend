@@ -29,7 +29,6 @@ export const Box = styled.div`
   margin: auto;
   box-shadow: 5px 4px 10px 0px rgba(0, 0, 0, 0.25);
   border-radius: 30px;
-
   box-sizing: border-box;
   overflow: hidden;
 
@@ -76,10 +75,10 @@ export const RegisterContainer = styled.div`
   align-items: center;
   background-color: #1c1e21;
   width: 100%;
+  box-sizing: border-box;
 
   h1 {
-    margin: 0;
-    margin-top: 110px;
+    margin-top: 3rem;
     margin-bottom: 3.25rem;
     color: #dc3157;
     color: #f5f5f5;
@@ -90,23 +89,31 @@ export const RegisterContainer = styled.div`
     font-weight: 700;
     line-height: normal;
   }
+`;
 
-  form {
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  height: 100%;
+  width: 100%;
+
+  div {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 28px;
-
-    height: 100%;
     width: 100%;
+    box-sizing: border-box;
+    padding: 0 50px;
 
     input {
-      width: 70%;
       background-color: #f0f0f0;
       outline: none;
       border: none;
       padding: 20px;
       border-radius: 12px;
+      width: 100%;
 
       font-family: 'Poppins', sans-serif;
       font-size: 14px;
@@ -117,6 +124,20 @@ export const RegisterContainer = styled.div`
       &::placeholder {
         color: #9c9c9c;
       }
+    }
+
+    input:focus {
+      outline: 3px solid #8D8D99;
+    }
+
+    input.invalid {
+      outline: 3px solid red;
+    }
+
+    span {
+      font-size: 0.9rem;
+      margin-top: 0.75rem;
+      align-self: flex-start;
     }
   }
 `;
@@ -162,7 +183,7 @@ export const RegisterButton = styled.button`
   width: 144px;
   height: 48px;
   border: 2px solid #be3144;
-  margin-top: 43px;
+  margin-top: 1rem;
   cursor: pointer;
   text-transform: uppercase;
   border-radius: 30px;
@@ -170,7 +191,7 @@ export const RegisterButton = styled.button`
   padding: 10px;
   transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s, border-color 0.3s;
 
-  &:hover {
+  &:not(:disabled):hover {
     transform: scale(1.05);
     background: #ff5e6e;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -182,6 +203,19 @@ export const RegisterButton = styled.button`
     background: #a82e3c;
     border-color: #a82e3c;
     box-shadow: none;
+  }
+
+  &:disabled {
+    background: grey;
+    border: 0;
+    cursor: not-allowed;
+  }
+
+  &:disabled:hover {
+    transform: none;
+    background: grey;
+    box-shadow: none;
+    border-color: grey;
   }
 
   @media (max-width: 1400px) {

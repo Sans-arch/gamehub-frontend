@@ -3,60 +3,72 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
   height: 100vh;
   width: 100vw;
   box-sizing: border-box;
   background-color: #1c1e21;
 `;
 
-export const CardContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  background: #111111;
-  width: 75%;
-  height: 80%;
-  border-radius: 30px;
-  overflow: hidden;
-  box-sizing: border-box;
-  box-shadow: 12px 4px 5px 0px rgba(0, 0, 0, 0.25);
-`;
-
-export const GameImage = styled.div`
-  height: 100%;
-  overflow: hidden;
-  text-align: center;
+export const Navbar = styled.nav`
+  width: 100%;
+  background: linear-gradient(180deg, rgba(211, 19, 14, 0.62) 0%, rgba(68, 12, 12, 0.05) 99%, rgba(217, 217, 217, 0.00) 100%);
+  padding-bottom: 30px;
 
   img {
-    object-fit: initial;
+    margin-top: 20px;
+    margin-left: 30px;
+    transition: filter 0.3s;
+  }
+
+  img:hover {
+    filter: brightness(80%);
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 2.25rem;
+  }
+  span {
+    text-align: center;
+    font-size: 2.25rem;
   }
 `;
 
-export const GameInformation = styled.div`
+export const GameContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 80%;
-  color: #f5f5f5;
-  font-family: 'Poppins', sans-serif;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 50%;
+  margin-top: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+  gap: 50px;
+  /* border: 2px solid red; */
 
-  h1 {
-    margin-bottom: 0;
+  img {
+    width: 420px;
+    height: 520px;
+    object-fit: initial;
   }
 
   p {
-    font-size: 0.9rem;
-    text-align: center;
-    width: 90%;
-    margin: 0;
-    margin-top: 1.5rem;
-    margin-bottom: 2rem;
+    text-align: justify;
+    width: 100%;
   }
+`;
 
-  svg {
-    color: #f5f5f5;
-    font-size: 3rem;
+export const GameInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* border: 2px solid blue; */
+
+  .custom-rating {
+    margin-top: 2rem;
+
+    svg {
+      color: #f5f5f5;
+      font-size: 2.25rem;
+    }
   }
 `;

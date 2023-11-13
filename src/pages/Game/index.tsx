@@ -1,12 +1,33 @@
-import { useState, useEffect } from 'react';
+import { AxiosError } from 'axios';
+import { useState, useEffect, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Rating, Skeleton } from '@mui/material';
+import { Rating } from '@mui/material';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Container, GameContainer, GameInfo, Navbar } from './styles';
+import {
+  Container,
+  CreateReviewInput,
+  GameContainer,
+  GameInfo,
+  Navbar,
+  ReviewRatingForm,
+  ReviewsContainer,
+} from './styles';
 
 import apiCaller from '@/src/services/api';
 import { GameCoverImageSizes } from '@components/types';
 import gameHubLogo from '@assets/logo/logo-white-removebg-preview.png';
+import GameSkeleton from './Skeleton';
+import { Review } from '@/src/components/Review';
+import { AuthContext } from '@/src/contexts/auth';
+
+const createRatingSchema = z.object({
+  reviewDescription: z.string().nonempty('A descrição é obrigatória'),
+});
+
+type ReviewFormData = z.infer<typeof createRatingSchema>;
 
 interface GameInfo {
   id: number;
@@ -21,13 +42,59 @@ interface GameInfo {
   rating: number;
   slug: string;
   summary: string;
+  usersReviews: {
+    id: number;
+    rating: number;
+    description: string;
+    gameId: number;
+    userId: number;
+    createdAt: string;
+    user: {
+      id: number;
+      name: string;
+    };
+  }[];
 }
 
 export default function Game() {
   const { slug } = useParams();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ReviewFormData>({
+    resolver: zodResolver(createRatingSchema),
+  });
+  const { user, signed } = useContext(AuthContext);
 
   const [gameInfo, setGameInfo] = useState<GameInfo | null>(null);
   const [ratingValue, setRatingValue] = useState(0);
+  const [reviews, setReviews] = useState<GameInfo['usersReviews']>([]);
+
+  const handleCreateReview: SubmitHandler<FieldValues> = async data => {
+    const { reviewDescription } = data as ReviewFormData;
+
+    if (reviewDescription) {
+      try {
+        const { data } = await apiCaller.post('/games/create-review', {
+          gameId: gameInfo?.id,
+          userId: user?.id,
+          description: reviewDescription,
+          rating: ratingValue,
+        });
+
+        setReviews(prevState => [...prevState, data]);
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          if (error.response) {
+            const { error: message } = error.response.data;
+
+            console.log(errors);
+          }
+        }
+      }
+    }
+  };
 
   useEffect(() => {
     if (slug !== undefined) {
@@ -40,8 +107,10 @@ export default function Game() {
         .then(response => {
           response.data.cover.url = response.data.cover.url.replace('//', 'https://');
           response.data.cover.url = response.data.cover.url.replace('t_thumb', GameCoverImageSizes.FULL_HD);
+          response.data.rating = (response.data.rating / 100) * 5;
+
           setGameInfo(response.data);
-          setRatingValue((response.data.rating / 100) * 5);
+          setReviews(response.data.usersReviews);
         })
         .catch(error => {
           console.log(error);
@@ -67,28 +136,52 @@ export default function Game() {
             <GameInfo>
               <p>{gameInfo?.summary}</p>
 
-              <Rating
-                name="half-rating"
-                className="custom-rating"
-                value={ratingValue}
-                onChange={(_event, newValue) => {
-                  setRatingValue(newValue ? newValue : 0);
-                }}
-                precision={0.5}
-              />
+              <Rating name="half-rating" className="custom-rating" value={gameInfo.rating} precision={0.5} readOnly />
             </GameInfo>
           </>
         ) : (
-          <>
-            <Skeleton variant="rectangular" animation="wave" width={420} height={520} />
-
-            <GameInfo>
-              <Skeleton variant="text" animation="pulse" />
-              <Skeleton variant="rectangular" animation="pulse" />
-            </GameInfo>
-          </>
+          <GameSkeleton />
         )}
       </GameContainer>
+
+      {gameInfo && (
+        <ReviewsContainer>
+          {signed && (
+            <ReviewRatingForm onSubmit={handleSubmit(handleCreateReview)}>
+              <div>
+                <h3>Dê uma nota:</h3>
+                <Rating
+                  name="half-rating"
+                  className="custom-rating"
+                  value={ratingValue}
+                  onChange={(_event, newValue) => {
+                    setRatingValue(newValue ? newValue : 0);
+                  }}
+                  precision={0.5}
+                />
+              </div>
+              <CreateReviewInput {...register('reviewDescription')} type="text" placeholder="Escreva sua avaliação" />
+            </ReviewRatingForm>
+          )}
+
+          {!signed && reviews.length > 0 && <h3>Avaliações dos usuários:</h3>}
+
+          {reviews
+            .sort((a, b) => {
+              return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+            })
+            .map(review => (
+              <Review
+                key={review.id}
+                userId={review.user.id}
+                name={review.user.name}
+                content={review.description}
+                rating={review.rating}
+                createdAt={review.createdAt}
+              />
+            ))}
+        </ReviewsContainer>
+      )}
     </Container>
   );
 }

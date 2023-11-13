@@ -8,6 +8,7 @@ import logo from '../../assets/logo/logo-white-removebg-preview.png';
 import { useContext, useState } from 'react';
 import { AuthContext } from '@/src/contexts/auth';
 import { NotificationSnackbar } from '@/src/components/NotificationSnackbar';
+import { AxiosError } from 'axios';
 
 const createUserFormSchema = z.object({
   email: z.string().nonempty('O e-mail é obrigatório').email('Formato de e-mail inválido').toLowerCase(),
@@ -35,9 +36,13 @@ export default function Login() {
       try {
         await signIn(data.email, data.password);
       } catch (error) {
-        const { error: message } = error.response.data;
-        setSnackbarmessage(message);
-        setIsSnackbarOpen(true);
+        if (error instanceof AxiosError) {
+          if (error.response) {
+            const { error: message } = error.response.data;
+            setSnackbarmessage(message);
+            setIsSnackbarOpen(true);
+          }
+        }
       }
     }
   };

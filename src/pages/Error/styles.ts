@@ -9,4 +9,14 @@ export const Container = styled.div`
     align-items: center;
     justify-content: center;
     gap: 1rem;
+
+    img {
+      width: 200px;
+      height: 200px;
+      transition: filter 0.3s;
+    }
+
+    img:hover {
+      filter: brightness(70%);
+    }
 `;

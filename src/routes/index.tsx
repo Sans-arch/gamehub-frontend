@@ -5,6 +5,7 @@ import Lists from '../pages/Lists';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
 import Game from '../pages/Game';
+import ErrorPage from '../pages/Error';
 import { PrivateRoute } from './privateRoutes';
 
 export const AppRouter = () => {
@@ -18,6 +19,7 @@ export const AppRouter = () => {
         <Route path="/lists" element={<PrivateRoute />}>
           <Route path="/lists" element={<Lists />} />
         </Route>
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </Router>
   );

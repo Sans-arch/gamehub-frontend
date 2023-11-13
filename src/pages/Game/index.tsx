@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Rating, Skeleton } from '@mui/material';
+import { Rating } from '@mui/material';
 
-import { Container, GameContainer, GameInfo, Navbar } from './styles';
+import { Container, CreateReviewInput, GameContainer, GameInfo, Navbar, ReviewsContainer } from './styles';
 
 import apiCaller from '@/src/services/api';
 import { GameCoverImageSizes } from '@components/types';
 import gameHubLogo from '@assets/logo/logo-white-removebg-preview.png';
+import GameSkeleton from './Skeleton';
+import { Review } from '@/src/components/Review';
 
 interface GameInfo {
   id: number;
@@ -79,16 +81,15 @@ export default function Game() {
             </GameInfo>
           </>
         ) : (
-          <>
-            <Skeleton variant="rectangular" animation="wave" width={420} height={520} />
-
-            <GameInfo>
-              <Skeleton variant="text" animation="pulse" />
-              <Skeleton variant="rectangular" animation="pulse" />
-            </GameInfo>
-          </>
+          <GameSkeleton />
         )}
       </GameContainer>
+
+      <ReviewsContainer>
+        <CreateReviewInput type="text" placeholder="Escreva sua avaliação" />
+        <Review name="Santiago" content="Jogaço" />
+        <Review name="Matheus" content="Baita de uma experiência, sensacional!" />
+      </ReviewsContainer>
     </Container>
   );
 }

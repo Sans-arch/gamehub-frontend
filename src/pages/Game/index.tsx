@@ -65,7 +65,7 @@ export default function Game() {
   } = useForm<ReviewFormData>({
     resolver: zodResolver(createRatingSchema),
   });
-  const { user } = useContext(AuthContext);
+  const { user, signed } = useContext(AuthContext);
 
   const [gameInfo, setGameInfo] = useState<GameInfo | null>(null);
   const [ratingValue, setRatingValue] = useState(0);
@@ -144,38 +144,44 @@ export default function Game() {
         )}
       </GameContainer>
 
-      <ReviewsContainer>
-        <ReviewRatingForm onSubmit={handleSubmit(handleCreateReview)}>
-          <div>
-            <h3>Dê uma nota:</h3>
-            <Rating
-              name="half-rating"
-              className="custom-rating"
-              value={ratingValue}
-              onChange={(_event, newValue) => {
-                setRatingValue(newValue ? newValue : 0);
-              }}
-              precision={0.5}
-            />
-          </div>
-          <CreateReviewInput {...register('reviewDescription')} type="text" placeholder="Escreva sua avaliação" />
-        </ReviewRatingForm>
+      {gameInfo && (
+        <ReviewsContainer>
+          {signed && (
+            <ReviewRatingForm onSubmit={handleSubmit(handleCreateReview)}>
+              <div>
+                <h3>Dê uma nota:</h3>
+                <Rating
+                  name="half-rating"
+                  className="custom-rating"
+                  value={ratingValue}
+                  onChange={(_event, newValue) => {
+                    setRatingValue(newValue ? newValue : 0);
+                  }}
+                  precision={0.5}
+                />
+              </div>
+              <CreateReviewInput {...register('reviewDescription')} type="text" placeholder="Escreva sua avaliação" />
+            </ReviewRatingForm>
+          )}
 
-        {reviews
-          .sort((a, b) => {
-            return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-          })
-          .map(review => (
-            <Review
-              key={review.id}
-              userId={review.user.id}
-              name={review.user.name}
-              content={review.description}
-              rating={review.rating}
-              createdAt={review.createdAt}
-            />
-          ))}
-      </ReviewsContainer>
+          {!signed && reviews.length > 0 && <h3>Avaliações dos usuários:</h3>}
+
+          {reviews
+            .sort((a, b) => {
+              return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+            })
+            .map(review => (
+              <Review
+                key={review.id}
+                userId={review.user.id}
+                name={review.user.name}
+                content={review.description}
+                rating={review.rating}
+                createdAt={review.createdAt}
+              />
+            ))}
+        </ReviewsContainer>
+      )}
     </Container>
   );
 }

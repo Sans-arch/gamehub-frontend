@@ -1,5 +1,5 @@
 import { AxiosError } from 'axios';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Rating } from '@mui/material';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
@@ -21,6 +21,7 @@ import { GameCoverImageSizes } from '@components/types';
 import gameHubLogo from '@assets/logo/logo-white-removebg-preview.png';
 import GameSkeleton from './Skeleton';
 import { Review } from '@/src/components/Review';
+import { AuthContext } from '@/src/contexts/auth';
 
 const createRatingSchema = z.object({
   reviewDescription: z.string().nonempty('A descrição é obrigatória'),
@@ -41,6 +42,18 @@ interface GameInfo {
   rating: number;
   slug: string;
   summary: string;
+  usersReviews: {
+    id: number;
+    rating: number;
+    description: string;
+    gameId: number;
+    userId: number;
+    createdAt: string;
+    user: {
+      id: number;
+      name: string;
+    };
+  }[];
 }
 
 export default function Game() {
@@ -55,13 +68,19 @@ export default function Game() {
 
   const [gameInfo, setGameInfo] = useState<GameInfo | null>(null);
   const [ratingValue, setRatingValue] = useState(0);
+  const { user } = useContext(AuthContext);
 
-  const handleSignIn: SubmitHandler<FieldValues> = async data => {
+  const handleCreateReview: SubmitHandler<FieldValues> = async data => {
     const { reviewDescription } = data as ReviewFormData;
 
     if (reviewDescription) {
       try {
-        // await signIn(data.email, data.password);
+        const createdReview = await apiCaller.post('/games/create-review', {
+          gameId: gameInfo?.id,
+          userId: user?.id,
+          description: reviewDescription,
+          rating: ratingValue,
+        });
       } catch (error) {
         if (error instanceof AxiosError) {
           if (error.response) {
@@ -95,6 +114,8 @@ export default function Game() {
     }
   }, [slug]);
 
+  console.log(gameInfo);
+
   return (
     <Container>
       <Navbar>
@@ -122,7 +143,7 @@ export default function Game() {
       </GameContainer>
 
       <ReviewsContainer>
-        <ReviewRatingForm onSubmit={handleSubmit(handleSignIn)}>
+        <ReviewRatingForm onSubmit={handleSubmit(handleCreateReview)}>
           <div>
             <h3>Dê uma nota:</h3>
             <Rating
@@ -138,8 +159,15 @@ export default function Game() {
           <CreateReviewInput {...register('reviewDescription')} type="text" placeholder="Escreva sua avaliação" />
         </ReviewRatingForm>
 
-        {/* <Review name="Santiago" content="Jogaço" rating={5} />
-        <Review name="Matheus" content="Baita de uma experiência, sensacional!" rating={2.5} /> */}
+        {gameInfo?.usersReviews.map(review => (
+          <Review
+            key={review.id}
+            name={review.user.name}
+            content={review.description}
+            rating={review.rating}
+            createdAt={review.createdAt}
+          />
+        ))}
       </ReviewsContainer>
     </Container>
   );

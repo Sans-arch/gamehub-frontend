@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import { Rating, Skeleton } from '@mui/material';
 
-import { CardContainer, Container, GameImage, GameInformation } from './styles';
+import { Container, GameContainer, GameInfo, Navbar } from './styles';
 
 import apiCaller from '@/src/services/api';
 import { GameCoverImageSizes } from '@components/types';
-import { useParams } from 'react-router-dom';
+import gameHubLogo from '@assets/logo/logo-white-removebg-preview.png';
 
 interface GameInfo {
   id: number;
@@ -27,11 +28,6 @@ export default function Game() {
 
   const [gameInfo, setGameInfo] = useState<GameInfo | null>(null);
   const [ratingValue, setRatingValue] = useState(0);
-  const [isFlipped, setIsFlipped] = useState(false);
-
-  function handleFlip() {
-    setIsFlipped(!isFlipped);
-  }
 
   useEffect(() => {
     if (slug !== undefined) {
@@ -55,30 +51,44 @@ export default function Game() {
 
   return (
     <Container>
-      <CardContainer className={isFlipped ? 'flip' : ''} onClick={handleFlip}>
-        <GameImage>
-          {gameInfo ? (
-            <img src={gameInfo?.cover.url} alt={gameInfo?.slug} />
-          ) : (
-            <Skeleton variant="rectangular" width={570} height={544} />
-          )}
-        </GameImage>
-        <GameInformation>
-          <h1>{gameInfo?.name}</h1>
-          <p>{gameInfo?.summary}</p>
+      <Navbar>
+        <Link to="/">
+          <img src={gameHubLogo} alt="Logotipo" width={100} height={100} />
+        </Link>
 
-          {gameInfo && (
-            <Rating
-              name="half-rating"
-              value={ratingValue}
-              onChange={(_event, newValue) => {
-                setRatingValue(newValue ? newValue : 0);
-              }}
-              precision={0.5}
-            />
-          )}
-        </GameInformation>
-      </CardContainer>
+        <h1>{gameInfo?.name}</h1>
+      </Navbar>
+
+      <GameContainer>
+        {gameInfo ? (
+          <>
+            <img src={gameInfo?.cover.url} alt={gameInfo?.slug} />
+
+            <GameInfo>
+              <p>{gameInfo?.summary}</p>
+
+              <Rating
+                name="half-rating"
+                className="custom-rating"
+                value={ratingValue}
+                onChange={(_event, newValue) => {
+                  setRatingValue(newValue ? newValue : 0);
+                }}
+                precision={0.5}
+              />
+            </GameInfo>
+          </>
+        ) : (
+          <>
+            <Skeleton variant="rectangular" animation="wave" width={420} height={520} />
+
+            <GameInfo>
+              <Skeleton variant="text" animation="pulse" />
+              <Skeleton variant="rectangular" animation="pulse" />
+            </GameInfo>
+          </>
+        )}
+      </GameContainer>
     </Container>
   );
 }

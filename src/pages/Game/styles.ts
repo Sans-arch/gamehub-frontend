@@ -82,10 +82,27 @@ export const ReviewsContainer = styled.div`
   margin-left: auto;
   margin-right: auto;
   box-sizing: border-box;
-  margin-top: 2rem;
   gap: 30px;
+  margin-top: 3rem;
   margin-bottom: 3rem;
-  /* border: 2px solid red; */
+`;
+
+export const ReviewRatingForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+
+    svg {
+      color: #D31313;
+    }
+  }
+
 `;
 
 export const CreateReviewInput = styled.input`

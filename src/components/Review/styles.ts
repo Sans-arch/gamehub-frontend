@@ -8,6 +8,17 @@ export const ReviewContainer = styled.div`
 
   div {
     display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    
+    & > div {
+      display: flex;
+      
+      svg {
+        font-size: 1rem;
+      }
+    }
 
     h3 {
       font-size: 14px;
@@ -22,8 +33,7 @@ export const ReviewContainer = styled.div`
         font-weight: 700;
         line-height: 160%;
       }
-  }
-
+    }
   }
 
   span {

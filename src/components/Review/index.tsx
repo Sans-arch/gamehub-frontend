@@ -4,22 +4,19 @@ import { ReviewContainer } from './styles';
 interface ReviewProps {
   name: string;
   content: string;
+  rating: number;
 }
 
-export function Review({ name, content }: ReviewProps) {
+export function Review({ name, content, rating }: ReviewProps) {
   return (
     <ReviewContainer>
       <div>
-        <h3>
-          {/* {name} <strong>(você)</strong> */}
-          {name}
-
-          <Rating name="half-rating" className="custom-rating" value={2} precision={0.5} />
-        </h3>
+        <h3>{name}</h3>
+        <div>
+          <Rating name="half-rating" value={rating} precision={0.5} readOnly />
+        </div>
       </div>
-      {/* <span>Cerca de 2h</span> */}
 
-      {/* <p>Muito bom Devon, parabéns!! 👏👏</p> */}
       <p>{content}</p>
     </ReviewContainer>
   );

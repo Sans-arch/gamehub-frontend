@@ -65,22 +65,25 @@ export default function Game() {
   } = useForm<ReviewFormData>({
     resolver: zodResolver(createRatingSchema),
   });
+  const { user } = useContext(AuthContext);
 
   const [gameInfo, setGameInfo] = useState<GameInfo | null>(null);
   const [ratingValue, setRatingValue] = useState(0);
-  const { user } = useContext(AuthContext);
+  const [reviews, setReviews] = useState<GameInfo['usersReviews']>([]);
 
   const handleCreateReview: SubmitHandler<FieldValues> = async data => {
     const { reviewDescription } = data as ReviewFormData;
 
     if (reviewDescription) {
       try {
-        const createdReview = await apiCaller.post('/games/create-review', {
+        const { data } = await apiCaller.post('/games/create-review', {
           gameId: gameInfo?.id,
           userId: user?.id,
           description: reviewDescription,
           rating: ratingValue,
         });
+
+        setReviews(prevState => [...prevState, data]);
       } catch (error) {
         if (error instanceof AxiosError) {
           if (error.response) {
@@ -107,14 +110,13 @@ export default function Game() {
           response.data.rating = (response.data.rating / 100) * 5;
 
           setGameInfo(response.data);
+          setReviews(response.data.usersReviews);
         })
         .catch(error => {
           console.log(error);
         });
     }
   }, [slug]);
-
-  console.log(gameInfo);
 
   return (
     <Container>
@@ -159,15 +161,20 @@ export default function Game() {
           <CreateReviewInput {...register('reviewDescription')} type="text" placeholder="Escreva sua avaliação" />
         </ReviewRatingForm>
 
-        {gameInfo?.usersReviews.map(review => (
-          <Review
-            key={review.id}
-            name={review.user.name}
-            content={review.description}
-            rating={review.rating}
-            createdAt={review.createdAt}
-          />
-        ))}
+        {reviews
+          .sort((a, b) => {
+            return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+          })
+          .map(review => (
+            <Review
+              key={review.id}
+              userId={review.user.id}
+              name={review.user.name}
+              content={review.description}
+              rating={review.rating}
+              createdAt={review.createdAt}
+            />
+          ))}
       </ReviewsContainer>
     </Container>
   );

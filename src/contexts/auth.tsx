@@ -62,8 +62,6 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
     } else {
       const { user, token } = response.data as signUpResponse;
 
-      console.log(response.data);
-
       setUser(user);
       apiCaller.defaults.headers.common.Authorization = `Bearer ${token}`;
       localStorage.setItem('@Auth:token', JSON.stringify(token));

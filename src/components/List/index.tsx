@@ -6,7 +6,6 @@ import apiCaller from '@/src/services/api';
 import { GameCard } from '../GameCard';
 import { GameCoverImageSizes } from '../types';
 import { CircularProgress } from '@mui/material';
-import { AiOutlineConsoleSql } from 'react-icons/ai';
 
 interface ListProps {
   id: number;

@@ -6,9 +6,10 @@ import { AiOutlineUserAdd } from 'react-icons/ai';
 import { Box, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import MailIcon from '@mui/icons-material/Mail';
 
-import { Container, Logo, MainGame, Navbar, Searchbar, SignIn } from './styles';
+import { Container, Logo, MainGame, Navbar, SignIn } from './styles';
 import gameHubLogo from '@assets/logo/logo-white-removebg-preview.png';
 import { AuthContext } from '@/src/contexts/auth';
+import SearchBar from './Searchbar';
 
 export function MainSlider() {
   const { signed, signOut, user } = useContext(AuthContext);
@@ -35,9 +36,7 @@ export function MainSlider() {
             <img src={gameHubLogo} alt="Logotipo" width={100} height={100} />
           </Logo>
 
-          <Searchbar>
-            <input type="text" placeholder="What do you want to play?" />
-          </Searchbar>
+          <SearchBar />
 
           <SignIn onClick={toggleDrawer(true)}>
             <LuCircleEqual />

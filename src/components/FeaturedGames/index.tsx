@@ -51,10 +51,6 @@ export function FeaturedGames() {
 
         <Title>
           <h2>Featured Games</h2>
-          <p>
-            See more
-            <BsChevronRight />
-          </p>
         </Title>
 
         <GamesContainer>

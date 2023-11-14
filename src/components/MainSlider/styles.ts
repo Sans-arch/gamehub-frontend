@@ -58,7 +58,7 @@ export const Logo = styled.div`
   }
 `;
 
-export const Searchbar = styled.div`
+export const SearchbarContainer = styled.div`
   width: 50%;
 
   input {
@@ -66,7 +66,8 @@ export const Searchbar = styled.div`
     padding: 10px;
     outline: none;
     border: none;
-    border: 2px solid #d1d5db;
+    /* border: 2px solid #d1d5db; */
+    outline: 2px solid #d1d5db;
     border-radius: 6px;
     width: 100%;
     background: transparent;
@@ -80,10 +81,8 @@ export const Searchbar = styled.div`
   }
 
   input:focus {
-    background-color: #f5f5f5;
-    color: #000;
-    transform: scale(1.05);
-    border: 2px solid #323238;
+    background-color: #323238;
+    color: #f5f5f5;
   }
 
   input:not(:focus) {

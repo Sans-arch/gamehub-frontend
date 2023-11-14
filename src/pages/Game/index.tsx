@@ -87,8 +87,6 @@ export default function Game() {
       } catch (error) {
         if (error instanceof AxiosError) {
           if (error.response) {
-            const { error: message } = error.response.data;
-
             console.log(errors);
           }
         }

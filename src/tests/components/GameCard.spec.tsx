@@ -1,3 +1,4 @@
+import { expect, it, describe } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { GameCard, GameCardProps } from '@components/GameCard';
 

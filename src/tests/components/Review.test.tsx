@@ -36,7 +36,6 @@ describe('Review Test suite', () => {
     expect(nameHeading).toHaveTextContent(name);
   });
 
-  // Quando a avaliação do usuário publicada, for do usuário que tá logado, aí mostramos a tag ("você")
   it('should render the tag "(você)" when the logged user is the author of a review', () => {
     const content: string = 'Such a nice game, I love it!';
     const createdAt: string = '2021-10-10T00:00:00.000Z';

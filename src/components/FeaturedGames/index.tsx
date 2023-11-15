@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from 'react';
-import { BsChevronRight } from 'react-icons/bs';
 import { Container, CreateListContainer, GamesContainer, Title } from './styles';
 import { CircularProgress } from '@mui/material';
 import { Button } from '@mui/material';
@@ -40,7 +39,7 @@ export function FeaturedGames() {
 
   return (
     <>
-      <Container>
+      <Container datatest-id="featured-games-container">
         {signed && (
           <CreateListContainer>
             <Button variant="contained" onClick={() => handleCreateListModal(true)}>
@@ -72,7 +71,7 @@ export function FeaturedGames() {
         </GamesContainer>
       </Container>
 
-      {signed && isCreateListModalOpen && (
+      {signed && (
         <CreateListModal handleCreateListModal={handleCreateListModal} isCreateListModalOpen={isCreateListModalOpen} />
       )}
     </>

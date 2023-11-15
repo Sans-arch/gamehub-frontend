@@ -17,6 +17,7 @@ export function NotificationSnackbar({ isSnackbarOpen, handleClose, message, typ
       open={isSnackbarOpen}
       autoHideDuration={6000}
       onClose={handleClose}
+      data-testid="notification-snackbar"
     >
       <Alert onClose={handleClose} severity={type} sx={{ width: '100%' }}>
         {message}

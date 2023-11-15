@@ -24,7 +24,7 @@ export function GameCard({ title, cover, originInfo, slug }: GameCardProps) {
   }
 
   return (
-    <Container onClick={handleClick}>
+    <Container onClick={handleClick} data-testid="gamecard-container">
       <img
         src={cover.url}
         alt={title}

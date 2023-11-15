@@ -19,7 +19,7 @@ export function Review({ name, content, rating, userId, createdAt }: ReviewProps
   const relativeTime = formatDistanceToNow(parseISO(createdAt), { addSuffix: true, locale: ptBR });
 
   return (
-    <ReviewContainer>
+    <ReviewContainer data-testid="review-container">
       <div>
         <h3>
           {name} {user?.id === userId && <strong>(você)</strong>}

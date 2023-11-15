@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { NotificationSnackbar } from '../../components/NotificationSnackbar';
 import { AlertColor } from '@mui/material';
 
-describe('NotificationSnackbar Test suite', () => {
-  it('should render correctly', () => {
+describe.only('NotificationSnackbar Test suite', () => {
+  it('should render NotificationSnackbar component correctly', () => {
     const notificationType: AlertColor = 'success';
     const notificationMessage: string = 'Notification message displayed correctly.';
     let isSnackbarOpen: boolean = true;
@@ -13,7 +13,6 @@ describe('NotificationSnackbar Test suite', () => {
       isSnackbarOpen = false;
     };
 
-    // Render desired component
     render(
       <NotificationSnackbar
         handleClose={handleClose}
@@ -23,8 +22,11 @@ describe('NotificationSnackbar Test suite', () => {
       />
     );
 
-    // Find the element that we want to interact with our rendered component
+    const notificationSnackbarElement = screen.getByTestId('notification-snackbar');
+    const closeButtonElement = screen.getByRole('button', { name: /close/i });
 
-    expect(isSnackbarOpen).toBe(true);
+    expect(notificationSnackbarElement).toBeInTheDocument();
+    expect(notificationMessage).toBe(notificationSnackbarElement.textContent);
+    expect(closeButtonElement).toBeInTheDocument();
   });
 });

@@ -78,10 +78,10 @@ export default function List({ id, description, gamesList }: ListProps) {
   }, []);
 
   return (
-    <Container>
-      <ListDescription onClick={deleteList}>
+    <Container data-testid="list-container">
+      <ListDescription>
         <h3>{description}</h3>
-        <span>
+        <span onClick={deleteList} data-testid="delete-list-button">
           <MdDeleteForever id="delete-icon" />
         </span>
       </ListDescription>

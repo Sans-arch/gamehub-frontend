@@ -29,100 +29,98 @@ export function MainSlider() {
   }
 
   return (
-    <>
-      <Container>
-        <Navbar>
-          <Logo>
-            <img src={gameHubLogo} alt="Logotipo" width={100} height={100} />
-          </Logo>
+    <Container data-testid="main-slider-container">
+      <Navbar>
+        <Logo>
+          <img src={gameHubLogo} alt="Logotipo" width={100} height={100} />
+        </Logo>
 
-          <SearchBar />
+        <SearchBar />
 
-          <SignIn onClick={toggleDrawer(true)}>
-            <LuCircleEqual />
-          </SignIn>
-        </Navbar>
+        <SignIn onClick={toggleDrawer(true)}>
+          <LuCircleEqual />
+        </SignIn>
+      </Navbar>
 
-        <MainGame>
-          <h1>Cyberpunk 2077: Phantom Liberty</h1>
-          <p>
-            Phantom Liberty is a new spy-thriller expansion for the open-world action-adventure RPG Cyberpunk 2077. As
-            cyber-enhanced mercenary V, join secret agent Solomon Reed to unravel a web of shattered loyalties and
-            sinister political machinations.
-          </p>
-        </MainGame>
+      <MainGame>
+        <h1>Cyberpunk 2077: Phantom Liberty</h1>
+        <p>
+          Phantom Liberty is a new spy-thriller expansion for the open-world action-adventure RPG Cyberpunk 2077. As
+          cyber-enhanced mercenary V, join secret agent Solomon Reed to unravel a web of shattered loyalties and
+          sinister political machinations.
+        </p>
+      </MainGame>
 
-        <Drawer
-          sx={{ outline: 'none' }}
-          id="drawer-sidebar"
-          anchor={'right'}
-          open={isDrawerOpened}
-          onClose={toggleDrawer(false)}
+      <Drawer
+        sx={{ outline: 'none' }}
+        id="drawer-sidebar"
+        anchor={'right'}
+        open={isDrawerOpened}
+        onClose={toggleDrawer(false)}
+      >
+        <Box
+          sx={{ width: 250, height: '100%', backgroundColor: '#1c1e21', color: '#f5f5f5' }}
+          role="listbox"
+          onClick={toggleDrawer(false)}
+          onKeyDown={toggleDrawer(false)}
         >
-          <Box
-            sx={{ width: 250, height: '100%', backgroundColor: '#1c1e21', color: '#f5f5f5' }}
-            role="listbox"
-            onClick={toggleDrawer(false)}
-            onKeyDown={toggleDrawer(false)}
-          >
-            {signed && user && (
-              <p
-                style={{
-                  textAlign: 'center',
-                  fontSize: '1.3rem',
-                  marginTop: 20,
-                }}
-              >
-                Seja-bem vindo {user.name}
-              </p>
+          {signed && user && (
+            <p
+              style={{
+                textAlign: 'center',
+                fontSize: '1.3rem',
+                marginTop: 20,
+              }}
+            >
+              Seja-bem vindo {user.name}
+            </p>
+          )}
+
+          <List>
+            {signed && (
+              <ListItem disablePadding disableGutters sx={{ outline: 'none' }}>
+                <ListItemButton onClick={signOut}>
+                  <ListItemIcon>{<MailIcon color="warning" />}</ListItemIcon>
+                  <ListItemText primary={'Logout'} />
+                </ListItemButton>
+              </ListItem>
             )}
 
-            <List>
-              {signed && (
-                <ListItem disablePadding disableGutters sx={{ outline: 'none' }}>
-                  <ListItemButton onClick={signOut}>
-                    <ListItemIcon>{<MailIcon color="warning" />}</ListItemIcon>
-                    <ListItemText primary={'Logout'} />
+            {!signed && (
+              <Link to="/login" style={{ textDecoration: 'none', color: '#f5f5f5' }}>
+                <ListItem disablePadding>
+                  <ListItemButton>
+                    <ListItemIcon sx={{ color: '#f5f5f5', fontSize: '1.55rem' }}>{<BiSolidLogIn />}</ListItemIcon>
+                    <ListItemText primary={'Fazer Login'} />
                   </ListItemButton>
                 </ListItem>
-              )}
+              </Link>
+            )}
 
-              {!signed && (
-                <Link to="/login" style={{ textDecoration: 'none', color: '#f5f5f5' }}>
-                  <ListItem disablePadding>
-                    <ListItemButton>
-                      <ListItemIcon sx={{ color: '#f5f5f5', fontSize: '1.55rem' }}>{<BiSolidLogIn />}</ListItemIcon>
-                      <ListItemText primary={'Fazer Login'} />
-                    </ListItemButton>
-                  </ListItem>
-                </Link>
-              )}
+            {!signed && (
+              <Link to="/register" style={{ textDecoration: 'none', color: '#f5f5f5' }}>
+                <ListItem disablePadding disableGutters sx={{ outline: 'none' }}>
+                  <ListItemButton>
+                    <ListItemIcon sx={{ color: '#f5f5f5', fontSize: '1.55rem' }}>{<AiOutlineUserAdd />}</ListItemIcon>
+                    <ListItemText primary={'Cadastrar-se'} />
+                  </ListItemButton>
+                </ListItem>
+              </Link>
+            )}
 
-              {!signed && (
-                <Link to="/register" style={{ textDecoration: 'none', color: '#f5f5f5' }}>
-                  <ListItem disablePadding disableGutters sx={{ outline: 'none' }}>
-                    <ListItemButton>
-                      <ListItemIcon sx={{ color: '#f5f5f5', fontSize: '1.55rem' }}>{<AiOutlineUserAdd />}</ListItemIcon>
-                      <ListItemText primary={'Cadastrar-se'} />
-                    </ListItemButton>
-                  </ListItem>
-                </Link>
-              )}
-
-              {signed && (
-                <Link to="/lists" style={{ textDecoration: 'none', color: '#f5f5f5' }}>
-                  <ListItem disablePadding disableGutters sx={{ outline: 'none' }}>
-                    <ListItemButton>
-                      <ListItemIcon>{<MailIcon color="info" />}</ListItemIcon>
-                      <ListItemText primary={'Minhas listas'} />
-                    </ListItemButton>
-                  </ListItem>
-                </Link>
-              )}
-            </List>
-          </Box>
-        </Drawer>
-      </Container>
-    </>
+            {signed && (
+              <Link to="/lists" style={{ textDecoration: 'none', color: '#f5f5f5' }}>
+                <ListItem disablePadding disableGutters sx={{ outline: 'none' }}>
+                  <ListItemButton>
+                    <ListItemIcon>{<MailIcon color="info" />}</ListItemIcon>
+                    <ListItemText primary={'Minhas listas'} />
+                  </ListItemButton>
+                </ListItem>
+              </Link>
+            )}
+          </List>
+        </Box>
+      </Drawer>
+    </Container>
   );
 }

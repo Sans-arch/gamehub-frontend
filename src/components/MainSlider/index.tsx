@@ -16,7 +16,7 @@ export function MainSlider() {
   const [isDrawerOpened, setIsDrawerOpened] = useState(false);
 
   function toggleDrawer(open: boolean) {
-    return (event: React.KeyboardEvent | React.MouseEvent) => {
+    return (_event: React.KeyboardEvent | React.MouseEvent) => {
       setIsDrawerOpened(open);
     };
   }

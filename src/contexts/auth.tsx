@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, useMemo, useState } from 'react';
 import apiCaller from '../services/api';
 import { Navigate } from 'react-router-dom';
 
@@ -69,7 +69,9 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
     }
   };
 
-  return (
-    <AuthContext.Provider value={{ user, signed: !!user, signIn, signOut, signUp }}>{children}</AuthContext.Provider>
-  );
+  const authContextValue = useMemo(() => {
+    return { user, signed: !!user, signIn, signOut, signUp };
+  }, [user, signIn, signOut, signUp]);
+
+  return <AuthContext.Provider value={authContextValue}>{children}</AuthContext.Provider>;
 };

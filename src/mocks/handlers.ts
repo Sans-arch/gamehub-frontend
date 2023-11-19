@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw';
 
-const getMostPopularGames = http.get('http://localhost:3003/api/games/most-popular', ({ request }) => {
+const getMostPopularGames = http.get('http://localhost:3003/api/games/most-popular', () => {
   const mockedGames = [{
     "id": 1020,
     "cover": {
@@ -32,7 +32,7 @@ const getMostPopularGames = http.get('http://localhost:3003/api/games/most-popul
   return HttpResponse.json(mockedGames)
 });
 
-const getGameById = http.get('http://localhost:3003/api/games/get-by-id', ({ request }) => {
+const getGameById = http.get('http://localhost:3003/api/games/get-by-id', () => {
   return HttpResponse.json([
     [
       {
@@ -85,13 +85,19 @@ const getGameById = http.get('http://localhost:3003/api/games/get-by-id', ({ req
   ]);
 });
 
-//  DELETE http://localhost:3003/api/lists/1
-const deleteListById = http.delete('http://localhost:3003/api/lists/:id', ({ request }) => {
+const deleteListById = http.delete('http://localhost:3003/api/lists/:id', () => {
   return new HttpResponse(null, { status: 200 })
+});
+
+const createList = http.post('http://localhost:3003/api/lists', () => {
+  const mockedResponse = { "id": 6, "description": "Nova lista", "gameList": [{ "id": 5 }, { "id": 6 }] }
+
+  return HttpResponse.json(mockedResponse)
 });
 
 export const handlers = [
   getMostPopularGames,
   getGameById,
-  deleteListById
+  deleteListById,
+  createList
 ];

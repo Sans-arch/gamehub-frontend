@@ -99,6 +99,7 @@ export function CreateListModal({ isCreateListModalOpen, handleCreateListModal }
         onClose={() => handleCreateListModal(false)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        data-testid="create-list-modal"
         slots={{
           backdrop: Backdrop,
         }}
@@ -106,7 +107,7 @@ export function CreateListModal({ isCreateListModalOpen, handleCreateListModal }
         <Container>
           <h1>Crie sua lista</h1>
 
-          <Form onSubmit={handleSubmit(handleCreateCustomList)}>
+          <Form onSubmit={handleSubmit(handleCreateCustomList)} name="create-list-form">
             <Input {...register('name')} type="text" placeholder="Nome da lista" />
             <Button type="submit" disabled={selectedGames.length === 0}>
               Criar

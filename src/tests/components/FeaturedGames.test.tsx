@@ -1,5 +1,4 @@
 import { describe, it, expect } from 'vitest';
-import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { FeaturedGames } from '../../components/FeaturedGames';
 import { MemoryRouter, Navigate } from 'react-router-dom';

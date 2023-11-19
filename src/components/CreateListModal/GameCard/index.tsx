@@ -1,6 +1,6 @@
 import { Container, Content } from './styles';
 
-interface GameCardProps {
+export interface GameCardProps {
   title: string;
   cover: {
     id: number;
@@ -19,7 +19,7 @@ interface GameCardProps {
 
 export function GameCard({ title, cover, slug, isSelected, handleSelectGame }: GameCardProps) {
   return (
-    <Container onClick={() => handleSelectGame(slug)} $is-selected={isSelected}>
+    <Container onClick={() => handleSelectGame(slug)} $is-selected={isSelected} data-testid="gamecard-container">
       <img
         src={cover.url}
         alt={title}

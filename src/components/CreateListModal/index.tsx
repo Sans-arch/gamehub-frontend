@@ -134,22 +134,21 @@ export function CreateListModal({ isCreateListModalOpen, handleCreateListModal }
               />
             )}
 
-            {games &&
-              games.map(game => {
-                return (
-                  <GameCard
-                    key={game.slug}
-                    slug={game.slug}
-                    title={game.name}
-                    originInfo={game.name}
-                    cover={game.cover}
-                    genres={game.name}
-                    rating={game.rating}
-                    handleSelectGame={handleSelectGame}
-                    isSelected={!!selectedGames.find(selectedGame => selectedGame.slug === game.slug)}
-                  />
-                );
-              })}
+            {games?.map(game => {
+              return (
+                <GameCard
+                  key={game.slug}
+                  slug={game.slug}
+                  title={game.name}
+                  originInfo={game.name}
+                  cover={game.cover}
+                  genres={game.name}
+                  rating={game.rating}
+                  handleSelectGame={handleSelectGame}
+                  isSelected={!!selectedGames.find(selectedGame => selectedGame.slug === game.slug)}
+                />
+              );
+            })}
           </GameList>
         </Container>
       </Modal>

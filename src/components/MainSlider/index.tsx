@@ -17,13 +17,6 @@ export function MainSlider() {
 
   function toggleDrawer(open: boolean) {
     return (event: React.KeyboardEvent | React.MouseEvent) => {
-      if (
-        event.type === 'keydown' &&
-        ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')
-      ) {
-        return;
-      }
-
       setIsDrawerOpened(open);
     };
   }
@@ -37,7 +30,7 @@ export function MainSlider() {
 
         <SearchBar />
 
-        <SignIn onClick={toggleDrawer(true)}>
+        <SignIn onClick={toggleDrawer(true)} role="button">
           <LuCircleEqual />
         </SignIn>
       </Navbar>

@@ -153,7 +153,7 @@ export default function Game() {
                   className="custom-rating"
                   value={ratingValue}
                   onChange={(_event, newValue) => {
-                    setRatingValue(newValue ? newValue : 0);
+                    setRatingValue(Number(newValue));
                   }}
                   precision={0.5}
                 />

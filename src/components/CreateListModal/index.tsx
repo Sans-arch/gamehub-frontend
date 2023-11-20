@@ -12,8 +12,8 @@ import { AuthContext } from '@/src/contexts/auth';
 import { NotificationSnackbar } from '../NotificationSnackbar';
 
 interface CreateListModalProps {
-  isCreateListModalOpen: boolean;
-  handleCreateListModal: (state: boolean) => void;
+  readonly isCreateListModalOpen: boolean;
+  readonly handleCreateListModal: (state: boolean) => void;
 }
 
 interface FormData {
@@ -140,10 +140,7 @@ export function CreateListModal({ isCreateListModalOpen, handleCreateListModal }
                   key={game.slug}
                   slug={game.slug}
                   title={game.name}
-                  originInfo={game.name}
                   cover={game.cover}
-                  genres={game.name}
-                  rating={game.rating}
                   handleSelectGame={handleSelectGame}
                   isSelected={!!selectedGames.find(selectedGame => selectedGame.slug === game.slug)}
                 />

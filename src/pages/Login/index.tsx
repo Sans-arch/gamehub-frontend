@@ -27,7 +27,7 @@ export default function Login() {
   });
   const { signIn, signed } = useContext(AuthContext);
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarmessage] = useState('');
+  const [snackbarMessage, setSnackbarMessage] = useState('');
 
   const handleSignIn: SubmitHandler<FieldValues> = async data => {
     const { email, password } = data as LoginUserFormData;
@@ -39,7 +39,7 @@ export default function Login() {
         if (error instanceof AxiosError) {
           if (error.response) {
             const { error: message } = error.response.data;
-            setSnackbarmessage(message);
+            setSnackbarMessage(message);
             setIsSnackbarOpen(true);
           }
         }

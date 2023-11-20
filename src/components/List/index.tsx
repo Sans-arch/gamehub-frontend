@@ -8,9 +8,9 @@ import { GameCoverImageSizes } from '../types';
 import { CircularProgress } from '@mui/material';
 
 interface ListProps {
-  id: number;
-  description: string;
-  gamesList: {
+  readonly id: number;
+  readonly description: string;
+  readonly gamesList: {
     id: number;
     gameid: number;
     listid: number;
@@ -23,7 +23,7 @@ interface ListProps {
 }
 
 interface GameFromAPI {
-  id: number;
+  readonly id: number;
   cover: {
     id: number;
     game: number;
@@ -31,10 +31,10 @@ interface GameFromAPI {
     url: string;
     width: number;
   };
-  name: string;
-  rating: number;
-  slug: string;
-  summary: string;
+  readonly name: string;
+  readonly rating: number;
+  readonly slug: string;
+  readonly summary: string;
 }
 
 export default function List({ id, description, gamesList }: ListProps) {

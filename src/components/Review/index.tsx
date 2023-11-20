@@ -7,11 +7,11 @@ import { useContext } from 'react';
 import { AuthContext } from '@/src/contexts/auth';
 
 interface ReviewProps {
-  name: string;
-  content: string;
-  rating: number;
-  createdAt: string;
-  userId: number;
+  readonly name: string;
+  readonly content: string;
+  readonly rating: number;
+  readonly createdAt: string;
+  readonly userId: number;
 }
 
 export function Review({ name, content, rating, userId, createdAt }: ReviewProps) {

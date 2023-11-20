@@ -1,20 +1,17 @@
 import { Container, Content } from './styles';
 
 export interface GameCardProps {
-  title: string;
-  cover: {
+  readonly title: string;
+  readonly cover: {
     id: number;
     game: number;
     height: number;
     url: string;
     width: number;
   };
-  originInfo: string;
-  genres: string;
-  rating: number;
-  slug: string;
-  handleSelectGame: (slug: string) => void;
-  isSelected: boolean;
+  readonly slug: string;
+  readonly handleSelectGame: (slug: string) => void;
+  readonly isSelected: boolean;
 }
 
 export function GameCard({ title, cover, slug, isSelected, handleSelectGame }: GameCardProps) {

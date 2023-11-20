@@ -18,9 +18,6 @@ describe('GameCard from CreateListModal test suite', () => {
         width: 800,
         url: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co1s7a.jpg',
       },
-      genres: 'Action, Adventure, Role-playing (RPG)',
-      originInfo: 'PC (Microsoft Windows), PlayStation 4, Xbox One, Nintendo Switch, PlayStation 5, Xbox Series',
-      rating: 4.5,
       slug: 'the-witcher-3-wild-hunt',
     };
 
@@ -42,9 +39,6 @@ describe('GameCard from CreateListModal test suite', () => {
         width: 800,
         url: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co1s7a.jpg',
       },
-      genres: 'Action, Adventure, Role-playing (RPG)',
-      originInfo: 'PC (Microsoft Windows), PlayStation 4, Xbox One, Nintendo Switch, PlayStation 5, Xbox Series',
-      rating: 4.5,
       slug: 'the-witcher-3-wild-hunt',
     };
 
@@ -68,9 +62,6 @@ describe('GameCard from CreateListModal test suite', () => {
         width: 800,
         url: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co1s7a.jpg',
       },
-      genres: 'Action, Adventure, Role-playing (RPG)',
-      originInfo: 'PC (Microsoft Windows), PlayStation 4, Xbox One, Nintendo Switch, PlayStation 5, Xbox Series',
-      rating: 4.5,
       slug: 'the-witcher-3-wild-hunt',
     };
 

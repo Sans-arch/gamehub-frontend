@@ -1,87 +1,50 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import { CreateListModal } from '../../../components/CreateListModal';
 import { MemoryRouter, Navigate } from 'react-router-dom';
-import { AuthContext } from '@/src/contexts/auth';
+import { AuthContext, AuthContextProps } from '@/src/contexts/auth';
 
 describe.only('CreateListModal test suite', () => {
-  it('should render the modal', () => {
-    const mockFunction = vi.fn();
-
-    render(
-      <AuthContext.Provider
-        value={{
-          user: {
-            id: 1,
-            email: '',
-            name: '',
-          },
-          signed: true,
-          signIn: () => Promise.resolve(),
-          signOut: () => <Navigate to="/" />,
-          signUp: () => Promise.resolve(),
-        }}
-      >
+  const renderCreateListModal = (
+    isCreateListModalOpen: boolean,
+    userMock: AuthContextProps = {
+      user: {
+        id: 1,
+        email: '',
+        name: '',
+      },
+      signed: true,
+      signIn: () => Promise.resolve(),
+      signOut: () => <Navigate to="/" />,
+      signUp: () => Promise.resolve(),
+    }
+  ) => {
+    return render(
+      <AuthContext.Provider value={userMock}>
         <MemoryRouter>
-          <CreateListModal isCreateListModalOpen={true} handleCreateListModal={mockFunction} />
+          <CreateListModal isCreateListModalOpen={isCreateListModalOpen} handleCreateListModal={vi.fn()} />
         </MemoryRouter>
       </AuthContext.Provider>
     );
+  };
+
+  it('should render the modal', () => {
+    renderCreateListModal(true);
 
     const modal = screen.getByTestId('create-list-modal');
     expect(modal).toBeInTheDocument();
   });
 
   it('should not render modal with isCreateListModalOpen is false', async () => {
-    const mockFunction = vi.fn();
-
-    render(
-      <AuthContext.Provider
-        value={{
-          user: {
-            id: 1,
-            email: '',
-            name: '',
-          },
-          signed: true,
-          signIn: () => Promise.resolve(),
-          signOut: () => <Navigate to="/" />,
-          signUp: () => Promise.resolve(),
-        }}
-      >
-        <MemoryRouter>
-          <CreateListModal isCreateListModalOpen={false} handleCreateListModal={mockFunction} />
-        </MemoryRouter>
-      </AuthContext.Provider>
-    );
+    renderCreateListModal(false);
 
     const modal = screen.queryByTestId('create-list-modal');
     expect(modal).not.toBeInTheDocument();
   });
 
   it('should render CircularProgress when the games are loading', async () => {
-    const mockFunction = vi.fn();
-
-    render(
-      <AuthContext.Provider
-        value={{
-          user: {
-            id: 1,
-            email: '',
-            name: '',
-          },
-          signed: true,
-          signIn: () => Promise.resolve(),
-          signOut: () => <Navigate to="/" />,
-          signUp: () => Promise.resolve(),
-        }}
-      >
-        <MemoryRouter>
-          <CreateListModal isCreateListModalOpen={true} handleCreateListModal={mockFunction} />
-        </MemoryRouter>
-      </AuthContext.Provider>
-    );
+    renderCreateListModal(true);
 
     const circularProgress = screen.getByRole('progressbar');
 
@@ -89,27 +52,7 @@ describe.only('CreateListModal test suite', () => {
   });
 
   it('should not render NotificationSnackbar when a list is not created', async () => {
-    const mockFunction = vi.fn();
-
-    render(
-      <AuthContext.Provider
-        value={{
-          user: {
-            id: 1,
-            email: '',
-            name: '',
-          },
-          signed: true,
-          signIn: () => Promise.resolve(),
-          signOut: () => <Navigate to="/" />,
-          signUp: () => Promise.resolve(),
-        }}
-      >
-        <MemoryRouter>
-          <CreateListModal isCreateListModalOpen={true} handleCreateListModal={mockFunction} />
-        </MemoryRouter>
-      </AuthContext.Provider>
-    );
+    renderCreateListModal(true);
 
     const notificationSnackbar = screen.queryByTestId('notification-snackbar');
 
@@ -117,27 +60,7 @@ describe.only('CreateListModal test suite', () => {
   });
 
   it('should render Games when fetched', async () => {
-    const mockFunction = vi.fn();
-
-    render(
-      <AuthContext.Provider
-        value={{
-          user: {
-            id: 1,
-            email: '',
-            name: '',
-          },
-          signed: true,
-          signIn: () => Promise.resolve(),
-          signOut: () => <Navigate to="/" />,
-          signUp: () => Promise.resolve(),
-        }}
-      >
-        <MemoryRouter>
-          <CreateListModal isCreateListModalOpen={true} handleCreateListModal={mockFunction} />
-        </MemoryRouter>
-      </AuthContext.Provider>
-    );
+    renderCreateListModal(true);
 
     await waitFor(async () => {
       const games = await screen.findAllByTestId('gamecard-container');
@@ -146,27 +69,7 @@ describe.only('CreateListModal test suite', () => {
   });
 
   it('should select a game when click it', async () => {
-    const mockFunction = vi.fn();
-
-    render(
-      <AuthContext.Provider
-        value={{
-          user: {
-            id: 1,
-            email: '',
-            name: '',
-          },
-          signed: true,
-          signIn: () => Promise.resolve(),
-          signOut: () => <Navigate to="/" />,
-          signUp: () => Promise.resolve(),
-        }}
-      >
-        <MemoryRouter>
-          <CreateListModal isCreateListModalOpen={true} handleCreateListModal={mockFunction} />
-        </MemoryRouter>
-      </AuthContext.Provider>
-    );
+    renderCreateListModal(true);
 
     await waitFor(async () => {
       const games = await screen.findAllByTestId('gamecard-container');
@@ -180,27 +83,7 @@ describe.only('CreateListModal test suite', () => {
   });
 
   it('should create a new list when form is submitted', async () => {
-    const mockFunction = vi.fn();
-
-    render(
-      <AuthContext.Provider
-        value={{
-          user: {
-            id: 1,
-            email: '',
-            name: '',
-          },
-          signed: true,
-          signIn: () => Promise.resolve(),
-          signOut: () => <Navigate to="/" />,
-          signUp: () => Promise.resolve(),
-        }}
-      >
-        <MemoryRouter>
-          <CreateListModal isCreateListModalOpen={true} handleCreateListModal={mockFunction} />
-        </MemoryRouter>
-      </AuthContext.Provider>
-    );
+    renderCreateListModal(true);
 
     await waitFor(async () => {
       const games = await screen.findAllByTestId('gamecard-container');
@@ -227,27 +110,7 @@ describe.only('CreateListModal test suite', () => {
   });
 
   it('should close NotificationSnackbar when closed', async () => {
-    const mockFunction = vi.fn();
-
-    render(
-      <AuthContext.Provider
-        value={{
-          user: {
-            id: 1,
-            email: '',
-            name: '',
-          },
-          signed: true,
-          signIn: () => Promise.resolve(),
-          signOut: () => <Navigate to="/" />,
-          signUp: () => Promise.resolve(),
-        }}
-      >
-        <MemoryRouter>
-          <CreateListModal isCreateListModalOpen={true} handleCreateListModal={mockFunction} />
-        </MemoryRouter>
-      </AuthContext.Provider>
-    );
+    renderCreateListModal(true);
 
     await waitFor(async () => {
       const games = await screen.findAllByTestId('gamecard-container');
@@ -280,24 +143,17 @@ describe.only('CreateListModal test suite', () => {
   });
 
   it('should not create a new list when user is not authenticated and token does not exists', async () => {
-    const mockFunction = vi.fn();
     vi.spyOn(Storage.prototype, 'getItem');
 
-    render(
-      <AuthContext.Provider
-        value={{
-          user: null,
-          signed: true,
-          signIn: () => Promise.resolve(),
-          signOut: () => <Navigate to="/" />,
-          signUp: () => Promise.resolve(),
-        }}
-      >
-        <MemoryRouter>
-          <CreateListModal isCreateListModalOpen={true} handleCreateListModal={mockFunction} />
-        </MemoryRouter>
-      </AuthContext.Provider>
-    );
+    const userMock = {
+      user: null,
+      signed: false,
+      signIn: () => Promise.resolve(),
+      signOut: () => <Navigate to="/" />,
+      signUp: () => Promise.resolve(),
+    };
+
+    renderCreateListModal(true, userMock);
 
     await waitFor(async () => {
       const games = await screen.findAllByTestId('gamecard-container');

@@ -8,7 +8,7 @@ type User = {
   name: string;
 };
 
-interface AuthContextProps {
+export interface AuthContextProps {
   user: User | null;
   signed: boolean;
   signIn(email: string, password: string): Promise<void>;

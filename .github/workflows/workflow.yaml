@@ -1,22 +1,61 @@
-name: Build React app
+name: Development CI/CD - Build and Deploy React App to CloudFront
 
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
 
 jobs:
-  build-app-react:
+  ci:
+    name: Create build artifact
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
-      - uses: actions/checkout@v4
-      - name: Using Node.js
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Config node environment
         uses: actions/setup-node@v3
         with:
           node-version: 20.
-      - name: run install, build
+
+      - name: Run npm commands
         run: |
           npm install
           npm run build
+
+  cd:
+    name: Deploy to S3
+    needs: ci
+    runs-on: ubuntu-latest
+    env:
+      BUCKET: gamehub-frontend
+      DIST: build
+      REGION: us-east-1
+      DIST_ID: E31X9W3PLVO8RY
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS crdentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.REGION }}
+
+      - name: Install dependencies and build static website
+        run: |
+          npm install --omit=dev
+          npm run build
+
+      - name: Copy files to the production website with the AWS CLI
+        run: |
+          aws s3 sync --delete ${{ env.DIST }} s3://${{ env.BUCKET }}
+
+      - name: Copy files to the production website with the AWS CLI
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ env.DIST_ID }} \
+            --paths "/*"

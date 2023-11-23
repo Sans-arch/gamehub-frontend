@@ -36,7 +36,7 @@ export function MainSlider() {
       </Navbar>
 
       <MainGame>
-        <h1>TESTE 2077: Phantom Liberty</h1>
+        <h1>Cyberpunk 2077: Phantom Liberty</h1>
         <p>
           Phantom Liberty is a new spy-thriller expansion for the open-world action-adventure RPG Cyberpunk 2077. As
           cyber-enhanced mercenary V, join secret agent Solomon Reed to unravel a web of shattered loyalties and

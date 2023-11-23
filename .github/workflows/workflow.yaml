@@ -9,6 +9,7 @@ jobs:
     name: Deploy to S3
     runs-on: ubuntu-latest
     env:
+      VITE_BACKEND_API: http://54.88.147.198:3003/api
       BUCKET: gamehub-frontend
       DIST: dist
       REGION: us-east-1

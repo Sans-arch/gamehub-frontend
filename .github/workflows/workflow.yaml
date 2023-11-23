@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BUCKET: gamehub-frontend
-      DIST: build
+      DIST: dist
       REGION: us-east-1
       DIST_ID: E31X9W3PLVO8RY
 

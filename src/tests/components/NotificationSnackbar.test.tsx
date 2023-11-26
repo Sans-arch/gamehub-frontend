@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { NotificationSnackbar } from '../../components/NotificationSnackbar';
 import { AlertColor } from '@mui/material';
 
-describe.only('NotificationSnackbar Test suite', () => {
+describe('NotificationSnackbar Test suite', () => {
   it('should render NotificationSnackbar component correctly', () => {
     const notificationType: AlertColor = 'success';
     const notificationMessage: string = 'Notification message displayed correctly.';

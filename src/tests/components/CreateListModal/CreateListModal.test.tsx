@@ -5,7 +5,7 @@ import { CreateListModal } from '../../../components/CreateListModal';
 import { MemoryRouter, Navigate } from 'react-router-dom';
 import { AuthContext, AuthContextProps } from '@/src/contexts/auth';
 
-describe.only('CreateListModal test suite', () => {
+describe('CreateListModal test suite', () => {
   const renderCreateListModal = (
     isCreateListModalOpen: boolean,
     userMock: AuthContextProps = {

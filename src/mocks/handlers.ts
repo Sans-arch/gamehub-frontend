@@ -1,6 +1,8 @@
 import { http, HttpResponse } from 'msw';
 
-const getMostPopularGames = http.get('http://localhost:3003/api/games/most-popular', () => {
+const baseUrl = import.meta.env.VITE_BACKEND_API;
+
+const getMostPopularGames = http.get(`${baseUrl}/games/most-popular`, () => {
   const mockedGames = [{
     "id": 1020,
     "cover": {
@@ -32,7 +34,7 @@ const getMostPopularGames = http.get('http://localhost:3003/api/games/most-popul
   return HttpResponse.json(mockedGames)
 });
 
-const getGameById = http.get('http://localhost:3003/api/games/get-by-id', () => {
+const getGameById = http.get(`${baseUrl}/games/get-by-id`, () => {
   return HttpResponse.json([
     [
       {
@@ -85,11 +87,11 @@ const getGameById = http.get('http://localhost:3003/api/games/get-by-id', () => 
   ]);
 });
 
-const deleteListById = http.delete('http://localhost:3003/api/lists/:id', () => {
+const deleteListById = http.delete(`${baseUrl}/lists/:id`, () => {
   return new HttpResponse(null, { status: 200 })
 });
 
-const createList = http.post('http://localhost:3003/api/lists', () => {
+const createList = http.post(`${baseUrl}/lists`, () => {
   const mockedResponse = { "id": 6, "description": "Nova lista", "gameList": [{ "id": 5 }, { "id": 6 }] }
 
   return HttpResponse.json(mockedResponse)

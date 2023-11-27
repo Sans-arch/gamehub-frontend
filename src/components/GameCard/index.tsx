@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Container, Content } from './styles';
+import { Container, Content, SmallContainer, SmallContent } from './styles';
 
 export interface GameCardProps {
   readonly title: string;
@@ -14,13 +14,26 @@ export interface GameCardProps {
   readonly genres?: string;
   readonly rating?: number;
   readonly slug: string;
+  readonly size?: 'small' | 'medium' | 'large';
 }
 
-export function GameCard({ title, cover, originInfo, slug }: GameCardProps) {
+export function GameCard({ title, cover, originInfo, slug, size = 'large' }: GameCardProps) {
   const navigate = useNavigate();
 
   function handleClick() {
     navigate(`/game/${slug}`);
+  }
+
+  if (size === 'small') {
+    return (
+      <SmallContainer onClick={handleClick} data-testid="gamecard-container">
+        <img src={cover.url} alt={title} />
+        <SmallContent>
+          <span>{originInfo}</span>
+          <p>{title}</p>
+        </SmallContent>
+      </SmallContainer>
+    );
   }
 
   return (

@@ -11,20 +11,19 @@ export const Container = styled.div`
   font-family: 'Poppins', sans-serif;
   overflow: auto;
 
-
   h1 {
+    position: relative;
     font-weight: 700;
-    padding-bottom: 30px;
     text-align: center;
     font-family: 'DM Sans', sans-serif;
     font-size: 36px;
+    bottom: 40px;
   }
 `;
 
 export const Navbar = styled.nav`
   width: 100%;
   background: linear-gradient(180deg, rgba(211, 19, 14, 0.62) 0%, rgba(68, 12, 12, 0.05) 99%, rgba(217, 217, 217, 0.00) 100%);
-  padding-bottom: 30px;
 
   img {
     margin-top: 20px;

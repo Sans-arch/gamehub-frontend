@@ -81,15 +81,22 @@ export default function List({ id, description, gamesList }: ListProps) {
     <Container data-testid="list-container">
       <ListDescription>
         <h3>{description}</h3>
-        <span onClick={deleteList} data-testid="delete-list-button" aria-hidden>
-          <MdDeleteForever id="delete-icon" />
+        <span onClick={deleteList} data-testid="delete-list-button" id="delete-icon" aria-hidden>
+          <MdDeleteForever />
         </span>
       </ListDescription>
       <GamesArea>
         {games.length === 0 && <CircularProgress color="primary" sx={{ alignSelf: 'center' }} size={'2rem'} />}
         {games.map(game => {
           return (
-            <GameCard key={game.slug} slug={game.slug} title={game.name} originInfo={game.name} cover={game.cover} />
+            <GameCard
+              key={game.slug}
+              slug={game.slug}
+              title={game.name}
+              originInfo={game.name}
+              cover={game.cover}
+              size="small"
+            />
           );
         })}
       </GamesArea>

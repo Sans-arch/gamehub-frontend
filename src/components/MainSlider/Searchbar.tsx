@@ -1,21 +1,59 @@
-import { useState } from 'react';
-import { SearchbarContainer } from './styles';
+import { useRef, useState } from 'react';
+import lodash from 'lodash';
+
+import { SearchGamesOptionsBox, SearchbarContainer } from './styles';
+import apiCaller from '@/src/services/api';
+import { SearchGameOption } from './SearchGameOption';
+
+export interface QueriedGame {
+  id: number;
+  name: string;
+  slug: string;
+  summary: string;
+  cover: {
+    id: number;
+    game: number;
+    height: number;
+    url: string;
+    width: number;
+  };
+}
 
 export default function SearchBar() {
-  const [input, setInput] = useState('');
+  const [queriedGames, setQueriedGames] = useState<QueriedGame[]>([]);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  const debouncedSearch = lodash.debounce(value => {
+    apiCaller
+      .get(`/games/get-by-search-term`, {
+        params: {
+          searchTerm: value,
+        },
+      })
+      .then(response => {
+        setQueriedGames(response.data);
+      });
+  }, 300);
 
   const handleChange = (value: string) => {
-    setInput(value);
+    debouncedSearch(value);
   };
 
   return (
     <SearchbarContainer>
       <input
+        ref={searchInputRef}
         type="text"
         placeholder="What do you want to play?"
-        value={input}
         onChange={e => handleChange(e.target.value)}
       />
+      {queriedGames.length > 0 && (
+        <SearchGamesOptionsBox>
+          {queriedGames.map(game => {
+            return <SearchGameOption key={game.id} data={game} />;
+          })}
+        </SearchGamesOptionsBox>
+      )}
     </SearchbarContainer>
   );
 }

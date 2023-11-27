@@ -16,11 +16,6 @@ export interface AuthContextProps {
   signUp(name: string, email: string, password: string): Promise<void>;
 }
 
-type signUpResponse = {
-  user: User;
-  token: string;
-};
-
 export const AuthContext = createContext<AuthContextProps>({} as AuthContextProps);
 
 export const AuthProvider = ({ children }: { children: JSX.Element }) => {

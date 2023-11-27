@@ -59,6 +59,7 @@ export const Logo = styled.div`
 `;
 
 export const SearchbarContainer = styled.div`
+  position: relative;
   width: 50%;
 
   input {
@@ -66,7 +67,6 @@ export const SearchbarContainer = styled.div`
     padding: 10px;
     outline: none;
     border: none;
-    /* border: 2px solid #d1d5db; */
     outline: 2px solid #d1d5db;
     border-radius: 6px;
     width: 100%;
@@ -83,6 +83,8 @@ export const SearchbarContainer = styled.div`
   input:focus {
     background-color: #323238;
     color: #f5f5f5;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
 
   input:not(:focus) {
@@ -92,6 +94,32 @@ export const SearchbarContainer = styled.div`
 
   input::placeholder {
     color: #9c9c9c;
+  }
+`;
+
+export const SearchGamesOptionsBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  background-color: #323238;
+  border-radius: 6px;
+  outline: 2px solid #d1d5db;
+  min-height: 50px;
+
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+`;
+
+export const SearchGameOptionContainer = styled.div`
+  display: flex;
+  cursor: pointer;
+  padding: 1rem;
+  border-bottom: 1px solid #d1d5db;
+
+  &:last-child {
+    border-bottom: none;
   }
 `;
 

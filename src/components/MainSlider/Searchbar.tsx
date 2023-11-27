@@ -11,6 +11,11 @@ export default function SearchBar() {
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   const debouncedSearch = lodash.debounce(value => {
+    if (value.length === 0) {
+      setQueriedGames([]);
+      return;
+    }
+
     apiCaller
       .get(`/games/get-by-search-term`, {
         params: {

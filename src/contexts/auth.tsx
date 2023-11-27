@@ -61,12 +61,10 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
       if (response.data.error) {
         alert(response.data.error);
       } else {
-        const { user, token } = response.data as signUpResponse;
-
-        setUser(user);
-        apiCaller.defaults.headers.common.Authorization = `Bearer ${token}`;
-        localStorage.setItem('@Auth:token', JSON.stringify(token));
-        localStorage.setItem('@Auth:user', JSON.stringify(user));
+        setUser(response.data.user);
+        apiCaller.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
+        localStorage.setItem('@Auth:token', response.data.token);
+        localStorage.setItem('@Auth:user', JSON.stringify(response.data.user));
       }
     };
 

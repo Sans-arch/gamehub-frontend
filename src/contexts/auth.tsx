@@ -34,44 +34,44 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
     return null;
   });
 
-  const signIn = async (email: string, password: string) => {
-    const response = await apiCaller.post('/auth/login', { email, password });
-
-    if (response.data.error) {
-      alert(response.data.error);
-    } else {
-      setUser(response.data.user);
-      apiCaller.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
-      localStorage.setItem('@Auth:token', response.data.token);
-      localStorage.setItem('@Auth:user', JSON.stringify(response.data.user));
-    }
-  };
-
-  const signOut = () => {
-    localStorage.removeItem('@Auth:user');
-    localStorage.removeItem('@Auth:token');
-    setUser(null);
-    return <Navigate to="/" />;
-  };
-
-  const signUp = async (name: string, email: string, password: string) => {
-    const response = await apiCaller.post('/auth/register', { name, email, password });
-
-    if (response.data.error) {
-      alert(response.data.error);
-    } else {
-      const { user, token } = response.data as signUpResponse;
-
-      setUser(user);
-      apiCaller.defaults.headers.common.Authorization = `Bearer ${token}`;
-      localStorage.setItem('@Auth:token', JSON.stringify(token));
-      localStorage.setItem('@Auth:user', JSON.stringify(user));
-    }
-  };
-
   const authContextValue = useMemo(() => {
+    const signIn = async (email: string, password: string) => {
+      const response = await apiCaller.post('/auth/login', { email, password });
+
+      if (response.data.error) {
+        alert(response.data.error);
+      } else {
+        setUser(response.data.user);
+        apiCaller.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
+        localStorage.setItem('@Auth:token', response.data.token);
+        localStorage.setItem('@Auth:user', JSON.stringify(response.data.user));
+      }
+    };
+
+    const signOut = () => {
+      localStorage.removeItem('@Auth:user');
+      localStorage.removeItem('@Auth:token');
+      setUser(null);
+      return <Navigate to="/" />;
+    };
+
+    const signUp = async (name: string, email: string, password: string) => {
+      const response = await apiCaller.post('/auth/register', { name, email, password });
+
+      if (response.data.error) {
+        alert(response.data.error);
+      } else {
+        const { user, token } = response.data as signUpResponse;
+
+        setUser(user);
+        apiCaller.defaults.headers.common.Authorization = `Bearer ${token}`;
+        localStorage.setItem('@Auth:token', JSON.stringify(token));
+        localStorage.setItem('@Auth:user', JSON.stringify(user));
+      }
+    };
+
     return { user, signed: !!user, signIn, signOut, signUp };
-  }, [user, signIn, signOut, signUp]);
+  }, [user]);
 
   return <AuthContext.Provider value={authContextValue}>{children}</AuthContext.Provider>;
 };

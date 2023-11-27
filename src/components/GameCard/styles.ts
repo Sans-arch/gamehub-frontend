@@ -28,6 +28,58 @@ export const Container = styled.div`
   }
 `;
 
+export const SmallContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  width: 220px;
+  height: 400px;
+
+  box-sizing: border-box;
+  overflow: hidden;
+  cursor: pointer;
+
+  transition: box-shadow 0.3s, transform 0.3s;
+
+  /* border: 2px solid blue; */
+
+  &:hover {
+    box-shadow: 0 0 10px #be3144;
+    transform: scale(1.1);
+    border-radius: 4px;
+    padding: 10px;
+    transition: padding 0.7s ease;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+export const SmallContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  margin-top: 12px;
+  font-family: 'Poppins', sans-serif;
+
+  & > span {
+    color: #9ca3af;
+    font-weight: 700;
+    font-size: 12px;
+  }
+
+  p {
+    color: #fef2f2;
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+`;
+
 export const Content = styled.div`
   display: flex;
   flex-direction: column;

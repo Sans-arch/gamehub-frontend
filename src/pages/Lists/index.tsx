@@ -42,11 +42,11 @@ export default function Lists() {
           <img src={gameHubLogo} alt="Logotipo" width={100} height={100} />
         </Link>
 
-        <h1>Minhas listas</h1>
+        <h1>My Lists</h1>
       </Navbar>
 
       <ListContainer>
-        {!lists.length && <h2>Você não possui listas, crie algumas!</h2>}
+        {!lists.length && <h2>You don't have lists, create some!</h2>}
 
         {lists.map(list => {
           return <List key={list.id} id={list.id} description={list.description} gamesList={list.gamelist} />;

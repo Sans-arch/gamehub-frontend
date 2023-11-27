@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { Container, CreateListContainer, GamesContainer, Title } from './styles';
-import { CircularProgress } from '@mui/material';
-import { Button } from '@mui/material';
+import { CircularProgress, Button } from '@mui/material';
 
 import apiCaller from '@services/api';
 import { GameCard } from '../GameCard';
@@ -43,7 +42,7 @@ export function FeaturedGames() {
         {signed && (
           <CreateListContainer>
             <Button variant="contained" onClick={() => handleCreateListModal(true)}>
-              Criar nova lista
+              Create new list
             </Button>
           </CreateListContainer>
         )}

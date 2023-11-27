@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Backdrop, Modal } from '@mui/material';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import CircularProgress from '@mui/material/CircularProgress';
+import lodash, { set } from 'lodash';
 
 import { Container, Form, GameList, Input, Button } from './styles';
 import { GameCoverImageSizes, IGame } from '../types';
@@ -27,6 +28,7 @@ export function CreateListModal({ isCreateListModalOpen, handleCreateListModal }
   const [games, setGames] = useState<IGame[]>([]);
   const [selectedGames, setSelectedGames] = useState<IGame[]>([]);
   const [isListCreated, setIsListCreated] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   const handleCreateCustomList: SubmitHandler<FieldValues> = async data => {
     const { name } = data as FormData;
@@ -74,8 +76,8 @@ export function CreateListModal({ isCreateListModalOpen, handleCreateListModal }
     setIsListCreated(false);
   }
 
-  useEffect(() => {
-    apiCaller
+  function getMostPopularGames() {
+    return apiCaller
       .get('/games/most-popular')
       .then(response => response.data)
       .then(gamesList => {
@@ -90,6 +92,51 @@ export function CreateListModal({ isCreateListModalOpen, handleCreateListModal }
       })
       .then(gamesList => setGames(gamesList))
       .catch(error => console.log(error));
+  }
+
+  const debouncedSearch = lodash.debounce(async value => {
+    if (value.length === 0) {
+      await getMostPopularGames();
+      return setHasError(false);
+    }
+
+    apiCaller
+      .get(`/games/get-by-search-term`, {
+        params: {
+          searchTerm: value,
+        },
+      })
+      .then(response => response.data)
+      .then(gamesList => {
+        if (gamesList.length === 0) {
+          setHasError(true);
+        }
+        if (hasError) {
+          setHasError(false);
+        }
+
+        return gamesList;
+      })
+      .then(gamesList => {
+        const mappedGames = gamesList.map((game: IGame) => {
+          game.cover.url = game.cover.url.replace('//', 'https://');
+          game.cover.url = game.cover.url.replace('t_thumb', GameCoverImageSizes.FULL_HD);
+
+          return game;
+        });
+
+        return mappedGames;
+      })
+      .then(gamesList => setGames(gamesList))
+      .catch(error => console.log(error));
+  }, 300);
+
+  function handleChange(value: string) {
+    debouncedSearch(value);
+  }
+
+  useEffect(() => {
+    getMostPopularGames();
   }, []);
 
   return (
@@ -105,26 +152,28 @@ export function CreateListModal({ isCreateListModalOpen, handleCreateListModal }
         }}
       >
         <Container>
-          <h1>Crie sua lista</h1>
+          <h1>Create your list</h1>
 
           <Form onSubmit={handleSubmit(handleCreateCustomList)} name="create-list-form">
-            <Input {...register('name')} type="text" placeholder="Nome da lista" />
+            <Input {...register('name')} type="text" placeholder="Name of the list" />
             <Button type="submit" disabled={selectedGames.length === 0}>
-              Criar
+              Create
             </Button>
           </Form>
 
           <Input
             type="text"
-            placeholder="Buscar por jogo"
-            disabled={games.length == 0}
+            placeholder="Find game"
+            onChange={e => handleChange(e.target.value)}
             style={{
               width: '80%',
               marginBottom: '1.5rem',
             }}
           />
           <GameList>
-            {games.length == 0 && (
+            {hasError && <h2 style={{ alignSelf: 'center', fontWeight: '400' }}>Game(s) not found!</h2>}
+
+            {games.length == 0 && !hasError && (
               <CircularProgress
                 color="secondary"
                 sx={{
@@ -134,18 +183,19 @@ export function CreateListModal({ isCreateListModalOpen, handleCreateListModal }
               />
             )}
 
-            {games?.map(game => {
-              return (
-                <GameCard
-                  key={game.slug}
-                  slug={game.slug}
-                  title={game.name}
-                  cover={game.cover}
-                  handleSelectGame={handleSelectGame}
-                  isSelected={!!selectedGames.find(selectedGame => selectedGame.slug === game.slug)}
-                />
-              );
-            })}
+            {!hasError &&
+              games.map(game => {
+                return (
+                  <GameCard
+                    key={game.slug}
+                    slug={game.slug}
+                    title={game.name}
+                    cover={game.cover}
+                    handleSelectGame={handleSelectGame}
+                    isSelected={!!selectedGames.find(selectedGame => selectedGame.slug === game.slug)}
+                  />
+                );
+              })}
           </GameList>
         </Container>
       </Modal>
@@ -153,7 +203,7 @@ export function CreateListModal({ isCreateListModalOpen, handleCreateListModal }
       {isListCreated && (
         <NotificationSnackbar
           type="success"
-          message="Lista criada com sucesso"
+          message="List created succesfully!"
           handleClose={handleCloseSnackbar}
           isSnackbarOpen={isListCreated}
         />

@@ -86,26 +86,10 @@ export default function List({ id, description, gamesList }: ListProps) {
         </span>
       </ListDescription>
       <GamesArea>
-        {games.length === 0 && (
-          <CircularProgress
-            color="primary"
-            sx={{
-              alignSelf: 'center',
-            }}
-            size={'2rem'}
-          />
-        )}
+        {games.length === 0 && <CircularProgress color="primary" sx={{ alignSelf: 'center' }} size={'2rem'} />}
         {games.map(game => {
           return (
-            <GameCard
-              key={game.slug}
-              slug={game.slug}
-              title={game.name}
-              originInfo={game.name}
-              cover={game.cover}
-              genres={game.name}
-              rating={game.rating}
-            />
+            <GameCard key={game.slug} slug={game.slug} title={game.name} originInfo={game.name} cover={game.cover} />
           );
         })}
       </GamesArea>

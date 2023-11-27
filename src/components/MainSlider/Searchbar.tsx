@@ -4,23 +4,10 @@ import lodash from 'lodash';
 import { SearchGamesOptionsBox, SearchbarContainer } from './styles';
 import apiCaller from '@/src/services/api';
 import { SearchGameOption } from './SearchGameOption';
-
-export interface QueriedGame {
-  id: number;
-  name: string;
-  slug: string;
-  summary: string;
-  cover: {
-    id: number;
-    game: number;
-    height: number;
-    url: string;
-    width: number;
-  };
-}
+import { IGame } from '../types';
 
 export default function SearchBar() {
-  const [queriedGames, setQueriedGames] = useState<QueriedGame[]>([]);
+  const [queriedGames, setQueriedGames] = useState<IGame[]>([]);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   const debouncedSearch = lodash.debounce(value => {

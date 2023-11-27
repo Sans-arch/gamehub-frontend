@@ -65,7 +65,7 @@ export function MainSlider() {
                 marginTop: 20,
               }}
             >
-              Seja-bem vindo {user.name}
+              Welcome {user.name}!
             </p>
           )}
 
@@ -84,7 +84,7 @@ export function MainSlider() {
                 <ListItem disablePadding>
                   <ListItemButton>
                     <ListItemIcon sx={{ color: '#f5f5f5', fontSize: '1.55rem' }}>{<BiSolidLogIn />}</ListItemIcon>
-                    <ListItemText primary={'Fazer Login'} />
+                    <ListItemText primary={'Sign in'} />
                   </ListItemButton>
                 </ListItem>
               </Link>
@@ -95,7 +95,7 @@ export function MainSlider() {
                 <ListItem disablePadding disableGutters sx={{ outline: 'none' }}>
                   <ListItemButton>
                     <ListItemIcon sx={{ color: '#f5f5f5', fontSize: '1.55rem' }}>{<AiOutlineUserAdd />}</ListItemIcon>
-                    <ListItemText primary={'Cadastrar-se'} />
+                    <ListItemText primary={'Sign up'} />
                   </ListItemButton>
                 </ListItem>
               </Link>
@@ -106,7 +106,7 @@ export function MainSlider() {
                 <ListItem disablePadding disableGutters sx={{ outline: 'none' }}>
                   <ListItemButton>
                     <ListItemIcon>{<MailIcon color="info" />}</ListItemIcon>
-                    <ListItemText primary={'Minhas listas'} />
+                    <ListItemText primary={'My lists'} />
                   </ListItemButton>
                 </ListItem>
               </Link>

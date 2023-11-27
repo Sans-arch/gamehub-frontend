@@ -1,9 +1,10 @@
 import { useNavigate } from 'react-router-dom';
-import { QueriedGame } from './Searchbar';
+
 import { SearchGameOptionContainer } from './styles';
+import { IGame } from '../types';
 
 interface SearchGameOptionProps {
-  readonly data: QueriedGame;
+  readonly data: IGame;
 }
 
 export function SearchGameOption({ data }: SearchGameOptionProps) {

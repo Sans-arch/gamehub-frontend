@@ -101,7 +101,7 @@ describe('CreateListModal test suite', () => {
 
     expect(input.value).toBe('Lista dos top games');
 
-    const formSubmitButton = screen.getByRole('button', { name: /Criar/i });
+    const formSubmitButton = screen.getByRole('button', { name: /Create/i });
     await user.click(formSubmitButton);
 
     const notificationSuccesful = await screen.findByTestId('notification-snackbar');
@@ -128,7 +128,7 @@ describe('CreateListModal test suite', () => {
 
     expect(input.value).toBe('Lista dos top games');
 
-    const formSubmitButton = screen.getByRole('button', { name: /Criar/i });
+    const formSubmitButton = screen.getByRole('button', { name: /Create/i });
     await user.click(formSubmitButton);
 
     const notificationSuccesful = await screen.findByTestId('notification-snackbar');
@@ -171,7 +171,7 @@ describe('CreateListModal test suite', () => {
 
     expect(input.value).toBe('Lista dos top games');
 
-    const formSubmitButton = screen.getByRole('button', { name: /Criar/i });
+    const formSubmitButton = screen.getByRole('button', { name: /Create/i });
     await user.click(formSubmitButton);
 
     const notificationSuccesful = screen.queryByTestId('notification-snackbar');

@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Backdrop, Modal } from '@mui/material';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import CircularProgress from '@mui/material/CircularProgress';
-import lodash, { set } from 'lodash';
+import lodash from 'lodash';
 
 import { Container, Form, GameList, Input, Button } from './styles';
 import { GameCoverImageSizes, IGame } from '../types';

@@ -53,7 +53,7 @@ describe('MainSlider test suite', () => {
     const signInButton = screen.getByRole('button');
     await user.click(signInButton);
 
-    const link = screen.getByText(/Minhas listas/);
+    const link = screen.getByText(/My lists/);
 
     expect(link).toBeInTheDocument();
   });
@@ -82,7 +82,7 @@ describe('MainSlider test suite', () => {
     const signInButton = screen.getByRole('button');
     await user.click(signInButton);
 
-    const link = screen.queryByText(/Minhas listas/);
+    const link = screen.queryByText(/My Lists/);
 
     expect(link).not.toBeInTheDocument();
   });

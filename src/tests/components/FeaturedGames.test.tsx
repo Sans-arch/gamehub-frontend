@@ -54,7 +54,7 @@ describe('FeaturedGames test suite', () => {
       </AuthContext.Provider>
     );
 
-    const createListButton = screen.queryByText(/Criar nova lista/);
+    const createListButton = screen.queryByText(/Create new list/);
 
     expect(createListButton).toBeInTheDocument();
   });
@@ -79,7 +79,7 @@ describe('FeaturedGames test suite', () => {
       </AuthContext.Provider>
     );
 
-    const createListButton = screen.queryByText(/Criar nova lista/);
+    const createListButton = screen.queryByText(/Create new list/);
 
     expect(createListButton).not.toBeInTheDocument();
   });
@@ -136,7 +136,7 @@ describe('FeaturedGames test suite', () => {
       </AuthContext.Provider>
     );
 
-    const createListButton = screen.queryByText(/Criar nova lista/) as HTMLElement;
+    const createListButton = screen.queryByText(/Create new list/) as HTMLElement;
     fireEvent.click(createListButton);
 
     const openedModalRenderedInScreen = screen.getByRole('presentation');

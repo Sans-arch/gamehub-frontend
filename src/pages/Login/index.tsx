@@ -1,17 +1,17 @@
+import { useContext, useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
+import { AxiosError } from 'axios';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
 import { Container, Box, LoginButton, RegisterButton, RegisterContainer, RegisterSidebar, Form } from './styles';
 import logo from '../../assets/logo/logo-white-removebg-preview.png';
-import { useContext, useState } from 'react';
 import { AuthContext } from '@/src/contexts/auth';
 import { NotificationSnackbar } from '@/src/components/NotificationSnackbar';
-import { AxiosError } from 'axios';
 
 const createUserFormSchema = z.object({
-  email: z.string().nonempty('O e-mail é obrigatório').email('Formato de e-mail inválido').toLowerCase(),
+  email: z.string().nonempty('Email is required').email('Invalid email format').toLowerCase(),
   password: z.string(),
 });
 
@@ -61,15 +61,15 @@ export default function Login() {
             <Link to="/">
               <img src={logo} alt="Logo" width={176} height={181} />
             </Link>
-            <h1>Bem-vindo ao GameHub!</h1>
-            <p>Crie sua conta aqui!</p>
+            <h1>Welcome to GameHub!</h1>
+            <p>Create your account here!</p>
             <Link to="/register">
-              <LoginButton>Cadastrar</LoginButton>
+              <LoginButton>Sign up</LoginButton>
             </Link>
           </RegisterSidebar>
 
           <RegisterContainer>
-            <h1>Faça login</h1>
+            <h1>Login</h1>
 
             <Form onSubmit={handleSubmit(handleSignIn)}>
               <div>
@@ -81,12 +81,12 @@ export default function Login() {
                 <input
                   {...register('password')}
                   type="password"
-                  placeholder="Senha"
+                  placeholder="Password"
                   className={errors.password && 'invalid'}
                 />
                 {errors.password && <span>{errors.password.message}</span>}
               </div>
-              <RegisterButton type="submit">Entrar</RegisterButton>
+              <RegisterButton type="submit">Enter</RegisterButton>
             </Form>
           </RegisterContainer>
         </Box>

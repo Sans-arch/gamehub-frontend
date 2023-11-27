@@ -15,7 +15,9 @@ export function SearchGameOption({ data }: SearchGameOptionProps) {
 
   return (
     <SearchGameOptionContainer>
-      <p onClick={handleClick}>{data.name}</p>
+      <p aria-hidden="true" onClick={handleClick}>
+        {data.name}
+      </p>
     </SearchGameOptionContainer>
   );
 }

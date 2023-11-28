@@ -14,7 +14,7 @@ export default defineConfig({
     setupFiles: "./src/setupTests.ts",
     coverage: {
       enabled: true,
-      provider: 'v8',
+      provider: 'istanbul',
       all: true,
       include: ['src/**/*.ts', 'src/**/*.tsx'],
       exclude: [

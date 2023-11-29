@@ -46,7 +46,6 @@ export const GameContainer = styled.div`
   margin-right: auto;
   box-sizing: border-box;
   gap: 50px;
-  /* border: 2px solid red; */
 
   img {
     width: 420px;
@@ -63,15 +62,33 @@ export const GameContainer = styled.div`
 export const GameInfo = styled.div`
   display: flex;
   flex-direction: column;
-  /* border: 2px solid blue; */
+
+  #heading-platforms {
+    margin-top: 1rem;
+  }
 
   .custom-rating {
     margin-top: 2rem;
-
+    margin-bottom: 2rem;
     svg {
       color: #f5f5f5;
       font-size: 2.25rem;
     }
+  }
+`;
+
+export const GamePlatforms = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 1rem;
+
+  div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+
   }
 `;
 

@@ -16,13 +16,13 @@ interface ReviewProps {
 
 export function Review({ name, content, rating, userId, createdAt }: ReviewProps) {
   const { user } = useContext(AuthContext);
-  const relativeTime = formatDistanceToNow(parseISO(createdAt), { addSuffix: true, locale: ptBR });
+  const relativeTime = formatDistanceToNow(parseISO(createdAt), { addSuffix: true });
 
   return (
     <ReviewContainer data-testid="review-container">
       <div>
         <h3>
-          {name} {user?.id === userId && <strong>(você)</strong>}
+          {name} {user?.id === userId && <strong>(you)</strong>}
         </h3>
         <div>
           <Rating name="half-rating" value={rating} precision={0.5} readOnly />

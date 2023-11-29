@@ -5,12 +5,14 @@ import { Rating } from '@mui/material';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { format } from 'date-fns';
 
 import {
   Container,
   CreateReviewInput,
   GameContainer,
   GameInfo,
+  GamePlatforms,
   Navbar,
   ReviewRatingForm,
   ReviewsContainer,
@@ -22,6 +24,7 @@ import gameHubLogo from '@assets/logo/logo-white-removebg-preview.png';
 import GameSkeleton from './Skeleton';
 import { Review } from '@/src/components/Review';
 import { AuthContext } from '@/src/contexts/auth';
+import { PlatformIcon } from '@/src/components/PlatformIcon';
 
 const createRatingSchema = z.object({
   reviewDescription: z.string().nonempty('A descrição é obrigatória'),
@@ -42,6 +45,15 @@ interface GameInfo {
   rating: number;
   slug: string;
   summary: string;
+  first_release_date: number;
+  platforms: {
+    id: number;
+    name: string;
+    platform_logo: {
+      id: number;
+      url: string;
+    };
+  }[];
   usersReviews: {
     id: number;
     rating: number;
@@ -94,6 +106,10 @@ export default function Game() {
     }
   };
 
+  const sortedReviews = [...reviews].sort((a, b) => {
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  });
+
   useEffect(() => {
     if (slug !== undefined) {
       apiCaller
@@ -102,13 +118,23 @@ export default function Game() {
             gameSlug: slug,
           },
         })
-        .then(response => {
-          response.data.cover.url = response.data.cover.url.replace('//', 'https://');
-          response.data.cover.url = response.data.cover.url.replace('t_thumb', GameCoverImageSizes.FULL_HD);
-          response.data.rating = (response.data.rating / 100) * 5;
+        .then(response => response.data)
+        .then((gameInfo: GameInfo) => {
+          gameInfo.cover.url = gameInfo.cover.url.replace('//', 'https://');
+          gameInfo.cover.url = gameInfo.cover.url.replace('t_thumb', GameCoverImageSizes.FULL_HD);
+          gameInfo.rating = (gameInfo.rating / 100) * 5;
 
-          setGameInfo(response.data);
-          setReviews(response.data.usersReviews);
+          gameInfo.platforms = gameInfo.platforms
+            .filter(platform => platform.platform_logo)
+            .map(platform => {
+              platform.platform_logo.url = platform.platform_logo.url.replace('//', 'https://');
+              platform.platform_logo.url = platform.platform_logo.url.replace('t_thumb', GameCoverImageSizes.FULL_HD);
+
+              return platform;
+            });
+
+          setGameInfo(gameInfo);
+          setReviews(gameInfo.usersReviews);
         })
         .catch(error => {
           console.log(error);
@@ -122,19 +148,32 @@ export default function Game() {
         <Link to="/">
           <img src={gameHubLogo} alt="Logotipo" width={100} height={100} />
         </Link>
-
         <h1>{gameInfo?.name}</h1>
       </Navbar>
 
       <GameContainer>
         {gameInfo ? (
           <>
-            <img src={gameInfo?.cover.url} alt={gameInfo?.slug} />
+            <img src={gameInfo.cover.url} alt={gameInfo.slug} />
 
             <GameInfo>
-              <p>{gameInfo?.summary}</p>
-
+              <p>{gameInfo.summary}</p>
               <Rating name="half-rating" className="custom-rating" value={gameInfo.rating} precision={0.5} readOnly />
+
+              <h3>Release date: </h3>
+              <p>{format(new Date(gameInfo.first_release_date * 1000), 'dd/MM/yyyy')}</p>
+              <h3 id="heading-platforms">Available on the following platforms:</h3>
+              <GamePlatforms>
+                <div>
+                  {gameInfo.platforms
+                    .sort((a, b) => {
+                      return a.name.localeCompare(b.name);
+                    })
+                    .map(platform => (
+                      <PlatformIcon key={platform.id} platform={platform} />
+                    ))}
+                </div>
+              </GamePlatforms>
             </GameInfo>
           </>
         ) : (
@@ -147,7 +186,7 @@ export default function Game() {
           {signed && (
             <ReviewRatingForm onSubmit={handleSubmit(handleCreateReview)}>
               <div>
-                <h3>Dê uma nota:</h3>
+                <h3>Give a rating:</h3>
                 <Rating
                   name="half-rating"
                   className="custom-rating"
@@ -158,26 +197,22 @@ export default function Game() {
                   precision={0.5}
                 />
               </div>
-              <CreateReviewInput {...register('reviewDescription')} type="text" placeholder="Escreva sua avaliação" />
+              <CreateReviewInput {...register('reviewDescription')} type="text" placeholder="Write your review" />
             </ReviewRatingForm>
           )}
 
-          {!signed && reviews.length > 0 && <h3>Avaliações dos usuários:</h3>}
+          {!signed && reviews.length > 0 && <h3>User reviews:</h3>}
 
-          {reviews
-            .sort((a, b) => {
-              return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-            })
-            .map(review => (
-              <Review
-                key={review.id}
-                userId={review.user.id}
-                name={review.user.name}
-                content={review.description}
-                rating={review.rating}
-                createdAt={review.createdAt}
-              />
-            ))}
+          {sortedReviews.map(review => (
+            <Review
+              key={review.id}
+              userId={review.user.id}
+              name={review.user.name}
+              content={review.description}
+              rating={review.rating}
+              createdAt={review.createdAt}
+            />
+          ))}
         </ReviewsContainer>
       )}
     </Container>

@@ -5,6 +5,26 @@ import { AuthContext } from '../../contexts/auth';
 import { Navigate } from 'react-router-dom';
 
 describe('Review Test suite', () => {
+  const renderReviewComponent = (content: string, createdAt: string, name: string, rating: number, userId: number) => {
+    return render(
+      <AuthContext.Provider
+        value={{
+          user: {
+            id: 1,
+            email: '',
+            name: '',
+          },
+          signed: true,
+          signIn: () => Promise.resolve(),
+          signOut: () => <Navigate to="/" />,
+          signUp: () => Promise.resolve(),
+        }}
+      >
+        <Review content={content} createdAt={createdAt} name={name} rating={rating} userId={userId} />
+      </AuthContext.Provider>
+    );
+  };
+
   it('should render Review component correctly', () => {
     const content: string = 'Such a nice game, I love it!';
     const createdAt: string = '2021-10-10T00:00:00.000Z';
@@ -12,23 +32,8 @@ describe('Review Test suite', () => {
     const rating = 4.5;
     const userId = 1;
 
-    render(
-      <AuthContext.Provider
-        value={{
-          user: {
-            id: 1,
-            email: '',
-            name: '',
-          },
-          signed: true,
-          signIn: () => Promise.resolve(),
-          signOut: () => <Navigate to="/" />,
-          signUp: () => Promise.resolve(),
-        }}
-      >
-        <Review content={content} createdAt={createdAt} name={name} rating={rating} userId={userId} />
-      </AuthContext.Provider>
-    );
+    renderReviewComponent(content, createdAt, name, rating, userId);
+
     const reviewContainer = screen.getByTestId('review-container');
     const nameHeading = screen.queryByRole('heading', { level: 3 });
 
@@ -36,34 +41,18 @@ describe('Review Test suite', () => {
     expect(nameHeading).toHaveTextContent(name);
   });
 
-  it('should render the tag "(você)" when the logged user is the author of a review', () => {
+  it('should render the tag "(you)" when the logged user is the author of a review', () => {
     const content: string = 'Such a nice game, I love it!';
     const createdAt: string = '2021-10-10T00:00:00.000Z';
     const name = 'John Doe';
     const rating = 4.5;
     const userId = 1;
 
-    render(
-      <AuthContext.Provider
-        value={{
-          user: {
-            id: 1,
-            email: '',
-            name: '',
-          },
-          signed: true,
-          signIn: () => Promise.resolve(),
-          signOut: () => <Navigate to="/" />,
-          signUp: () => Promise.resolve(),
-        }}
-      >
-        <Review content={content} createdAt={createdAt} name={name} rating={rating} userId={userId} />
-      </AuthContext.Provider>
-    );
+    renderReviewComponent(content, createdAt, name, rating, userId);
 
     const nameHeading = screen.getByText(/John Doe/);
 
     expect(nameHeading).toHaveTextContent(name);
-    expect(nameHeading.textContent?.trim()).toEqual(`${name} (você)`);
+    expect(nameHeading.textContent?.trim()).toEqual(`${name} (you)`);
   });
 });

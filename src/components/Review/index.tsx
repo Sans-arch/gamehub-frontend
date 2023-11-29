@@ -1,6 +1,5 @@
 import { Rating } from '@mui/material';
 import { formatDistanceToNow, parseISO } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
 
 import { ReviewContainer } from './styles';
 import { useContext } from 'react';

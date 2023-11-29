@@ -27,5 +27,5 @@ jobs:
       - name: Run Tests
         run: npm test
 
-      - name: Build static content
+      - name: Build content (testing the build process)
         run: npm run build

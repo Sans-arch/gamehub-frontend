@@ -36,7 +36,7 @@ describe('Review Test suite', () => {
     expect(nameHeading).toHaveTextContent(name);
   });
 
-  it('should render the tag "(você)" when the logged user is the author of a review', () => {
+  it('should render the tag "(you)" when the logged user is the author of a review', () => {
     const content: string = 'Such a nice game, I love it!';
     const createdAt: string = '2021-10-10T00:00:00.000Z';
     const name = 'John Doe';
@@ -64,6 +64,6 @@ describe('Review Test suite', () => {
     const nameHeading = screen.getByText(/John Doe/);
 
     expect(nameHeading).toHaveTextContent(name);
-    expect(nameHeading.textContent?.trim()).toEqual(`${name} (você)`);
+    expect(nameHeading.textContent?.trim()).toEqual(`${name} (you)`);
   });
 });

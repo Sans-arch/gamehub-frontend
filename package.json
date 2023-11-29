@@ -25,7 +25,6 @@
     "axios": "^1.6.0",
     "bcryptjs": "^2.4.3",
     "date-fns": "^2.30.0",
-    "istanbul": "^0.4.5",
     "lodash": "^4.17.21",
     "nookies": "^2.5.2",
     "react": "^18.2.0",

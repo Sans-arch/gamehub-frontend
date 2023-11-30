@@ -77,6 +77,19 @@ export const GameInfo = styled.div`
   }
 `;
 
+export const GameTechnicalInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  div + div {
+    margin-top: 10px;
+  }
+
+  ul {
+    list-style: none;
+  }
+`;
+
 export const GamePlatforms = styled.div`
   display: flex;
   flex-direction: column;

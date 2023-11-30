@@ -13,6 +13,7 @@ import {
   GameContainer,
   GameInfo,
   GamePlatforms,
+  GameTechnicalInfo,
   Navbar,
   ReviewRatingForm,
   ReviewsContainer,
@@ -46,6 +47,10 @@ interface GameInfo {
   slug: string;
   summary: string;
   first_release_date: number;
+  genres: {
+    id: number;
+    name: string;
+  }[];
   platforms: {
     id: number;
     name: string;
@@ -160,8 +165,21 @@ export default function Game() {
               <p>{gameInfo.summary}</p>
               <Rating name="half-rating" className="custom-rating" value={gameInfo.rating} precision={0.5} readOnly />
 
-              <h3>Release date: </h3>
-              <p>{format(new Date(gameInfo.first_release_date * 1000), 'dd/MM/yyyy')}</p>
+              <GameTechnicalInfo>
+                <div>
+                  <h3>Release date: </h3>
+                  <p>{format(new Date(gameInfo.first_release_date * 1000), 'dd/MM/yyyy')}</p>
+                </div>
+
+                <div>
+                  <h3>Genres:</h3>
+                  <ul>
+                    {gameInfo.genres.map(genre => (
+                      <li key={genre.id}>{genre.name}</li>
+                    ))}
+                  </ul>
+                </div>
+              </GameTechnicalInfo>
               <h3 id="heading-platforms">Available on the following platforms:</h3>
               <GamePlatforms>
                 <div>
